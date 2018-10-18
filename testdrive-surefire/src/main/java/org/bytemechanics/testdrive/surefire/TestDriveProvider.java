@@ -1,0 +1,120 @@
+/*
+ * Copyright 2018 Byte Mechanics.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.bytemechanics.testdrive.surefire;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.Collections;
+import java.util.Optional;
+import org.apache.maven.surefire.booter.Command;
+import org.apache.maven.surefire.booter.CommandReader;
+import org.apache.maven.surefire.providerapi.AbstractProvider;
+import org.apache.maven.surefire.providerapi.ProviderParameters;
+import org.apache.maven.surefire.report.ConsoleOutputCapture;
+import org.apache.maven.surefire.report.ConsoleOutputReceiver;
+import org.apache.maven.surefire.report.ReporterException;
+import org.apache.maven.surefire.report.ReporterFactory;
+import org.apache.maven.surefire.report.RunListener;
+import org.apache.maven.surefire.suite.RunResult;
+import org.apache.maven.surefire.testset.TestListResolver;
+import org.apache.maven.surefire.testset.TestRequest;
+import org.apache.maven.surefire.testset.TestSetFailedException;
+import org.apache.maven.surefire.util.RunOrderCalculator;
+import org.apache.maven.surefire.util.ScanResult;
+import org.apache.maven.surefire.util.TestsToRun;
+import org.bytemechanics.testdrive.Specification;
+
+/**
+ *
+ * @author afarre
+ */
+public class TestDriveProvider extends AbstractProvider{
+
+	private final ClassLoader testClassLoader;
+    private final String customRunListeners;
+    private final TestListResolver testResolver;
+    private final ProviderParameters providerParameters;
+    private final RunOrderCalculator runOrderCalculator;
+    private final ScanResult scanResult;
+    private final int rerunFailingTestsCount;
+    private final CommandReader commandsReader;
+	private TestsToRun testsToRun;
+
+	
+	public TestDriveProvider(final ProviderParameters _parameters){
+		this.commandsReader = _parameters.isInsideFork() ? CommandReader.getReader().setShutdown( _parameters.getShutdown() ) : null;
+        this.providerParameters = _parameters;
+        this.testClassLoader = _parameters.getTestClassLoader();
+        this.scanResult = _parameters.getScanResult();
+        this.runOrderCalculator = _parameters.getRunOrderCalculator();
+        this.customRunListeners = _parameters.getProviderProperties().get( "listener" );
+        final TestRequest testRequest = _parameters.getTestRequest();
+        this.testResolver = testRequest.getTestListResolver();
+		this.rerunFailingTestsCount = testRequest.getRerunFailingTestsCount();
+		this.testsToRun=null;
+	}
+	
+	@Override
+	public Iterable<Class<?>> getSuites() {
+		return scanClassPath()
+					.map(tests -> (Iterable<Class<?>>)tests)
+					.orElse(Collections.emptyList());
+	}
+	
+	protected Optional<TestsToRun> scanClassPath() {
+		return Optional.ofNullable(this.scanResult)
+						.map(result -> result.applyFilter(Specification.class::isAssignableFrom, testClassLoader))
+						.map(this.runOrderCalculator::orderTestClasses);
+	}
+
+	
+	@Override
+	public RunResult invoke(Object forkTestSet) throws TestSetFailedException, ReporterException, InvocationTargetException {
+
+		RunResult reply;
+
+        final ReporterFactory reporterFactory = providerParameters.getReporterFactory();
+        final RunListener reporter = reporterFactory.createReporter();
+        ConsoleOutputCapture.startCapture((ConsoleOutputReceiver)reporter);
+		try{
+			if ( this.testsToRun == null ){
+				if (forkTestSet instanceof TestsToRun){
+					this.testsToRun = (TestsToRun) forkTestSet;
+				}else if(forkTestSet instanceof Class){
+					this.testsToRun = TestsToRun.fromClass((Class<?>)forkTestSet);
+				}else{
+					this.testsToRun = scanClassPath()
+										.orElseGet(() -> new TestsToRun(Collections.emptySet()));
+                }
+            }
+            if(this.commandsReader!=null){
+                registerShutdownListener( testsToRun );
+                this.commandsReader.awaitStarted();
+            }
+            /* TODO
+			TestNGDirectoryTestSuite suite = newDirectorySuite();
+            suite.execute( testsToRun, reporter );
+			*/
+        }finally{
+            reply = reporterFactory.close();
+        }
+		
+		return reply;
+	}
+	
+	private void registerShutdownListener( final TestsToRun testsToRun ){
+        this.commandsReader.addShutdownListener((Command command) -> testsToRun.markTestSetFinished());
+    }
+}
