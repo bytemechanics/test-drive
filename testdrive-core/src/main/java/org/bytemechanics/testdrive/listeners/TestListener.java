@@ -15,8 +15,8 @@
  */
 package org.bytemechanics.testdrive.listeners;
 
-import org.bytemechanics.testdrive.beans.Result;
-import org.bytemechanics.testdrive.beans.TestId;
+import org.bytemechanics.testdrive.adapter.Result;
+import org.bytemechanics.testdrive.adapter.TestId;
 
 /**
  *
@@ -24,6 +24,6 @@ import org.bytemechanics.testdrive.beans.TestId;
  */
 public interface TestListener extends ExecutionListener{
 
-	public void startTest(final TestId _specificationTest);
-	public void endTest(final TestId _specificationTest,final Result _result);	
+	public <T extends TestId> T startTest(final T _specificationTest);
+	public <T extends TestId> T endTest(final T _specificationTest,final Result _result);	
 }

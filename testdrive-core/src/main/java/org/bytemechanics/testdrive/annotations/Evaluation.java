@@ -28,5 +28,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface Evaluation {
 	public String name() default "";
-	public String[] args() default {};
+	public String[] args();
+	public boolean skip() default false;
 }

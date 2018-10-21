@@ -16,31 +16,74 @@
 package org.bytemechanics.testdrive.runners.beans;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
+import org.bytemechanics.testdrive.Specification;
+import org.bytemechanics.testdrive.adapter.TestId;
 import org.bytemechanics.testdrive.annotations.Evaluation;
 import org.bytemechanics.testdrive.annotations.Test;
-import org.bytemechanics.testdrive.beans.Result;
-import org.bytemechanics.testdrive.beans.TestId;
+import org.bytemechanics.testdrive.exceptions.SpecificationNotInstantiable;
 
 /**
  *
  * @author afarre
  */
-public class TestBean extends TestId {
+public class TestBean extends SpecificationBean implements TestId {
 	
-	private Result result;
+	private final Specification specification;
+	
+	private final Method testMethod;
+	private final String testName;
+	private final Class[] testMethodParameters;
+	private ResultBean testResult;
 
 	public TestBean(final SpecificationBean _specification,final Method _method) {
-		super(_specification.getSpecificationClass()
-				,_specification.getSpecificationName()
-				,_specification.getSpecificationGroup()
-				,_method, Optional.ofNullable(_method)
+		super(_specification);
+		this.testMethod = _method;
+		this.testName =  Optional.ofNullable(_method)
 									.filter(clazz -> clazz.isAnnotationPresent(Test.class))
 									.map(clazz -> clazz.getAnnotation(Test.class))
 									.map(Test::name)
-									.orElse(_method.getName()));
-		this.result=null;
+									.orElse(_method.getName());
+		this.testMethodParameters=Optional.ofNullable(_method)
+											.map(Method::getParameterTypes)
+											.orElseGet(() -> new Class[0]);
+		this.specification=_specification.getSpecificationSupplier()
+											.get()
+											.orElseThrow(() -> new SpecificationNotInstantiable(_specification.getSpecificationClass()));
+		this.testResult=null;
+	}
+
+	public TestBean(final TestBean _test) {
+		super(_test);
+		this.testMethod = _test.getTestMethod();
+		this.testName = _test.getTestName();
+		this.testMethodParameters = _test.getTestMethodParameters();
+		this.testResult = _test.getTestResult();
+		this.specification=_test.getSpecification();
+	}
+
+	public Specification getSpecification() {
+		return specification;
+	}
+	@Override
+	public Method getTestMethod() {
+		return testMethod;
+	}
+	@Override
+	public Class[] getTestMethodParameters() {
+		return testMethodParameters;
+	}
+	@Override
+	public String getTestName() {
+		return testName;
+	}
+	public ResultBean getTestResult() {
+		return testResult;
+	}
+	public void setTestResult(ResultBean result) {
+		this.testResult = result;
 	}
 
 	public Evaluation[] getEvaluations(){
@@ -49,22 +92,14 @@ public class TestBean extends TestId {
 						.map(Test::evaluations)
 						.orElseGet(() -> new Evaluation[0]);
 	}
-	public Result getResult() {
-		return result;
-	}
-	public void setResult(Result result) {
-		this.result = result;
-	}
-	public TestBean withResult(Result result) {
-		this.result = result;
-		return this;
-	}
 
-	
 	@Override
 	public int hashCode() {
 		int hash = super.hashCode();
-		hash = 37 * hash + Objects.hashCode(this.result);
+		hash = 53 * hash + Objects.hashCode(this.testMethod);
+		hash = 53 * hash + Objects.hashCode(this.testName);
+		hash = 53 * hash + Arrays.deepHashCode(this.testMethodParameters);
+		hash = 53 * hash + Objects.hashCode(this.testResult);
 		return hash;
 	}
 
@@ -75,6 +110,16 @@ public class TestBean extends TestId {
 			return false;
 		}
 		final TestBean other = (TestBean) obj;
-		return Objects.equals(this.result, other.result);
+		if (!Objects.equals(this.testName, other.testName)) {
+			return false;
+		}
+		if (!Objects.equals(this.testMethod, other.testMethod)) {
+			return false;
+		}
+		if (!Arrays.deepEquals(this.testMethodParameters, other.testMethodParameters)) {
+			return false;
+		}
+		return Objects.equals(this.testResult, other.testResult);
 	}
+	
 }

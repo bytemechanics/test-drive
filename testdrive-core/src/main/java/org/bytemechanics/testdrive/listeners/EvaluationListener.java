@@ -15,14 +15,15 @@
  */
 package org.bytemechanics.testdrive.listeners;
 
-import org.bytemechanics.testdrive.beans.EvaluationId;
-import org.bytemechanics.testdrive.beans.Result;
+import org.bytemechanics.testdrive.adapter.EvaluationId;
+import org.bytemechanics.testdrive.adapter.Result;
+
 
 /**
  * @author afarre
  */
 public interface EvaluationListener extends ExecutionListener{
 	
-	public void startEvaluation(final EvaluationId _specificationTest);
-	public void endEvaluation(final EvaluationId _specificationTest,final Result _result);
+	public <T extends EvaluationId> T startEvaluation(final T _specificationTest);
+	public <T extends EvaluationId> T endEvaluation(final T _specificationTest,final Result _result);
 }

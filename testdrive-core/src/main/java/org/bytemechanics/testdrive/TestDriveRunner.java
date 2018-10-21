@@ -17,6 +17,7 @@ package org.bytemechanics.testdrive;
 
 import java.lang.reflect.Method;
 import java.util.stream.Stream;
+import org.bytemechanics.testdrive.adapter.Result;
 import org.bytemechanics.testdrive.listeners.ExecutionListener;
 
 /**
@@ -27,7 +28,7 @@ public interface TestDriveRunner {
 	
 	public <T extends ExecutionListener> void registerListener(final T _listener);
 	
-	public void evaluateSpecification(final Class<? extends Specification> _specificationClass);
-	public void evaluateSpecificationTest(final Class<? extends Specification> _specificationClass,final Method _method);
+	public Result evaluateSpecification(final Class<? extends Specification> _specificationClass);
+	public Result evaluateSpecificationTest(final Class<? extends Specification> _specificationClass,final Method _method);
 	public void evaluateStream(Stream<Class<? extends Specification>> _specifications);
 }

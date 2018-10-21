@@ -18,16 +18,21 @@ package org.bytemechanics.testdrive.runners;
 import java.lang.reflect.Method;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.stream.Stream;
 import org.bytemechanics.testdrive.Specification;
 import org.bytemechanics.testdrive.TestDriveRunner;
+import org.bytemechanics.testdrive.adapter.Result;
+import org.bytemechanics.testdrive.annotations.Skip;
 import org.bytemechanics.testdrive.annotations.Test;
+import org.bytemechanics.testdrive.exceptions.AssertException;
+import org.bytemechanics.testdrive.internal.commons.string.SimpleFormat;
 import org.bytemechanics.testdrive.listeners.EvaluationListener;
 import org.bytemechanics.testdrive.listeners.ExecutionListener;
 import org.bytemechanics.testdrive.listeners.SpecificationListener;
 import org.bytemechanics.testdrive.listeners.TestListener;
 import org.bytemechanics.testdrive.runners.beans.EvaluationBean;
+import org.bytemechanics.testdrive.runners.beans.ResultBean;
 import org.bytemechanics.testdrive.runners.beans.SpecificationBean;
 import org.bytemechanics.testdrive.runners.beans.TestBean;
 
@@ -38,21 +43,20 @@ import org.bytemechanics.testdrive.runners.beans.TestBean;
  */
 public class DefaultTestDriveRunner implements TestDriveRunner{
 
-	private Optional<SpecificationListener> specificationListener;
-	private Optional<TestListener> testListener;
-	private Optional<EvaluationListener> evaluationListener;
-	
-	private Consumer<SpecificationBean> startSpecification;
-	private Consumer<TestBean> startTest;
-	private Consumer<EvaluationBean> startEvaluation;
-	private Consumer<EvaluationBean> endEvaluation;
-	private Consumer<TestBean> endTest;
-	private Consumer<SpecificationBean> endSpecification;
+	private Function<SpecificationBean,SpecificationBean> startSpecification;
+	private Function<TestBean,TestBean> startTest;
+	private Function<EvaluationBean,EvaluationBean> startEvaluation;
+	private Function<EvaluationBean,EvaluationBean> endEvaluation;
+	private Function<TestBean,TestBean> endTest;
+	private Function<SpecificationBean,SpecificationBean> endSpecification;
 	
 	public DefaultTestDriveRunner(){
-		this.specificationListener=Optional.empty();
-		this.testListener=Optional.empty();
-		this.evaluationListener=Optional.empty();
+		this.startSpecification=(SpecificationBean specification) -> specification;
+		this.startTest=(TestBean test) -> test;
+		this.startEvaluation=(EvaluationBean evaluation) -> evaluation;
+		this.endEvaluation=(EvaluationBean evaluation) -> evaluation;
+		this.endTest=(TestBean test) -> test;
+		this.endSpecification=(SpecificationBean specification) -> specification;
 	}
 
 	
@@ -61,93 +65,140 @@ public class DefaultTestDriveRunner implements TestDriveRunner{
 		this.startSpecification=Optional.ofNullable(_listener)
 											.filter(SpecificationListener.class::isInstance)
 											.map(listener -> (SpecificationListener)listener)
-											.map(listener -> ((Consumer<SpecificationBean>)listener::startSpecification))
-											.orElse((SpecificationBean specification) -> {});
+											.map(listener -> ((Function<SpecificationBean,SpecificationBean>)listener::startSpecification))
+											.orElse(this.startSpecification);
 		this.endSpecification=Optional.ofNullable(_listener)
 											.filter(SpecificationListener.class::isInstance)
 											.map(listener -> (SpecificationListener)listener)
-											.map(listener -> (Consumer<SpecificationBean>)((SpecificationBean spec) -> listener.endSpecification(spec,spec.getResult())))
-											.orElse((SpecificationBean specification) -> {});
+											.map(listener -> (Function<SpecificationBean,SpecificationBean>)((SpecificationBean spec) -> listener.endSpecification(spec,spec.getSpecificationResult())))
+											.orElse(this.endSpecification);
 		this.startTest=Optional.ofNullable(_listener)
 											.filter(TestListener.class::isInstance)
 											.map(listener -> (TestListener)listener)
-											.map(listener -> ((Consumer<TestBean>)listener::startTest))
-											.orElse((TestBean test) -> {});
+											.map(listener -> ((Function<TestBean,TestBean>)listener::startTest))
+											.orElse(this.startTest);
 		this.endTest=Optional.ofNullable(_listener)
 											.filter(TestListener.class::isInstance)
 											.map(listener -> (TestListener)listener)
-											.map(listener -> (Consumer<TestBean>)((TestBean test) -> listener.endTest(test,test.getResult())))
-											.orElse((TestBean test) -> {});
+											.map(listener -> (Function<TestBean,TestBean>)((TestBean test) -> listener.endTest(test,test.getTestResult())))
+											.orElse(this.endTest);
 		this.startEvaluation=Optional.ofNullable(_listener)
 											.filter(EvaluationListener.class::isInstance)
 											.map(listener -> (EvaluationListener)listener)
-											.map(listener -> ((Consumer<EvaluationBean>)listener::startEvaluation))
-											.orElse((EvaluationBean evaluation) -> {});
+											.map(listener -> ((Function<EvaluationBean,EvaluationBean>)listener::startEvaluation))
+											.orElse(this.startEvaluation);
 		this.endEvaluation=Optional.ofNullable(_listener)
 											.filter(EvaluationListener.class::isInstance)
 											.map(listener -> (EvaluationListener)listener)
-											.map(listener -> (Consumer<EvaluationBean>)((EvaluationBean evaluation) -> listener.endEvaluation(evaluation,evaluation.getResult())))
-											.orElse((EvaluationBean evaluation) -> {});
+											.map(listener -> (Function<EvaluationBean,EvaluationBean>)((EvaluationBean evaluation) -> listener.endEvaluation(evaluation,evaluation.getEvaluationResult())))
+											.orElse(this.endEvaluation);
 	}
 
 
 
-	protected SpecificationBean evaluateSpecification(final SpecificationBean _specification) {
+	protected EvaluationBean evaluate(final EvaluationBean _evaluation){
 		
-		Stream.of(_specification.getSpecificationClass().getMethods())
-				.filter(method -> method.isAnnotationPresent(Test.class))
-				.map(method -> new TestBean(_specification, method))
-				.peek(this.startTest::accept)
-				.map(this::evaluateSpecificationTest)
-				.forEach(this.endTest::accept);
+		final EvaluationBean reply=_evaluation;
 		
-		return _specification;
+		if(!_evaluation.getEvaluation().skip()){
+			try(ResultBean result=new ResultBean()){
+				reply.setEvaluationResult(result);
+				_evaluation.getSpecification()
+							.executeTest(_evaluation.getTestMethod(), _evaluation.getParsedArguments());
+			}catch(AssertException e){
+				reply.getEvaluationResult().fail(e);
+			}catch(Exception e){
+				reply.getEvaluationResult().error(e);
+			}
+		}else{
+			reply.setEvaluationResult(ResultBean.skipped(SimpleFormat.format("{}: annotated to skip",_evaluation.name())));
+		}
+		
+		return reply;
 	}
 	
 	protected TestBean evaluateSpecificationTest(final TestBean _test) {
 		
-		if(_test.getEvaluations().length>0){
-			AtomicInteger counter=new AtomicInteger();
-			Stream.of(_test.getEvaluations())
-					.map(evaluation -> new EvaluationBean(_test,counter.addAndGet(1),evaluation))
-					.peek(this.startEvaluation::accept)
-					//Todo do something to evaluate test
-					.forEach(this.endEvaluation::accept);
-		}else if(_test.getTestMethodParameters().length==0){
-			this.startEvaluation
-					//Todo do something to evaluate test
-					.andThen(this.endEvaluation)
-					.accept(new EvaluationBean(_test));
+		final TestBean reply=_test;
+		
+		if(!_test.getTestMethod().isAnnotationPresent(Skip.class)){
+			if(_test.getEvaluations().length>0){
+				try(ResultBean result=new ResultBean()){
+					reply.setTestResult(result);
+					AtomicInteger counter=new AtomicInteger();
+					Stream.of(_test.getEvaluations())
+							.map(evaluation -> new EvaluationBean(_test,counter.addAndGet(1),evaluation))
+							.peek(this.startEvaluation::apply)
+							.map(this::evaluate)
+							.forEach(this.endEvaluation::apply);
+				}catch(Exception e){
+					reply.getTestResult().error(e);
+				}
+			}else if(_test.getTestMethodParameters().length==0){
+				try(ResultBean result=new ResultBean()){
+					reply.setTestResult(result);
+					EvaluationBean eval=this.startEvaluation
+												.andThen(this::evaluate)
+												.andThen(this.endEvaluation)
+												.apply(new EvaluationBean(_test));
+				}catch(Exception e){
+					reply.getTestResult().error(e);
+				}
+			}else{
+				reply.setTestResult(ResultBean.skipped(SimpleFormat.format("{}: method has arguments and can not find any evaluation",_test.name())));
+			}
 		}else{
-			//Test skipped no evaluations
+			reply.setTestResult(ResultBean.skipped(SimpleFormat.format("{}: method has marked with skip annotation",_test.name())));
 		}
 		
 		return _test;
 	}
+	protected SpecificationBean evaluateSpecification(final SpecificationBean _specification) {
+		
+		SpecificationBean reply=_specification;
 
-	@Override
-	public void evaluateSpecification(final Class<? extends Specification> _specificationClass) {
-		Optional.ofNullable(_specificationClass)
-				.map(SpecificationBean::new)
-				.ifPresent(this.startSpecification.andThen(this::evaluateSpecification).andThen(this.endSpecification)::accept);
+		if(!reply.getSpecificationClass().isAnnotationPresent(Skip.class)){
+			try(ResultBean result=new ResultBean()){
+				reply.setSpecificationResult(result);
+				Stream.of(_specification.getSpecificationClass().getMethods())
+						.filter(method -> method.isAnnotationPresent(Test.class))
+						.map(method -> new TestBean(_specification, method))
+						.peek(this.startTest::apply)
+						.map(this::evaluateSpecificationTest)
+						.forEach(this.endTest::apply);
+			}catch(Exception e){
+				reply.getSpecificationResult().error(e);
+			}
+		}else{
+			reply.setSpecificationResult(ResultBean.skipped(SimpleFormat.format("{}: class has marked with skip annotation",reply.name())));
+		}
+		
+		return reply;
 	}
 
 	@Override
-	public void evaluateSpecificationTest(final Class<? extends Specification> _specificationClass,final Method _method) {
-		Optional.ofNullable(_specificationClass)
-				.map(SpecificationBean::new)
-				.filter(spec -> _method!=null)
-				.map(spec -> new TestBean(spec, _method))
-				.ifPresent(this.startTest.andThen(this::evaluateSpecificationTest).andThen(this.endTest)::accept);
+	public Result evaluateSpecification(final Class<? extends Specification> _specificationClass) {
+		return Optional.ofNullable(_specificationClass)
+						.map(SpecificationBean::new)
+						.map(this.startSpecification.andThen(this::evaluateSpecification).andThen(this.endSpecification)::apply)
+						.map(SpecificationBean::getSpecificationResult)
+						.orElse(null);
+	}
+
+	@Override
+	public Result evaluateSpecificationTest(final Class<? extends Specification> _specificationClass,final Method _method) {
+		return Optional.ofNullable(_specificationClass)
+						.map(SpecificationBean::new)
+						.filter(spec -> _method!=null)
+						.map(spec -> new TestBean(spec, _method))
+						.map(this.startTest.andThen(this::evaluateSpecificationTest).andThen(this.endTest)::apply)
+						.map(TestBean::getTestResult)
+						.orElse(null);
 	}
 	
 	@Override
 	public void evaluateStream(final Stream<Class<? extends Specification>> _specifications) {
-		_specifications
-				.map(SpecificationBean::new)
-				.peek(this.startSpecification::accept)
-				.map(this::evaluateSpecification)
-				.forEach(this.endSpecification::accept);
+		_specifications.forEach(this::evaluateSpecification);
 	}
 
 }

@@ -15,32 +15,36 @@
  */
 package org.bytemechanics.testdrive.exceptions;
 
-import java.lang.reflect.Method;
 import java.util.Objects;
 import org.bytemechanics.testdrive.Specification;
 import org.bytemechanics.testdrive.internal.commons.string.SimpleFormat;
 
 /**
- * Exception thrown when try to execute a test that is not accessible by the test runner
+ * Exception thrown when failed trying to instantiate an specification
  * @see RuntimeException
+ * @see Specification
  * @author afarre
  * @since 1.0.0
  */
-public class TestNotAccessible extends RuntimeException{
+public class SpecificationNotInstantiable extends RuntimeException{
 
 	private final Class<? extends Specification> specification;
-	private final Method test;
 	
 	/**
 	 * Test not accessible exception constructor
-	 * @param _specification specification where the exception happen
-	 * @param _test test method where the exception happen
+	 * @param _specification specification class 
+	 */
+	public SpecificationNotInstantiable(final Class<? extends Specification> _specification) {
+		this(_specification,null);
+	}
+	/**
+	 * Test not accessible exception constructor
+	 * @param _specification specification class 
 	 * @param _cause exception cause
 	 */
-	public TestNotAccessible(final Class<? extends Specification> _specification,final Method _test,final Throwable _cause) {
-		super(SimpleFormat.format("Specification {}, test {} is not accessible", _specification.getSimpleName(),_test.getName(),_test.getParameterTypes()),_cause);
+	public SpecificationNotInstantiable(final Class<? extends Specification> _specification,final Throwable _cause) {
+		super(SimpleFormat.format("Specification {} is not instantiable, verify exist a public constructor without parameters", _specification.getSimpleName()),_cause);
 		this.specification=_specification;
-		this.test=_test;
 	}
 
 	/**
@@ -50,24 +54,14 @@ public class TestNotAccessible extends RuntimeException{
 	public Class<? extends Specification> getSpecification() {
 		return specification;
 	}
-	/**
-	 * Retrieve the test where exception happens
-	 * @return method where the exception happen
-	 */
-	public Method getTest() {
-		return test;
-	}
 
-	/** @see Object#hashCode()  */
 	@Override
 	public int hashCode() {
-		int hash = 7;
-		hash = 89 * hash + Objects.hashCode(this.specification);
-		hash = 89 * hash + Objects.hashCode(this.test);
+		int hash = 3;
+		hash = 47 * hash + Objects.hashCode(this.specification);
 		return hash;
 	}
 
-	/** @see Object#equals(java.lang.Object)  */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -79,10 +73,8 @@ public class TestNotAccessible extends RuntimeException{
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final TestNotAccessible other = (TestNotAccessible) obj;
-		if (!Objects.equals(this.specification, other.specification)) {
-			return false;
-		}
-		return Objects.equals(this.test, other.test);
+		final SpecificationNotInstantiable other = (SpecificationNotInstantiable) obj;
+		return Objects.equals(this.specification, other.specification);
 	}
+
 }

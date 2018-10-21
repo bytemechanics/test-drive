@@ -18,6 +18,7 @@ package org.bytemechanics.testdrive.exceptions;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Objects;
+import org.bytemechanics.testdrive.Specification;
 import org.bytemechanics.testdrive.internal.commons.string.SimpleFormat;
 
 /**
@@ -28,39 +29,39 @@ import org.bytemechanics.testdrive.internal.commons.string.SimpleFormat;
  */
 public class TestParametersNotMatch extends RuntimeException{
 
-	private final Class testUnit;
+	private final Class<? extends Specification> specification;
 	private final Method test;
 	private final Object[] provided;
 	
 	/**
 	 * Test parameters not match exception constructor
-	 * @param _testUnit test unit where the exception happen
+	 * @param _specification specification where the exception happen
 	 * @param _test test method where the exception happen
 	 * @param _provided Received parameters
 	 */
-	public TestParametersNotMatch(final Class _testUnit,final Method _test,final Object[] _provided) {
-		this(_testUnit,_test,_provided,null);
+	public TestParametersNotMatch(final Class<? extends Specification> _specification,final Method _test,final Object[] _provided) {
+		this(_specification,_test,_provided,null);
 	}
 	/**
 	 * Test parameters not match exception constructor
-	 * @param _testUnit test unit where the exception happen
+	 * @param _specification specification where the exception happen
 	 * @param _test test method where the exception happen
 	 * @param _provided Received parameters
 	 * @param _cause exception cause
 	 */
-	public TestParametersNotMatch(final Class _testUnit,final Method _test,final Object[] _provided,final Throwable _cause) {
-		super(SimpleFormat.format("TestUnit {}, test {} has not the necessary parameters.\n\tExpected: {}\n\tFound: {}", _testUnit.getSimpleName(),_test.getName(),_test.getParameterTypes(),_provided),_cause);
-		this.testUnit=_testUnit;
+	public TestParametersNotMatch(final Class<? extends Specification> _specification,final Method _test,final Object[] _provided,final Throwable _cause) {
+		super(SimpleFormat.format("Specification {}, test {} has not the necessary parameters.\n\tExpected: {}\n\tFound: {}", _specification.getSimpleName(),_test.getName(),_test.getParameterTypes(),_provided),_cause);
+		this.specification=_specification;
 		this.test=_test;
 		this.provided=_provided;
 	}
 
 	/**
-	 * Retrieve the test unit where exception happens
+	 * Retrieve the specification where exception happens
 	 * @return class where the exception happen
 	 */
-	public Class getTestUnit() {
-		return testUnit;
+	public Class<? extends Specification> getSpecification() {
+		return specification;
 	}
 	/**
 	 * Retrieve the test where exception happens
@@ -81,7 +82,7 @@ public class TestParametersNotMatch extends RuntimeException{
 	@Override
 	public int hashCode() {
 		int hash = 5;
-		hash = 11 * hash + Objects.hashCode(this.testUnit);
+		hash = 11 * hash + Objects.hashCode(this.specification);
 		hash = 11 * hash + Objects.hashCode(this.test);
 		hash = 11 * hash + Arrays.deepHashCode(this.provided);
 		return hash;
@@ -100,7 +101,7 @@ public class TestParametersNotMatch extends RuntimeException{
 			return false;
 		}
 		final TestParametersNotMatch other = (TestParametersNotMatch) obj;
-		if (!Objects.equals(this.testUnit, other.testUnit)) {
+		if (!Objects.equals(this.specification, other.specification)) {
 			return false;
 		}
 		if (!Objects.equals(this.test, other.test)) {

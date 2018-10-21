@@ -13,18 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.bytemechanics.testdrive.listeners;
+package org.bytemechanics.testdrive.annotations;
 
-import org.bytemechanics.testdrive.adapter.Result;
-import org.bytemechanics.testdrive.adapter.SpecificationId;
-
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  *
  * @author afarre
  */
-public interface SpecificationListener extends ExecutionListener{
-
-	public <T extends SpecificationId> T startSpecification(final T _specification);
-	public <T extends SpecificationId> T endSpecification(final T _specification,final Result _result);
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.TYPE,ElementType.METHOD})
+public @interface Skip {
+	
 }

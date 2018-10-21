@@ -13,18 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.bytemechanics.testdrive.listeners;
+package org.bytemechanics.testdrive.adapter;
 
-import org.bytemechanics.testdrive.adapter.Result;
-import org.bytemechanics.testdrive.adapter.SpecificationId;
-
+import java.time.Duration;
+import org.bytemechanics.testdrive.ResultStatus;
 
 /**
  *
  * @author afarre
  */
-public interface SpecificationListener extends ExecutionListener{
+public interface Result {
 
-	public <T extends SpecificationId> T startSpecification(final T _specification);
-	public <T extends SpecificationId> T endSpecification(final T _specification,final Result _result);
+	public Duration getDuration();
+	public ResultStatus getStatus();
+	public String getMessage();
+	public Throwable getError();
 }

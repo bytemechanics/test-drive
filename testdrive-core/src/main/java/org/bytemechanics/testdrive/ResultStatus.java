@@ -13,18 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.bytemechanics.testdrive.listeners;
-
-import org.bytemechanics.testdrive.adapter.Result;
-import org.bytemechanics.testdrive.adapter.SpecificationId;
-
+package org.bytemechanics.testdrive;
 
 /**
- *
  * @author afarre
  */
-public interface SpecificationListener extends ExecutionListener{
+public enum ResultStatus {
 
-	public <T extends SpecificationId> T startSpecification(final T _specification);
-	public <T extends SpecificationId> T endSpecification(final T _specification,final Result _result);
+	SUCCESS,
+	SKIPPED,
+	FAILURE,
+	ERROR,
+	;
 }

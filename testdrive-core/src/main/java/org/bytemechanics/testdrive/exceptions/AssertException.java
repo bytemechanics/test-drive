@@ -17,6 +17,7 @@ package org.bytemechanics.testdrive.exceptions;
 
 import java.lang.reflect.Method;
 import java.util.Objects;
+import org.bytemechanics.testdrive.Specification;
 import org.bytemechanics.testdrive.internal.commons.string.SimpleFormat;
 
 /**
@@ -27,7 +28,7 @@ import org.bytemechanics.testdrive.internal.commons.string.SimpleFormat;
  */
 public class AssertException extends RuntimeException{
 
-	private final Class testUnit;
+	private final Class<? extends Specification> specification;
 	private final Method test;
 	private final String assertion;
 	private final Object expected;
@@ -35,16 +36,16 @@ public class AssertException extends RuntimeException{
 	
 	/**
 	 * Assertion failure exception constructor
-	 * @param _testUnit test unit where the exception happen
+	 * @param _specification specification where the exception happen
 	 * @param _test test method where the exception happen
 	 * @param _assertion Failed assertion
 	 * @param _expected expected result
 	 * @param _actual actual result
 	 * @param _cause exception cause
 	 */
-	public AssertException(final Class _testUnit,final Method _test,final String _assertion,final Object _expected,final Object _actual,final Throwable _cause) {
-		super(SimpleFormat.format("TestUnit {}, test {}, assertion {} failed:\n\tExpected:\t{}\n\tActual:\t{}", _testUnit.getSimpleName(),_test.getName(),_test.getParameterTypes(),_assertion,_expected,_actual),_cause);
-		this.testUnit=_testUnit;
+	public AssertException(final Class<? extends Specification> _specification,final Method _test,final String _assertion,final Object _expected,final Object _actual,final Throwable _cause) {
+		super(SimpleFormat.format("Specification {}, test {}, assertion {} failed:\n\tExpected:\t{}\n\tActual:\t{}", _specification.getSimpleName(),_test.getName(),_test.getParameterTypes(),_assertion,_expected,_actual),_cause);
+		this.specification=_specification;
 		this.test=_test;
 		this.assertion=_assertion;
 		this.expected=_expected;
@@ -52,11 +53,11 @@ public class AssertException extends RuntimeException{
 	}
 
 	/**
-	 * Retrieve the test unit where exception happens
+	 * Retrieve the specification where exception happens
 	 * @return class where the exception happen
 	 */
-	public Class getTestUnit() {
-		return testUnit;
+	public Class<? extends Specification> getSpecification() {
+		return specification;
 	}
 	/**
 	 * Retrieve the test where exception happens
@@ -91,7 +92,7 @@ public class AssertException extends RuntimeException{
 	@Override
 	public int hashCode() {
 		int hash = 7;
-		hash = 43 * hash + Objects.hashCode(this.testUnit);
+		hash = 43 * hash + Objects.hashCode(this.specification);
 		hash = 43 * hash + Objects.hashCode(this.test);
 		hash = 43 * hash + Objects.hashCode(this.assertion);
 		hash = 43 * hash + Objects.hashCode(this.expected);
@@ -115,7 +116,7 @@ public class AssertException extends RuntimeException{
 		if (!Objects.equals(this.assertion, other.assertion)) {
 			return false;
 		}
-		if (!Objects.equals(this.testUnit, other.testUnit)) {
+		if (!Objects.equals(this.specification, other.specification)) {
 			return false;
 		}
 		if (!Objects.equals(this.test, other.test)) {

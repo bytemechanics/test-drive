@@ -19,72 +19,106 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Supplier;
 import org.bytemechanics.testdrive.Specification;
+import org.bytemechanics.testdrive.adapter.SpecificationId;
 import org.bytemechanics.testdrive.annotations.SpecificationInfo;
-import org.bytemechanics.testdrive.beans.Result;
-import org.bytemechanics.testdrive.beans.SpecificationId;
 import org.bytemechanics.testdrive.internal.commons.reflection.ObjectFactory;
 
 /**
  *
  * @author afarre
  */
-public class SpecificationBean extends SpecificationId {
+public class SpecificationBean implements SpecificationId {
 	
+	private final Class<? extends Specification> specificationClass;
+	private final String specificationName;
+	private final String specificationGroup;
 	private final Supplier<Optional<Specification>> specificationSupplier;
-	private Result result;
+	private ResultBean specificationResult;
 
 	
-	public SpecificationBean(Class<? extends Specification> _testClass) {
-		super(_testClass, Optional.ofNullable(_testClass)
+	public SpecificationBean(final Class<? extends Specification> _testClass) {
+		this.specificationClass=_testClass;
+		this.specificationName=Optional.ofNullable(_testClass)
 									.filter(clazz -> clazz.isAnnotationPresent(SpecificationInfo.class))
 									.map(clazz -> clazz.getAnnotation(SpecificationInfo.class))
 									.map(SpecificationInfo::name)
-									.orElse(_testClass.getSimpleName())
-						,Optional.ofNullable(_testClass)
+									.orElse(_testClass.getSimpleName());
+		this.specificationGroup=Optional.ofNullable(_testClass)
 									.filter(clazz -> clazz.isAnnotationPresent(SpecificationInfo.class))
 									.map(clazz -> clazz.getAnnotation(SpecificationInfo.class))
 									.map(SpecificationInfo::group)
-									.orElse(_testClass.getSimpleName()));
+									.orElse(_testClass.getSimpleName());
 		this.specificationSupplier=ObjectFactory.of(Specification.class)
 												.supplier();
-		this.result=null;
+		this.specificationResult=null;
+	}
+	public SpecificationBean(final SpecificationBean _spec) {
+		this.specificationClass=_spec.getSpecificationClass();
+		this.specificationName=_spec.getSpecificationName();
+		this.specificationGroup=_spec.getSpecificationGroup();
+		this.specificationSupplier=_spec.getSpecificationSupplier();
+		this.specificationResult=_spec.getSpecificationResult();
 	}
 
 	
-	public Supplier<Optional<Specification>> getSpecification() {
+	public Supplier<Optional<Specification>> getSpecificationSupplier() {
 		return specificationSupplier;
 	}
-
-	public Result getResult() {
-		return result;
+	@Override
+	public Class<? extends Specification> getSpecificationClass() {
+		return this.specificationClass;
 	}
-	public void setResult(Result result) {
-		this.result = result;
+	@Override
+	public String getSpecificationName() {
+		return this.specificationName;
 	}
-	public SpecificationBean withResult(Result result) {
-		this.result = result;
-		return this;
+	@Override
+	public String getSpecificationGroup() {
+		return this.specificationGroup;
 	}
-
+	public ResultBean getSpecificationResult() {
+		return specificationResult;
+	}
+	public void setSpecificationResult(ResultBean result) {
+		this.specificationResult = result;
+	}
 	
+
 	@Override
 	public int hashCode() {
-		int hash = super.hashCode();
-		hash = 79 * hash + Objects.hashCode(this.specificationSupplier);
-		hash = 79 * hash + Objects.hashCode(this.result);
+		int hash = 7;
+		hash = 61 * hash + Objects.hashCode(this.specificationClass);
+		hash = 61 * hash + Objects.hashCode(this.specificationName);
+		hash = 61 * hash + Objects.hashCode(this.specificationGroup);
+		hash = 61 * hash + Objects.hashCode(this.specificationSupplier);
+		hash = 61 * hash + Objects.hashCode(this.specificationResult);
 		return hash;
 	}
 
 	@Override
-	@SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
 	public boolean equals(Object obj) {
-		if (!super.equals(obj)) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
 		}
 		final SpecificationBean other = (SpecificationBean) obj;
+		if (!Objects.equals(this.specificationName, other.specificationName)) {
+			return false;
+		}
+		if (!Objects.equals(this.specificationGroup, other.specificationGroup)) {
+			return false;
+		}
+		if (!Objects.equals(this.specificationClass, other.specificationClass)) {
+			return false;
+		}
 		if (!Objects.equals(this.specificationSupplier, other.specificationSupplier)) {
 			return false;
 		}
-		return Objects.equals(this.result, other.result);
+		return Objects.equals(this.specificationResult, other.specificationResult);
 	}
 }

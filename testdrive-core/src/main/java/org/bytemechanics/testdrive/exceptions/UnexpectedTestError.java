@@ -17,6 +17,7 @@ package org.bytemechanics.testdrive.exceptions;
 
 import java.lang.reflect.Method;
 import java.util.Objects;
+import org.bytemechanics.testdrive.Specification;
 import org.bytemechanics.testdrive.internal.commons.string.SimpleFormat;
 
 /**
@@ -27,18 +28,18 @@ import org.bytemechanics.testdrive.internal.commons.string.SimpleFormat;
  */
 public class UnexpectedTestError extends RuntimeException{
 
-	private final Class testUnit;
+	private final Class<? extends Specification> specification;
 	private final Method test;
 	
 	/**
-	 * Unexpected test error constructor
-	 * @param _testUnit test unit where the exception happen
+	 * Unexpected specification constructor
+	 * @param _specification specification where the exception happen
 	 * @param _test test method where the exception happen
 	 * @param _cause exception cause
 	 */
-	public UnexpectedTestError(final Class _testUnit,final Method _test,final Throwable _cause) {
-		super(SimpleFormat.format("TestUnit {}, test {} launch an unexpected {}:\n\t{}", _testUnit.getSimpleName(),_test.getName(),_test.getParameterTypes(),_cause.getClass(),_cause.getMessage()),_cause);
-		this.testUnit=_testUnit;
+	public UnexpectedTestError(final Class<? extends Specification> _specification,final Method _test,final Throwable _cause) {
+		super(SimpleFormat.format("Specification {}, test {} launch an unexpected {}:\n\t{}", _specification.getSimpleName(),_test.getName(),_test.getParameterTypes(),_cause.getClass(),_cause.getMessage()),_cause);
+		this.specification=_specification;
 		this.test=_test;
 	}
 
@@ -46,8 +47,8 @@ public class UnexpectedTestError extends RuntimeException{
 	 * Retrieve the test unit where exception happens
 	 * @return class where the exception happen
 	 */
-	public Class getTestUnit() {
-		return testUnit;
+	public Class<? extends Specification> getSpecification() {
+		return specification;
 	}
 	/**
 	 * Retrieve the test where exception happens
@@ -61,7 +62,7 @@ public class UnexpectedTestError extends RuntimeException{
 	@Override
 	public int hashCode() {
 		int hash = 7;
-		hash = 89 * hash + Objects.hashCode(this.testUnit);
+		hash = 89 * hash + Objects.hashCode(this.specification);
 		hash = 89 * hash + Objects.hashCode(this.test);
 		return hash;
 	}
@@ -79,7 +80,7 @@ public class UnexpectedTestError extends RuntimeException{
 			return false;
 		}
 		final UnexpectedTestError other = (UnexpectedTestError) obj;
-		if (!Objects.equals(this.testUnit, other.testUnit)) {
+		if (!Objects.equals(this.specification, other.specification)) {
 			return false;
 		}
 		return Objects.equals(this.test, other.test);

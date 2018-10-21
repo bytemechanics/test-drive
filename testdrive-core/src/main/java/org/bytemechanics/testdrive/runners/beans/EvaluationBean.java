@@ -17,39 +17,64 @@ package org.bytemechanics.testdrive.runners.beans;
 
 import java.util.Objects;
 import java.util.Optional;
+import org.bytemechanics.testdrive.adapter.EvaluationId;
 import org.bytemechanics.testdrive.annotations.Evaluation;
-import org.bytemechanics.testdrive.beans.EvaluationId;
-import org.bytemechanics.testdrive.beans.Result;
 import org.bytemechanics.testdrive.exceptions.TestParametersNotMatch;
 import org.bytemechanics.testdrive.internal.commons.string.GenericTextParser;
+import org.bytemechanics.testdrive.internal.commons.string.SimpleFormat;
 
 /**
  *
  * @author afarre
  */
-public class EvaluationBean extends EvaluationId{
+public class EvaluationBean extends TestBean implements EvaluationId{
 	
-	private Result result;
+	private final Evaluation evaluation;
+	private final int evaluationCounter;
+	private final String evaluationName;
+	private final String[] evaluationArguments;
+	private ResultBean evaluationResult;
 
+	
 	public EvaluationBean(final TestBean _test,final int _counter,final Evaluation _evaluation) {
-		super(_test.getSpecificationClass(),_test.getSpecificationName(),_test.getSpecificationGroup(),_test.getTestMethod(),_test.getTestName(), _counter,_evaluation.name() , _evaluation.args());
-		this.result=null;
+		super(_test);
+		this.evaluation=_evaluation;
+		this.evaluationCounter = _counter;
+		this.evaluationName = Optional.of(_evaluation.name())
+							.filter(val -> !val.isEmpty())
+							.orElseGet(() -> SimpleFormat.format("Evaluation {} with args: {}",_counter,_evaluation.args()));
+		this.evaluationArguments = _evaluation.args();
+		this.evaluationResult=null;
 	}
 	public EvaluationBean(final TestBean _test) {
-		super(_test.getSpecificationClass(),_test.getSpecificationName(),_test.getSpecificationGroup(),_test.getTestMethod(),_test.getTestName(), 1,_test.getTestName(),new String[0]);
-		this.result=null;
+		super(_test);
+		this.evaluationCounter = 1;
+		this.evaluationName = _test.getTestName();
+		this.evaluationArguments = new String[0];
+		this.evaluationResult=null;
+		this.evaluation=null;
 	}
 
-	
-	public Result getResult() {
-		return result;
+	@Override
+	public int getEvaluationCounter() {
+		return evaluationCounter;
 	}
-	public void setResult(Result result) {
-		this.result = result;
+	@Override
+	public String getEvaluationName() {
+		return evaluationName;
 	}
-	public EvaluationBean withResult(Result result) {
-		this.result = result;
-		return this;
+	@Override
+	public String[] getEvaluationArguments() {
+		return evaluationArguments;
+	}
+	public Evaluation getEvaluation() {
+		return evaluation;
+	}
+	public ResultBean getEvaluationResult() {
+		return evaluationResult;
+	}
+	public void setEvaluationResult(ResultBean result) {
+		this.evaluationResult = result;
 	}
 	
 	
@@ -65,16 +90,16 @@ public class EvaluationBean extends EvaluationId{
 	}
 	public Object[] getParsedArguments(){
 		return Optional.ofNullable(getTestMethodParameters())
-						.filter(parameters -> parameters.length<=getArguments().length)
-						.map(parameters -> parseArguments(parameters, getArguments()))
-						.orElseThrow(() -> new TestParametersNotMatch(getSpecificationClass(),getTestMethod(),getArguments()));
+						.filter(parameters -> parameters.length<=getEvaluationArguments().length)
+						.map(parameters -> parseArguments(parameters, getEvaluationArguments()))
+						.orElseThrow(() -> new TestParametersNotMatch(getSpecificationClass(),getTestMethod(),getEvaluationArguments()));
 	}
 	
 	
 	@Override
 	public int hashCode() {
 		int hash = super.hashCode();
-		hash = 97 * hash + Objects.hashCode(this.result);
+		hash = 97 * hash + Objects.hashCode(this.evaluationResult);
 		return hash;
 	}
 
@@ -85,7 +110,7 @@ public class EvaluationBean extends EvaluationId{
 			return false;
 		}
 		final EvaluationBean other = (EvaluationBean) obj;
-		return Objects.equals(this.result, other.result);
+		return Objects.equals(this.evaluationResult, other.evaluationResult);
 	}
 	
 }
