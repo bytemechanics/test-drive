@@ -19,19 +19,15 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
-import org.bytemechanics.testdrive.Specification;
 import org.bytemechanics.testdrive.adapter.TestId;
 import org.bytemechanics.testdrive.annotations.Evaluation;
 import org.bytemechanics.testdrive.annotations.Test;
-import org.bytemechanics.testdrive.exceptions.SpecificationNotInstantiable;
 
 /**
  *
  * @author afarre
  */
 public class TestBean extends SpecificationBean implements TestId {
-	
-	private final Specification specification;
 	
 	private final Method testMethod;
 	private final String testName;
@@ -49,9 +45,6 @@ public class TestBean extends SpecificationBean implements TestId {
 		this.testMethodParameters=Optional.ofNullable(_method)
 											.map(Method::getParameterTypes)
 											.orElseGet(() -> new Class[0]);
-		this.specification=_specification.getSpecificationSupplier()
-											.get()
-											.orElseThrow(() -> new SpecificationNotInstantiable(_specification.getSpecificationClass()));
 		this.testResult=null;
 	}
 
@@ -61,12 +54,8 @@ public class TestBean extends SpecificationBean implements TestId {
 		this.testName = _test.getTestName();
 		this.testMethodParameters = _test.getTestMethodParameters();
 		this.testResult = _test.getTestResult();
-		this.specification=_test.getSpecification();
 	}
 
-	public Specification getSpecification() {
-		return specification;
-	}
 	@Override
 	public Method getTestMethod() {
 		return testMethod;

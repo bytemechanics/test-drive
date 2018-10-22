@@ -25,5 +25,9 @@ import org.bytemechanics.testdrive.adapter.TestId;
 public interface TestListener extends ExecutionListener{
 
 	public <T extends TestId> T startTest(final T _specificationTest);
+	public <T extends TestId> T startTestSetup(final T _specification);
+	public <T extends TestId> T endTestSetup(final T _specification);
+	public <T extends TestId> T startTestCleanup(final T _specification);
+	public <T extends TestId> T endTestCleanup(final T _specification);
 	public <T extends TestId> T endTest(final T _specificationTest,final Result _result);	
 }

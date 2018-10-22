@@ -17,10 +17,10 @@ package org.bytemechanics.testdrive.runners.beans;
 
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Supplier;
 import org.bytemechanics.testdrive.Specification;
 import org.bytemechanics.testdrive.adapter.SpecificationId;
 import org.bytemechanics.testdrive.annotations.SpecificationInfo;
+import org.bytemechanics.testdrive.exceptions.SpecificationNotInstantiable;
 import org.bytemechanics.testdrive.internal.commons.reflection.ObjectFactory;
 
 /**
@@ -32,7 +32,7 @@ public class SpecificationBean implements SpecificationId {
 	private final Class<? extends Specification> specificationClass;
 	private final String specificationName;
 	private final String specificationGroup;
-	private final Supplier<Optional<Specification>> specificationSupplier;
+	private final Specification specification;
 	private ResultBean specificationResult;
 
 	
@@ -48,21 +48,23 @@ public class SpecificationBean implements SpecificationId {
 									.map(clazz -> clazz.getAnnotation(SpecificationInfo.class))
 									.map(SpecificationInfo::group)
 									.orElse(_testClass.getSimpleName());
-		this.specificationSupplier=ObjectFactory.of(Specification.class)
-												.supplier();
+		this.specification=ObjectFactory.of(Specification.class)
+												.supplier()
+													.get()
+														.orElseThrow(() -> new SpecificationNotInstantiable(this.specificationClass));
 		this.specificationResult=null;
 	}
 	public SpecificationBean(final SpecificationBean _spec) {
 		this.specificationClass=_spec.getSpecificationClass();
 		this.specificationName=_spec.getSpecificationName();
 		this.specificationGroup=_spec.getSpecificationGroup();
-		this.specificationSupplier=_spec.getSpecificationSupplier();
+		this.specification=_spec.getSpecification();
 		this.specificationResult=_spec.getSpecificationResult();
 	}
 
 	
-	public Supplier<Optional<Specification>> getSpecificationSupplier() {
-		return specificationSupplier;
+	public Specification getSpecification() {
+		return specification;
 	}
 	@Override
 	public Class<? extends Specification> getSpecificationClass() {
@@ -90,7 +92,7 @@ public class SpecificationBean implements SpecificationId {
 		hash = 61 * hash + Objects.hashCode(this.specificationClass);
 		hash = 61 * hash + Objects.hashCode(this.specificationName);
 		hash = 61 * hash + Objects.hashCode(this.specificationGroup);
-		hash = 61 * hash + Objects.hashCode(this.specificationSupplier);
+		hash = 61 * hash + Objects.hashCode(this.specification);
 		hash = 61 * hash + Objects.hashCode(this.specificationResult);
 		return hash;
 	}
@@ -116,7 +118,7 @@ public class SpecificationBean implements SpecificationId {
 		if (!Objects.equals(this.specificationClass, other.specificationClass)) {
 			return false;
 		}
-		if (!Objects.equals(this.specificationSupplier, other.specificationSupplier)) {
+		if (!Objects.equals(this.specification, other.specification)) {
 			return false;
 		}
 		return Objects.equals(this.specificationResult, other.specificationResult);
