@@ -48,7 +48,7 @@ public class SpecificationBean implements SpecificationId {
 									.map(clazz -> clazz.getAnnotation(SpecificationInfo.class))
 									.map(SpecificationInfo::group)
 									.orElse(_testClass.getSimpleName());
-		this.specification=ObjectFactory.of(Specification.class)
+		this.specification=ObjectFactory.of(_testClass)
 												.supplier()
 													.get()
 														.orElseThrow(() -> new SpecificationNotInstantiable(this.specificationClass));

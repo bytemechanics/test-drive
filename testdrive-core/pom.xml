@@ -56,6 +56,7 @@
 									<classes>
 										<class>org.bytemechanics.commons.functional.LambdaUnchecker</class>
 										<class>org.bytemechanics.commons.string.SimpleFormat</class>
+										<class>org.bytemechanics.commons.string.Stringify</class>
 										<class>org.bytemechanics.commons.string.GenericTextParser</class>
 										<class>org.bytemechanics.commons.reflection.ObjectFactory</class>
 									</classes>

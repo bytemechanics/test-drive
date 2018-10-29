@@ -17,6 +17,7 @@ package org.bytemechanics.testdrive.runners.internal;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import org.bytemechanics.testdrive.DrivenTest;
 import org.bytemechanics.testdrive.exceptions.AssertException;
@@ -60,46 +61,50 @@ public class DrivenTestRunner{
 	}
 
 	
+	private Function<EvaluationBean,EvaluationBean> fromConsumerToFunction(final Consumer<EvaluationBean> _consumer){
+		return (EvaluationBean t) -> { _consumer.accept(t); return t;};
+	}
+	
 	public <T extends ExecutionListener> void registerListener(final T _listener) {
 		this.drivenTestGivenBegin=Optional.ofNullable(_listener)
 											.filter(DrivenTestListener.class::isInstance)
 											.map(listener -> (DrivenTestListener)listener)
-											.map(listener -> ((Function<EvaluationBean,EvaluationBean>)listener::drivenTestGivenBegin))
+											.map(listener -> fromConsumerToFunction(listener::drivenTestCleanBegin))
 											.orElse(this.drivenTestGivenBegin);
 		this.drivenTestGivenEnd=Optional.ofNullable(_listener)
 											.filter(DrivenTestListener.class::isInstance)
 											.map(listener -> (DrivenTestListener)listener)
-											.map(listener -> (Function<EvaluationBean,EvaluationBean>)((EvaluationBean evaluation) -> listener.drivenTestGivenEnd(evaluation)))
+											.map(listener -> fromConsumerToFunction(listener::drivenTestGivenEnd))
 											.orElse(this.drivenTestGivenEnd);
 		this.drivenTestWhenBegin=Optional.ofNullable(_listener)
 											.filter(DrivenTestListener.class::isInstance)
 											.map(listener -> (DrivenTestListener)listener)
-											.map(listener -> ((Function<EvaluationBean,EvaluationBean>)listener::drivenTestWhenBegin))
+											.map(listener -> fromConsumerToFunction(listener::drivenTestWhenBegin))
 											.orElse(this.drivenTestWhenBegin);
 		this.drivenTestWhenEnd=Optional.ofNullable(_listener)
 											.filter(DrivenTestListener.class::isInstance)
 											.map(listener -> (DrivenTestListener)listener)
-											.map(listener -> (Function<EvaluationBean,EvaluationBean>)((EvaluationBean evaluation) -> listener.drivenTestWhenEnd(evaluation)))
+											.map(listener -> fromConsumerToFunction(listener::drivenTestWhenEnd))
 											.orElse(this.drivenTestWhenEnd);
 		this.drivenTestThenBegin=Optional.ofNullable(_listener)
 											.filter(DrivenTestListener.class::isInstance)
 											.map(listener -> (DrivenTestListener)listener)
-											.map(listener -> ((Function<EvaluationBean,EvaluationBean>)listener::drivenTestThenBegin))
+											.map(listener -> fromConsumerToFunction(listener::drivenTestThenBegin))
 											.orElse(this.drivenTestThenBegin);
 		this.drivenTestThenEnd=Optional.ofNullable(_listener)
 											.filter(DrivenTestListener.class::isInstance)
 											.map(listener -> (DrivenTestListener)listener)
-											.map(listener -> (Function<EvaluationBean,EvaluationBean>)((EvaluationBean evaluation) -> listener.drivenTestThenEnd(evaluation)))
+											.map(listener -> fromConsumerToFunction(listener::drivenTestThenEnd))
 											.orElse(this.drivenTestThenEnd);
 		this.drivenTestCleanBegin=Optional.ofNullable(_listener)
 											.filter(DrivenTestListener.class::isInstance)
 											.map(listener -> (DrivenTestListener)listener)
-											.map(listener -> ((Function<EvaluationBean,EvaluationBean>)listener::drivenTestCleanBegin))
+											.map(listener -> fromConsumerToFunction(listener::drivenTestCleanBegin))
 											.orElse(this.drivenTestCleanBegin);
 		this.drivenTestCleanEnd=Optional.ofNullable(_listener)
 											.filter(DrivenTestListener.class::isInstance)
 											.map(listener -> (DrivenTestListener)listener)
-											.map(listener -> (Function<EvaluationBean,EvaluationBean>)((EvaluationBean evaluation) -> listener.drivenTestCleanEnd(evaluation)))
+											.map(listener -> fromConsumerToFunction(listener::drivenTestCleanEnd))
 											.orElse(this.drivenTestCleanEnd);
 	}
 

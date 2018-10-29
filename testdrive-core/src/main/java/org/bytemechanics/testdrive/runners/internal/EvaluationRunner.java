@@ -16,8 +16,11 @@
 package org.bytemechanics.testdrive.runners.internal;
 
 import java.util.Optional;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import org.bytemechanics.testdrive.DrivenTest;
+import org.bytemechanics.testdrive.adapter.Result;
 import org.bytemechanics.testdrive.exceptions.AssertException;
 import org.bytemechanics.testdrive.internal.commons.string.SimpleFormat;
 import org.bytemechanics.testdrive.listeners.EvaluationListener;
@@ -42,6 +45,12 @@ public class EvaluationRunner extends DrivenTestRunner{
 		this.endEvaluation=(EvaluationBean evaluation) -> evaluation;
 	}
 
+	private Function<EvaluationBean,EvaluationBean> fromConsumerToFunction(final Consumer<EvaluationBean> _consumer){
+		return (EvaluationBean t) -> { _consumer.accept(t); return t;};
+	}
+	private Function<EvaluationBean,EvaluationBean> fromConsumerToFunctionResult(final BiConsumer<EvaluationBean,Result> _consumer){
+		return (EvaluationBean t) -> { _consumer.accept(t,t.getEvaluationResult()); return t;};
+	}
 	
 	@Override
 	public <T extends ExecutionListener> void registerListener(final T _listener) {
@@ -49,12 +58,12 @@ public class EvaluationRunner extends DrivenTestRunner{
 		this.startEvaluation=Optional.ofNullable(_listener)
 											.filter(EvaluationListener.class::isInstance)
 											.map(listener -> (EvaluationListener)listener)
-											.map(listener -> ((Function<EvaluationBean,EvaluationBean>)listener::startEvaluation))
+											.map(listener -> fromConsumerToFunction(listener::startEvaluation))
 											.orElse(this.startEvaluation);
 		this.endEvaluation=Optional.ofNullable(_listener)
 											.filter(EvaluationListener.class::isInstance)
 											.map(listener -> (EvaluationListener)listener)
-											.map(listener -> (Function<EvaluationBean,EvaluationBean>)((EvaluationBean evaluation) -> listener.endEvaluation(evaluation,evaluation.getEvaluationResult())))
+											.map(listener -> fromConsumerToFunctionResult(listener::endEvaluation))
 											.orElse(this.endEvaluation);
 	}
 

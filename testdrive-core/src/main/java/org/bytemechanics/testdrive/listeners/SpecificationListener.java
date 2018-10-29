@@ -25,10 +25,10 @@ import org.bytemechanics.testdrive.adapter.SpecificationId;
  */
 public interface SpecificationListener extends ExecutionListener{
 
-	public <T extends SpecificationId> T startSpecification(final T _specification);
-	public <T extends SpecificationId> T startSpecificationSetup(final T _specification);
-	public <T extends SpecificationId> T endSpecificationSetup(final T _specification);
-	public <T extends SpecificationId> T startSpecificationCleanup(final T _specification);
-	public <T extends SpecificationId> T endSpecificationCleanup(final T _specification);
-	public <T extends SpecificationId> T endSpecification(final T _specification,final Result _result);
+	public <T extends SpecificationId> void startSpecification(final T _specification);
+	public <T extends SpecificationId> void startSpecificationSetup(final T _specification);
+	public <T extends SpecificationId> void endSpecificationSetup(final T _specification);
+	public <T extends SpecificationId> void startSpecificationCleanup(final T _specification);
+	public <T extends SpecificationId> void endSpecificationCleanup(final T _specification);
+	public <T extends SpecificationId> void endSpecification(final T _specification,final Result _result);
 }

@@ -18,6 +18,8 @@ package org.bytemechanics.testdrive.surefire;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collections;
 import java.util.Optional;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 import org.apache.maven.surefire.booter.Command;
 import org.apache.maven.surefire.booter.CommandReader;
 import org.apache.maven.surefire.providerapi.AbstractProvider;
@@ -35,6 +37,9 @@ import org.apache.maven.surefire.util.RunOrderCalculator;
 import org.apache.maven.surefire.util.ScanResult;
 import org.apache.maven.surefire.util.TestsToRun;
 import org.bytemechanics.testdrive.Specification;
+import org.bytemechanics.testdrive.TestDriveRunner;
+import org.bytemechanics.testdrive.runners.DefaultTestDriveRunner;
+import org.bytemechanics.testdrive.surefire.listener.TestDriveListener;
 
 /**
  *
@@ -103,10 +108,9 @@ public class TestDriveProvider extends AbstractProvider{
                 registerShutdownListener( testsToRun );
                 this.commandsReader.awaitStarted();
             }
-            /* TODO
-			TestNGDirectoryTestSuite suite = newDirectorySuite();
-            suite.execute( testsToRun, reporter );
-			*/
+			final TestDriveRunner runner=new DefaultTestDriveRunner();
+			runner.registerListener(new TestDriveListener(reporter));
+			runner.evaluateStream(specStream(testsToRun));
         }finally{
             reply = reporterFactory.close();
         }
@@ -114,7 +118,13 @@ public class TestDriveProvider extends AbstractProvider{
 		return reply;
 	}
 	
-	private void registerShutdownListener( final TestsToRun testsToRun ){
-        this.commandsReader.addShutdownListener((Command command) -> testsToRun.markTestSetFinished());
+	private Stream<Class<? extends Specification>> specStream(final TestsToRun _testsToRun){
+		return StreamSupport.stream(_testsToRun.spliterator(), false)
+							.filter(Specification.class::isAssignableFrom)
+							.map(clazz -> (Class<? extends Specification>)clazz);
+	}
+	
+	private void registerShutdownListener( final TestsToRun _testsToRun ){
+        this.commandsReader.addShutdownListener((Command command) -> _testsToRun.markTestSetFinished());
     }
 }

@@ -26,7 +26,7 @@ public class AddInteger {
 		this.val=_val;
 	}
 	
-	public int accumulate(final int _va11,final int _va12){
+	public  int accumulate(final int _va11,final int _va12){
 		return _va11+_va12+val;
 	}
 }

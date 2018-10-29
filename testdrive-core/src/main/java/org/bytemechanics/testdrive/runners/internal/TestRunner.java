@@ -17,8 +17,11 @@ package org.bytemechanics.testdrive.runners.internal;
 
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Stream;
+import org.bytemechanics.testdrive.adapter.Result;
 import org.bytemechanics.testdrive.annotations.Skip;
 import org.bytemechanics.testdrive.internal.commons.string.SimpleFormat;
 import org.bytemechanics.testdrive.listeners.ExecutionListener;
@@ -47,6 +50,12 @@ public class TestRunner extends EvaluationRunner{
 		this.endTest=(TestBean test) -> test;
 	}
 
+	private Function<TestBean,TestBean> fromConsumerToFunction(final Consumer<TestBean> _consumer){
+		return (TestBean t) -> { _consumer.accept(t); return t;};
+	}
+	private Function<TestBean,TestBean> fromConsumerToFunctionResult(final BiConsumer<TestBean,Result> _consumer){
+		return (TestBean t) -> { _consumer.accept(t,t.getTestResult()); return t;};
+	}
 	
 	@Override
 	public <T extends ExecutionListener> void registerListener(final T _listener) {
@@ -54,32 +63,32 @@ public class TestRunner extends EvaluationRunner{
 		this.startTest=Optional.ofNullable(_listener)
 											.filter(TestListener.class::isInstance)
 											.map(listener -> (TestListener)listener)
-											.map(listener -> ((Function<TestBean,TestBean>)listener::startTest))
+											.map(listener -> fromConsumerToFunction(listener::startTest))
 											.orElse(this.startTest);
 		this.startTestSetup=Optional.ofNullable(_listener)
 											.filter(TestListener.class::isInstance)
 											.map(listener -> (TestListener)listener)
-											.map(listener -> ((Function<TestBean,TestBean>)listener::startTestSetup))
+											.map(listener -> fromConsumerToFunction(listener::startTestSetup))
 											.orElse(this.startTestSetup);
 		this.endTestSetup=Optional.ofNullable(_listener)
 											.filter(TestListener.class::isInstance)
 											.map(listener -> (TestListener)listener)
-											.map(listener -> (Function<TestBean,TestBean>)((TestBean test) -> listener.endTestSetup(test)))
+											.map(listener -> fromConsumerToFunction(listener::endTestSetup))
 											.orElse(this.endTestSetup);
 		this.startTestCleanup=Optional.ofNullable(_listener)
 											.filter(TestListener.class::isInstance)
 											.map(listener -> (TestListener)listener)
-											.map(listener -> ((Function<TestBean,TestBean>)listener::startTestCleanup))
+											.map(listener -> fromConsumerToFunction(listener::startTestCleanup))
 											.orElse(this.startTestCleanup);
 		this.endTestCleanup=Optional.ofNullable(_listener)
 											.filter(TestListener.class::isInstance)
 											.map(listener -> (TestListener)listener)
-											.map(listener -> (Function<TestBean,TestBean>)((TestBean test) -> listener.endTestCleanup(test)))
+											.map(listener -> fromConsumerToFunction(listener::endTestCleanup))
 											.orElse(this.endTestCleanup);
 		this.endTest=Optional.ofNullable(_listener)
 											.filter(TestListener.class::isInstance)
 											.map(listener -> (TestListener)listener)
-											.map(listener -> (Function<TestBean,TestBean>)((TestBean test) -> listener.endTest(test,test.getTestResult())))
+											.map(listener -> fromConsumerToFunctionResult(listener::endTest))
 											.orElse(this.endTest);
 	}
 	

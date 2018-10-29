@@ -24,6 +24,6 @@ import org.bytemechanics.testdrive.adapter.Result;
  */
 public interface EvaluationListener extends ExecutionListener{
 	
-	public <T extends EvaluationId> T startEvaluation(final T _specificationTest);
-	public <T extends EvaluationId> T endEvaluation(final T _specificationTest,final Result _result);
+	public <T extends EvaluationId> void startEvaluation(final T _specificationTest);
+	public <T extends EvaluationId> void endEvaluation(final T _specificationTest,final Result _result);
 }

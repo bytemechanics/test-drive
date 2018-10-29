@@ -10,6 +10,14 @@
     <packaging>jar</packaging>
     <name>TestDrive-Example</name>
 	
+	<dependencies>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>testdrive-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
+	
 	<build>
 		<plugins>
 			<plugin>

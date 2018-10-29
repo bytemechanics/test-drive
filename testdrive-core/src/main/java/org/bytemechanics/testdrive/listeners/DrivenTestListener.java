@@ -23,12 +23,12 @@ import org.bytemechanics.testdrive.adapter.EvaluationId;
  */
 public interface DrivenTestListener extends ExecutionListener{
 
-	public <T extends EvaluationId> T drivenTestGivenBegin(final T _evaluation);
-	public <T extends EvaluationId> T drivenTestGivenEnd(final T _evaluation);
-	public <T extends EvaluationId> T drivenTestWhenBegin(final T _evaluation);
-	public <T extends EvaluationId> T drivenTestWhenEnd(final T _evaluation);
-	public <T extends EvaluationId> T drivenTestThenBegin(final T _evaluation);
-	public <T extends EvaluationId> T drivenTestThenEnd(final T _evaluation);
-	public <T extends EvaluationId> T drivenTestCleanBegin(final T _evaluation);
-	public <T extends EvaluationId> T drivenTestCleanEnd(final T _evaluation);
+	public <T extends EvaluationId> void drivenTestGivenBegin(final T _evaluation);
+	public <T extends EvaluationId> void drivenTestGivenEnd(final T _evaluation);
+	public <T extends EvaluationId> void drivenTestWhenBegin(final T _evaluation);
+	public <T extends EvaluationId> void drivenTestWhenEnd(final T _evaluation);
+	public <T extends EvaluationId> void drivenTestThenBegin(final T _evaluation);
+	public <T extends EvaluationId> void drivenTestThenEnd(final T _evaluation);
+	public <T extends EvaluationId> void drivenTestCleanBegin(final T _evaluation);
+	public <T extends EvaluationId> void drivenTestCleanEnd(final T _evaluation);
 }

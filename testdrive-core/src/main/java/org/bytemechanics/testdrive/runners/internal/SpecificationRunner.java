@@ -16,8 +16,11 @@
 package org.bytemechanics.testdrive.runners.internal;
 
 import java.util.Optional;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Stream;
+import org.bytemechanics.testdrive.adapter.Result;
 import org.bytemechanics.testdrive.annotations.Skip;
 import org.bytemechanics.testdrive.annotations.Test;
 import org.bytemechanics.testdrive.internal.commons.string.SimpleFormat;
@@ -51,39 +54,45 @@ public class SpecificationRunner extends TestRunner{
 		this.endSpecification=(SpecificationBean specification) -> specification;
 	}
 
-	
+	private Function<SpecificationBean,SpecificationBean> fromConsumerToFunction(final Consumer<SpecificationBean> _consumer){
+		return (SpecificationBean t) -> { _consumer.accept(t); return t;};
+	}
+	private Function<SpecificationBean,SpecificationBean> fromConsumerToFunctionResult(final BiConsumer<SpecificationBean,Result> _consumer){
+		return (SpecificationBean t) -> { _consumer.accept(t,t.getSpecificationResult()); return t;};
+	}
+
 	@Override
 	public <T extends ExecutionListener> void registerListener(final T _listener) {
 		super.registerListener(_listener);
 		this.startSpecification=Optional.ofNullable(_listener)
 											.filter(SpecificationListener.class::isInstance)
 											.map(listener -> (SpecificationListener)listener)
-											.map(listener -> ((Function<SpecificationBean,SpecificationBean>)listener::startSpecification))
+											.map(listener -> fromConsumerToFunction(listener::startSpecification))
 											.orElse(this.startSpecification);
 		this.startSpecificationSetup=Optional.ofNullable(_listener)
 											.filter(SpecificationListener.class::isInstance)
 											.map(listener -> (SpecificationListener)listener)
-											.map(listener -> ((Function<SpecificationBean,SpecificationBean>)listener::startSpecificationSetup))
+											.map(listener -> fromConsumerToFunction(listener::startSpecificationSetup))
 											.orElse(this.startSpecificationSetup);
 		this.endSpecificationSetup=Optional.ofNullable(_listener)
 											.filter(SpecificationListener.class::isInstance)
 											.map(listener -> (SpecificationListener)listener)
-											.map(listener -> ((Function<SpecificationBean,SpecificationBean>)listener::endSpecificationSetup))
+											.map(listener -> fromConsumerToFunction(listener::endSpecificationSetup))
 											.orElse(this.endSpecificationSetup);
 		this.startSpecificationCleanup=Optional.ofNullable(_listener)
 											.filter(SpecificationListener.class::isInstance)
 											.map(listener -> (SpecificationListener)listener)
-											.map(listener -> ((Function<SpecificationBean,SpecificationBean>)listener::startSpecificationCleanup))
+											.map(listener -> fromConsumerToFunction(listener::startSpecificationCleanup))
 											.orElse(this.startSpecificationCleanup);
 		this.endSpecificationCleanup=Optional.ofNullable(_listener)
 											.filter(SpecificationListener.class::isInstance)
 											.map(listener -> (SpecificationListener)listener)
-											.map(listener -> ((Function<SpecificationBean,SpecificationBean>)listener::endSpecificationCleanup))
+											.map(listener -> fromConsumerToFunction(listener::endSpecificationCleanup))
 											.orElse(this.endSpecificationCleanup);
 		this.endSpecification=Optional.ofNullable(_listener)
 											.filter(SpecificationListener.class::isInstance)
 											.map(listener -> (SpecificationListener)listener)
-											.map(listener -> (Function<SpecificationBean,SpecificationBean>)((SpecificationBean spec) -> listener.endSpecification(spec,spec.getSpecificationResult())))
+											.map(listener -> fromConsumerToFunctionResult(listener::endSpecification))
 											.orElse(this.endSpecification);
 	}
 
