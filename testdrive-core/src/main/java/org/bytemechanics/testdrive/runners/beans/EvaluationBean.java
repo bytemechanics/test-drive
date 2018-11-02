@@ -20,6 +20,7 @@ import java.util.Optional;
 import org.bytemechanics.testdrive.adapter.EvaluationId;
 import org.bytemechanics.testdrive.annotations.Evaluation;
 import org.bytemechanics.testdrive.exceptions.TestParametersNotMatch;
+import org.bytemechanics.testdrive.exceptions.UnparseableParameter;
 import org.bytemechanics.testdrive.internal.commons.string.GenericTextParser;
 import org.bytemechanics.testdrive.internal.commons.string.SimpleFormat;
 
@@ -41,8 +42,9 @@ public class EvaluationBean extends TestBean implements EvaluationId{
 		this.evaluation=_evaluation;
 		this.evaluationCounter = _counter;
 		this.evaluationName = Optional.of(_evaluation.name())
-							.filter(val -> !val.isEmpty())
-							.orElseGet(() -> SimpleFormat.format("Evaluation {} with args: {}",_counter,_evaluation.args()));
+										.filter(val -> !val.isEmpty())
+										.map(val -> SimpleFormat.format("{}[{}]", val,_counter))
+										.orElseGet(() -> String.valueOf(_counter));
 		this.evaluationArguments = _evaluation.args();
 		this.evaluationResult=null;
 	}
@@ -83,7 +85,13 @@ public class EvaluationBean extends TestBean implements EvaluationId{
 		final Object[] reply=new Object[_classes.length];
 		
 		for(int ic1=0;ic1<_classes.length;ic1++){
-			reply[ic1]=GenericTextParser.toValue(_classes[ic1], _values[ic1]);
+			try {
+				final int position=ic1;
+				reply[position]=GenericTextParser.toValue(_classes[position], _values[position])
+						.orElseThrow(() -> new UnparseableParameter(position, _classes[position], _values[position]));
+			} catch (Throwable ex) {
+				throw (UnparseableParameter)ex;
+			}
 		}
 		
 		return reply;

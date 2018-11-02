@@ -15,7 +15,6 @@
  */
 package org.bytemechanics.testdrive.adapter;
 
-import java.util.Optional;
 import org.bytemechanics.testdrive.internal.commons.string.SimpleFormat;
 
 /**
@@ -30,9 +29,6 @@ public interface EvaluationId extends TestId{
 
 	@Override
 	public default String name(){
-		return SimpleFormat.format("{}, Evaluation {}", TestId.super.name(),Optional.ofNullable(getEvaluationName())
-																				.map(String::trim)
-																				.filter(String::isEmpty)
-																				.orElseGet(() -> SimpleFormat.format("{}: ({})", getEvaluationCounter(),getEvaluationArguments())));
+		return SimpleFormat.format("{}:{}", TestId.super.name(getEvaluationArguments()),getEvaluationName());
 	}
 }

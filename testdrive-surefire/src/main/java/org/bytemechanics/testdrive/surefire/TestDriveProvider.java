@@ -86,36 +86,48 @@ public class TestDriveProvider extends AbstractProvider{
 
 	
 	@Override
-	public RunResult invoke(Object forkTestSet) throws TestSetFailedException, ReporterException, InvocationTargetException {
+	public RunResult invoke(final Object _forkTestSet) throws TestSetFailedException, ReporterException, InvocationTargetException {
 
 		RunResult reply;
 
         final ReporterFactory reporterFactory = providerParameters.getReporterFactory();
-        final RunListener reporter = reporterFactory.createReporter();
-        ConsoleOutputCapture.startCapture((ConsoleOutputReceiver)reporter);
 		try{
-			if ( this.testsToRun == null ){
-				if (forkTestSet instanceof TestsToRun){
-					this.testsToRun = (TestsToRun) forkTestSet;
-				}else if(forkTestSet instanceof Class){
-					this.testsToRun = TestsToRun.fromClass((Class<?>)forkTestSet);
-				}else{
-					this.testsToRun = scanClassPath()
-										.orElseGet(() -> new TestsToRun(Collections.emptySet()));
-                }
-            }
+			//Create reporter
+	        final RunListener reporter = reporterFactory.createReporter();
+			//Initiate capture
+	        ConsoleOutputCapture.startCapture((ConsoleOutputReceiver)reporter);
+			//Ensure tests to run
+			ensureTestsToRun(_forkTestSet);
+			//Prepare commands reader
             if(this.commandsReader!=null){
                 registerShutdownListener( testsToRun );
                 this.commandsReader.awaitStarted();
             }
-			final TestDriveRunner runner=new DefaultTestDriveRunner();
+			//Create runner
+			final TestDriveRunner runner=new DefaultTestDriveRunner(this.providerParameters.getSkipAfterFailureCount());
+			//add listener to runner
 			runner.registerListener(new TestDriveListener(reporter));
+			//Evaluate
 			runner.evaluateStream(specStream(testsToRun));
         }finally{
             reply = reporterFactory.close();
         }
 		
 		return reply;
+	}
+	
+	private void ensureTestsToRun(final Object _forkTestSet) throws TestSetFailedException{
+		
+		if ( this.testsToRun == null ){
+			if (_forkTestSet instanceof TestsToRun){
+				this.testsToRun = (TestsToRun) _forkTestSet;
+			}else if(_forkTestSet instanceof Class){
+				this.testsToRun = TestsToRun.fromClass((Class<?>)_forkTestSet);
+			}else{
+				this.testsToRun = scanClassPath()
+									.orElseGet(() -> new TestsToRun(Collections.emptySet()));
+			}
+		}
 	}
 	
 	private Stream<Class<? extends Specification>> specStream(final TestsToRun _testsToRun){

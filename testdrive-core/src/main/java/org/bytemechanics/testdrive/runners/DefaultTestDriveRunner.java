@@ -17,6 +17,7 @@ package org.bytemechanics.testdrive.runners;
 
 import java.lang.reflect.Method;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 import org.bytemechanics.testdrive.Specification;
 import org.bytemechanics.testdrive.TestDriveRunner;
@@ -32,9 +33,25 @@ import org.bytemechanics.testdrive.runners.internal.SpecificationRunner;
  */
 public class DefaultTestDriveRunner extends SpecificationRunner implements TestDriveRunner{
 
+	private final AtomicInteger maxFailuresLeft;
 	
+
 	public DefaultTestDriveRunner(){
 		super();
+		this.maxFailuresLeft=new AtomicInteger( Integer.MAX_VALUE);
+	}
+	public DefaultTestDriveRunner(final int _maxFailuresAllowed){
+		super();
+		this.maxFailuresLeft=new AtomicInteger((_maxFailuresAllowed>0)? _maxFailuresAllowed : Integer.MAX_VALUE);
+	}
+
+	@Override
+	protected void addFailure(){
+		this.maxFailuresLeft.decrementAndGet();
+	}
+	@Override
+	protected boolean hasUserRequestedSkip(){
+		return this.maxFailuresLeft.get()<0;
 	}
 	
 	

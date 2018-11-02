@@ -15,7 +15,6 @@
  */
 package org.bytemechanics.testdrive.runners.beans;
 
-import java.util.Objects;
 import java.util.Optional;
 import org.bytemechanics.testdrive.Specification;
 import org.bytemechanics.testdrive.adapter.SpecificationId;
@@ -88,39 +87,12 @@ public class SpecificationBean implements SpecificationId {
 
 	@Override
 	public int hashCode() {
-		int hash = 7;
-		hash = 61 * hash + Objects.hashCode(this.specificationClass);
-		hash = 61 * hash + Objects.hashCode(this.specificationName);
-		hash = 61 * hash + Objects.hashCode(this.specificationGroup);
-		hash = 61 * hash + Objects.hashCode(this.specification);
-		hash = 61 * hash + Objects.hashCode(this.specificationResult);
-		return hash;
+		return getSpecificationClass().hashCode();
 	}
 
 	@Override
+	@SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
 	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final SpecificationBean other = (SpecificationBean) obj;
-		if (!Objects.equals(this.specificationName, other.specificationName)) {
-			return false;
-		}
-		if (!Objects.equals(this.specificationGroup, other.specificationGroup)) {
-			return false;
-		}
-		if (!Objects.equals(this.specificationClass, other.specificationClass)) {
-			return false;
-		}
-		if (!Objects.equals(this.specification, other.specification)) {
-			return false;
-		}
-		return Objects.equals(this.specificationResult, other.specificationResult);
+		return getSpecificationClass().equals(obj);
 	}
 }

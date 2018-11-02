@@ -20,6 +20,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Stream;
+import org.bytemechanics.testdrive.ResultStatus;
 import org.bytemechanics.testdrive.adapter.Result;
 import org.bytemechanics.testdrive.annotations.Skip;
 import org.bytemechanics.testdrive.annotations.Test;
@@ -35,7 +36,7 @@ import org.bytemechanics.testdrive.runners.beans.TestBean;
  *
  * @author afarre
  */
-public class SpecificationRunner extends TestRunner{
+public abstract class SpecificationRunner extends TestRunner{
 
 	private Function<SpecificationBean,SpecificationBean> startSpecification;
 	private Function<SpecificationBean,SpecificationBean> startSpecificationSetup;
@@ -113,18 +114,27 @@ public class SpecificationRunner extends TestRunner{
 		
 		SpecificationBean reply=_specification;
 
-		if(!reply.getSpecificationClass().isAnnotationPresent(Skip.class)){
-			try(ResultBean result=new ResultBean()){
-				reply.setSpecificationResult(result);
-				Stream.of(_specification.getSpecificationClass().getMethods())
-						.filter(method -> method.isAnnotationPresent(Test.class))
-						.map(method -> new TestBean(_specification, method))
-						.forEach(this::test);
-			}catch(Exception e){
-				reply.getSpecificationResult().error(e);
+		if(!hasUserRequestedSkip()){
+			if(!reply.getSpecificationClass().isAnnotationPresent(Skip.class)){
+				try(ResultBean result=new ResultBean()){
+					reply.setSpecificationResult(result);
+					Stream.of(_specification.getSpecificationClass().getMethods())
+							.filter(method -> method.isAnnotationPresent(Test.class))
+							.map(method -> new TestBean(_specification, method))
+							.map(this::test)
+							.map(TestBean::getTestResult)
+							.map(ResultBean::getStatus)
+							.reduce(ResultStatus::worst)
+								.filter(status -> status.in(ResultStatus.ERROR,ResultStatus.FAILURE))
+								.ifPresent(status -> reply.getSpecificationResult().update(status, SimpleFormat.format("There are {}s in spec", status.name().toLowerCase()), null));
+				}catch(Exception e){
+					reply.getSpecificationResult().error(e);
+				}
+			}else{
+				reply.setSpecificationResult(ResultBean.skipped(SimpleFormat.format("{}: class has marked with skip annotation",reply.name())));
 			}
 		}else{
-			reply.setSpecificationResult(ResultBean.skipped(SimpleFormat.format("{}: class has marked with skip annotation",reply.name())));
+			reply.setSpecificationResult(ResultBean.skipped(SimpleFormat.format("{}: User requested to skip",reply.name())));
 		}
 		
 		return reply;

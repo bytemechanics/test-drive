@@ -31,15 +31,16 @@ public interface SpecificationId {
 	public String getSpecificationGroup();
 
 	public default String name(){
-		return SimpleFormat.format("Specification {}{}"
+		return SimpleFormat.format("{}{}"
+									,Optional.ofNullable(getSpecificationGroup())
+												.map(String::trim)
+												.filter(String::isEmpty)
+												.map(group -> SimpleFormat.format("{}:", group))
+												.orElse("")
 									, Optional.ofNullable(getSpecificationName())
 												.map(String::trim)
 												.filter(String::isEmpty)
 												.orElseGet(() -> getSpecificationClass().getSimpleName())
-									,Optional.ofNullable(getSpecificationGroup())
-												.map(String::trim)
-												.filter(String::isEmpty)
-												.map(group -> SimpleFormat.format("of group {}", group))
-												.orElse(""));
+);
 	}
 }

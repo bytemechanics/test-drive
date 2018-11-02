@@ -33,10 +33,9 @@ public interface Result {
 
 	@SuppressWarnings("ThrowableResultIgnored")
 	public default String getLog(){
-		return SimpleFormat.format("[{}] >> in {} >> {}{}"
+		return SimpleFormat.format("[{}] >> in {} >> {}"
 				, getStatus().name()
 				,Stringify.toString(getDuration(), "m:ss.SSS")
-				,getMessage()
-				,(getError()!=null)? "\n"+Stringify.toString(getError()) : "");
+				,getMessage());
 	}
 }

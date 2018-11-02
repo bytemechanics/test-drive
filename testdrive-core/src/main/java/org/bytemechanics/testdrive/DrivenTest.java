@@ -23,8 +23,8 @@ import org.bytemechanics.testdrive.exceptions.AssertException;
  */
 public interface DrivenTest {
 	
-	public default void given(final Object... _args) { };
-	public void when(final Object... _args);
-	public void then(final Object... _args) throws AssertException;
-	public default void clean(final Object... _args) { };
+	public default void given() { };
+	public void when();
+	public void then() throws AssertException;
+	public default void clean() { };
 }

@@ -13,32 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.bytemechanics.testdrive.adapter;
+package org.bytemechanics.testdrive.exceptions;
 
-import java.lang.reflect.Method;
 import org.bytemechanics.testdrive.internal.commons.string.SimpleFormat;
 
 /**
- * Bean to idenfity the one particular specification test
+ * Exception to identify a non parseable parameter to the necessary class
  * @author afarre
- * @since 1.0.0
  */
-public interface TestId extends SpecificationId{
-	
+public class UnparseableParameter extends RuntimeException{
 
-	public Method getTestMethod();
-	public Class[] getTestMethodParameters();
-	public String getTestName();
-
-	@Override
-	public default String name(){
-		return SimpleFormat.format(getTestName(),(Object[])getTestMethod().getParameterTypes());
-	}
-	public default String name(final String... _args){
-		return SimpleFormat.format(getTestName(),(Object[])_args);
-	}
-
-	public default String specName(){
-		return SpecificationId.super.name();
+	/**
+	 * Test parameters not match exception constructor
+	 * @param _parameter
+	 * @param _toClass
+	 * @param _value
+	 */
+	public UnparseableParameter(final int _parameter,final Class _toClass,final String _value) {
+		super(SimpleFormat.format("Unparseable parameter {} with value {} to class {}", _parameter,_value,_toClass));
 	}
 }

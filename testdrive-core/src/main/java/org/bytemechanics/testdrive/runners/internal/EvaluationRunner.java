@@ -33,7 +33,7 @@ import org.bytemechanics.testdrive.runners.beans.ResultBean;
  *
  * @author afarre
  */
-public class EvaluationRunner extends DrivenTestRunner{
+public abstract class EvaluationRunner extends DrivenTestRunner{
 
 	private Function<EvaluationBean,EvaluationBean> startEvaluation;
 	private Function<EvaluationBean,EvaluationBean> endEvaluation;
@@ -45,6 +45,9 @@ public class EvaluationRunner extends DrivenTestRunner{
 		this.endEvaluation=(EvaluationBean evaluation) -> evaluation;
 	}
 
+	protected abstract void addFailure();
+	protected abstract boolean hasUserRequestedSkip();
+	
 	private Function<EvaluationBean,EvaluationBean> fromConsumerToFunction(final Consumer<EvaluationBean> _consumer){
 		return (EvaluationBean t) -> { _consumer.accept(t); return t;};
 	}
@@ -67,25 +70,34 @@ public class EvaluationRunner extends DrivenTestRunner{
 											.orElse(this.endEvaluation);
 	}
 
+	@SuppressWarnings("CallToPrintStackTrace")
 	protected EvaluationBean executeEvaluation(final EvaluationBean _evaluation){
 		
 		final EvaluationBean reply=_evaluation;
 		
-		if(!_evaluation.getEvaluation().skip()){
-			try(ResultBean result=new ResultBean()){
-				reply.setEvaluationResult(result);
-				if(DrivenTest.class.isAssignableFrom(_evaluation.getTestMethod().getReturnType())){
-					driveTest(_evaluation);
-				}else{
-					executeMethod(_evaluation);
+		if(!hasUserRequestedSkip()){
+			if(!_evaluation.getEvaluation().skip()){
+				try(ResultBean result=new ResultBean()){
+					reply.setEvaluationResult(result);
+					if(DrivenTest.class.isAssignableFrom(_evaluation.getTestMethod().getReturnType())){
+						driveTest(_evaluation);
+					}else{
+						executeMethod(_evaluation);
+					}
+				}catch(AssertException|AssertionError e){
+					e.printStackTrace();
+					addFailure();
+					reply.getEvaluationResult().failure(e);
+				}catch(Exception e){
+					e.printStackTrace();
+					addFailure();
+					reply.getEvaluationResult().error(e);
 				}
-			}catch(AssertException e){
-				reply.getEvaluationResult().fail(e);
-			}catch(Exception e){
-				reply.getEvaluationResult().error(e);
+			}else{
+				reply.setEvaluationResult(ResultBean.skipped(SimpleFormat.format("{}: annotated to skip",reply.name())));
 			}
 		}else{
-			reply.setEvaluationResult(ResultBean.skipped(SimpleFormat.format("{}: annotated to skip",_evaluation.name())));
+			reply.setEvaluationResult(ResultBean.skipped(SimpleFormat.format("{}: User requested to skip",reply.name())));
 		}
 		
 		return reply;

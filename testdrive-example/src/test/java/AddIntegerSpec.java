@@ -30,47 +30,48 @@ public class AddIntegerSpec implements Specification {
 
 	@Override
 	public void cleanupSpec() {
-		System.out.println("AddIntegerSpec >> cleanupSpec");
+		System.out.println("execute: cleanupSpec");
 	}
 	@Override
 	public void setup() {
-		System.out.println("AddIntegerSpec >> setup");
+		System.out.println("execute: setup");
 	}
 	@Override
 	public void cleanup() {
-		System.out.println("AddIntegerSpec >> cleanup");
+		System.out.println("execute: cleanup");
 	}
 	@Override
 	public void setupSpec() {
-		System.out.println("AddIntegerSpec >> setupSpec");
+		System.out.println("execute:setupSpec");
 	}
 
 	public AddIntegerSpec(){
-		System.out.println("AddIntegerSpec >> new");
+		System.out.println("execute: new");
 	}
 
-	@Test(name = "accumulate-values",evaluations = {
-		@Evaluation(name = "zero",args = {"0","0","0","0"})
+	@Test(evaluations = {
+		@Evaluation(name = "zero",args = {"0","0","0","0"}),
+		@Evaluation(name = "one",args = {"1","1","0","0"})
 	})
-	public DrivenTest accumulate(final int _base,final int _val1,final int _val2){
-		System.out.println("AddIntegerSpec >> accumulate");
+	public DrivenTest accumulate(final int _base,final int _val1,final int _val2,final int _expected){
+		System.out.println("execute: accumulate");
 		return new DrivenTest() {
 			
 			AddInteger add;
 			int actual;
 
 			@Override
-			public void given(Object... _args) {
-				this.add=new AddInteger((int)_args[0]);
+			public void given() {
+				this.add=new AddInteger((int)_base);
 			}
 			
 			@Override
-			public void when(Object... _args) {
-				this.actual=this.add.accumulate((int)_args[1],(int)_args[2]);
+			public void when() {
+				this.actual=this.add.accumulate((int)_val1,(int)_val2);
 			}
 			@Override
-			public void then(Object... _args) throws AssertException {
-				assert(this.actual==(int)_args[3]);
+			public void then() throws AssertException {
+				assert(this.actual==(int)_expected);
 			}
 		};
 	}

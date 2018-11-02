@@ -19,9 +19,12 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.bytemechanics.testdrive.adapter.TestId;
 import org.bytemechanics.testdrive.annotations.Evaluation;
 import org.bytemechanics.testdrive.annotations.Test;
+import org.bytemechanics.testdrive.internal.commons.string.SimpleFormat;
 
 /**
  *
@@ -41,13 +44,27 @@ public class TestBean extends SpecificationBean implements TestId {
 									.filter(clazz -> clazz.isAnnotationPresent(Test.class))
 									.map(clazz -> clazz.getAnnotation(Test.class))
 									.map(Test::name)
-									.orElse(_method.getName());
+									.map(String::trim)
+									.filter(name -> !name.isEmpty())
+									.orElse(buildTestPattern(_method));
 		this.testMethodParameters=Optional.ofNullable(_method)
 											.map(Method::getParameterTypes)
 											.orElseGet(() -> new Class[0]);
 		this.testResult=null;
 	}
 
+	private String buildTestPattern(final Method _method){
+		return Stream.of(_method.getParameters())
+						.map(parameter -> "{}")
+						.collect(Collectors.joining(",",getTestMethod().getName()+"(", ")"));
+	}
+	private String buildTestName(final Method _method){
+		return Stream.of(_method.getParameters())
+						.map(parameter -> SimpleFormat.format("{} {}",parameter.getType().getSimpleName(),parameter.getName()))
+						.collect(Collectors.joining(",",getTestMethod().getName()+"(", ")"));
+	}
+	
+	
 	public TestBean(final TestBean _test) {
 		super(_test);
 		this.testMethod = _test.getTestMethod();
@@ -110,5 +127,4 @@ public class TestBean extends SpecificationBean implements TestId {
 		}
 		return Objects.equals(this.testResult, other.testResult);
 	}
-	
 }

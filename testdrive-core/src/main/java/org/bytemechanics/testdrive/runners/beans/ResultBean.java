@@ -19,7 +19,6 @@ import java.time.Duration;
 import java.time.Instant;
 import org.bytemechanics.testdrive.ResultStatus;
 import org.bytemechanics.testdrive.adapter.Result;
-import org.bytemechanics.testdrive.exceptions.AssertException;
 
 /**
  *
@@ -43,21 +42,31 @@ public class ResultBean implements Result,AutoCloseable{
 	}
 	
 	public ResultBean skip(final String _message){
-		this.status=ResultStatus.SKIPPED;
-		this.message=_message;
 		this.duration=Duration.ZERO;
-		return this;
+		return update(ResultStatus.SKIPPED, _message, null);
 	}
-	public ResultBean fail(final AssertException e){
-		this.status=ResultStatus.FAILURE;
-		this.message=e.getMessage();
-		this.error=e;
-		return this;
+	public ResultBean failure(final Throwable _error){
+		return failure(_error.getMessage(),_error);
 	}
-	public ResultBean error(final Throwable e){
-		this.status=ResultStatus.ERROR;
-		this.message=e.getMessage();
-		this.error=e;
+	public ResultBean failure(final String _message){
+		return failure(_message,null);
+	}
+	public ResultBean failure(final String _message,final Throwable _error){
+		return update(ResultStatus.FAILURE, _message, _error);
+	}
+	public ResultBean error(final Throwable _error){
+		return error(_error.getMessage(),_error);
+	}
+	public ResultBean error(final String _message){
+		return error(_message,null);
+	}
+	public ResultBean error(final String _message,final Throwable _error){
+		return update(ResultStatus.ERROR, _message, _error);
+	}
+	public ResultBean update(final ResultStatus _status,final String _message,final Throwable _error){
+		this.status=_status;
+		this.message=_message;
+		this.error=_error;
 		return this;
 	}
 	

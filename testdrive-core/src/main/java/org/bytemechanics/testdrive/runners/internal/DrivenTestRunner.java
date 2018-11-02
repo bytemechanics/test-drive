@@ -112,7 +112,7 @@ public class DrivenTestRunner{
 
 		try{
 			this.drivenTestGivenBegin.apply(_evaluation);
-			_drivenTest.given(_evaluation.getParsedArguments());
+			_drivenTest.given();
 		}catch(Exception e){
 			throw new DrivenTestGivenException(_evaluation, e);
 		}finally{
@@ -125,7 +125,7 @@ public class DrivenTestRunner{
 
 		try{
 			this.drivenTestWhenBegin.apply(_evaluation);
-			_drivenTest.when(_evaluation.getParsedArguments());
+			_drivenTest.when();
 		}catch(Exception e){
 			throw new DrivenTestWhenException(_evaluation, e);
 		}finally{
@@ -138,7 +138,7 @@ public class DrivenTestRunner{
 
 		try{
 			this.drivenTestThenBegin.apply(_evaluation);
-			_drivenTest.then(_evaluation.getParsedArguments());
+			_drivenTest.then();
 		}catch(AssertException e){
 			throw e;
 		}catch(Exception e){
@@ -154,7 +154,7 @@ public class DrivenTestRunner{
 
 		try{
 			this.drivenTestCleanBegin.apply(_evaluation);
-			_drivenTest.clean(_evaluation.getParsedArguments());
+			_drivenTest.clean();
 		}catch(Exception e){
 			throw new DrivenTestCleanException(_evaluation, e);
 		}finally{

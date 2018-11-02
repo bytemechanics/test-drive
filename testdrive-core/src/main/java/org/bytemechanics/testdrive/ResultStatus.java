@@ -15,14 +15,31 @@
  */
 package org.bytemechanics.testdrive;
 
+import java.util.stream.Stream;
+
 /**
  * @author afarre
  */
 public enum ResultStatus {
 
-	SUCCESS,
-	SKIPPED,
-	FAILURE,
-	ERROR,
+	SUCCESS(0),
+	SKIPPED(0),
+	FAILURE(1),
+	ERROR(2),
 	;
+	
+	private final int weight;
+	
+	ResultStatus(final int _weight){
+		this.weight=_weight;
+	}
+	
+	public boolean in(final ResultStatus... _statuses){
+		return Stream.of(_statuses)
+						.anyMatch(this::equals);
+	}
+	
+	public static ResultStatus worst(final ResultStatus _status1,final ResultStatus _status2){
+		return (_status1.weight>_status2.weight)? _status1 : _status2;
+	}
 }

@@ -21,6 +21,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Stream;
+import org.bytemechanics.testdrive.ResultStatus;
 import org.bytemechanics.testdrive.adapter.Result;
 import org.bytemechanics.testdrive.annotations.Skip;
 import org.bytemechanics.testdrive.internal.commons.string.SimpleFormat;
@@ -35,7 +36,7 @@ import org.bytemechanics.testdrive.runners.beans.TestBean;
  *
  * @author afarre
  */
-public class TestRunner extends EvaluationRunner{
+public abstract class TestRunner extends EvaluationRunner{
 
 	private Function<TestBean,TestBean> startTest;
 	private Function<TestBean,TestBean> startTestSetup;
@@ -109,29 +110,39 @@ public class TestRunner extends EvaluationRunner{
 		
 		final TestBean reply=_test;
 		
-		if(!_test.getTestMethod().isAnnotationPresent(Skip.class)){
-			if(_test.getEvaluations().length>0){
-				try(ResultBean result=new ResultBean()){
-					reply.setTestResult(result);
-					AtomicInteger counter=new AtomicInteger();
-					Stream.of(_test.getEvaluations())
-							.map(evaluation -> new EvaluationBean(_test,counter.addAndGet(1),evaluation))
-							.forEach(this::evaluate);
-				}catch(Exception e){
-					reply.getTestResult().error(e);
-				}
-			}else if(_test.getTestMethodParameters().length==0){
-				try(ResultBean result=new ResultBean()){
-					reply.setTestResult(result);
-					this.evaluate(new EvaluationBean(_test));
-				}catch(Exception e){
-					reply.getTestResult().error(e);
+		if(!hasUserRequestedSkip()){
+			if(!_test.getTestMethod().isAnnotationPresent(Skip.class)){
+				if(_test.getEvaluations().length>0){
+					try(ResultBean result=new ResultBean()){
+						reply.setTestResult(result);
+						AtomicInteger counter=new AtomicInteger();
+						Stream.of(_test.getEvaluations())
+								.map(evaluation -> new EvaluationBean(_test,counter.addAndGet(1),evaluation))
+								.map(this::evaluate)
+								.map(EvaluationBean::getEvaluationResult)
+								.map(ResultBean::getStatus)
+								.reduce(ResultStatus::worst)
+									.filter(status -> status.in(ResultStatus.ERROR,ResultStatus.FAILURE))
+									.ifPresent(status -> 
+											reply.getTestResult().update(status, SimpleFormat.format("There are {}s in test", status.name().toLowerCase()), null));
+					}catch(Exception e){
+						reply.getTestResult().error(e);
+					}
+				}else if(_test.getTestMethodParameters().length==0){
+					try(ResultBean result=new ResultBean()){
+						reply.setTestResult(result);
+						this.evaluate(new EvaluationBean(_test));
+					}catch(Exception e){
+						reply.getTestResult().error(e);
+					}
+				}else{
+					reply.setTestResult(ResultBean.skipped(SimpleFormat.format("{}: method has arguments and can not find any evaluation",reply.name())));
 				}
 			}else{
-				reply.setTestResult(ResultBean.skipped(SimpleFormat.format("{}: method has arguments and can not find any evaluation",_test.name())));
+				reply.setTestResult(ResultBean.skipped(SimpleFormat.format("{}: method has marked with skip annotation",reply.name())));
 			}
 		}else{
-			reply.setTestResult(ResultBean.skipped(SimpleFormat.format("{}: method has marked with skip annotation",_test.name())));
+			reply.setTestResult(ResultBean.skipped(SimpleFormat.format("{}: User requested to skip",reply.name())));
 		}
 		
 		return _test;
