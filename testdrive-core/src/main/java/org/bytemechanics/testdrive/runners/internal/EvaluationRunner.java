@@ -84,12 +84,13 @@ public abstract class EvaluationRunner extends DrivenTestRunner{
 					}else{
 						executeMethod(_evaluation);
 					}
-				}catch(AssertException|AssertionError e){
-					e.printStackTrace();
+				}catch(AssertException e){
 					addFailure();
-					reply.getEvaluationResult().failure(e);
+					reply.getEvaluationResult().failure(new AssertException(_evaluation.name(),e));
+				}catch(AssertionError e){
+					addFailure();
+					reply.getEvaluationResult().failure(new AssertException(_evaluation.name(),e));
 				}catch(Exception e){
-					e.printStackTrace();
 					addFailure();
 					reply.getEvaluationResult().error(e);
 				}

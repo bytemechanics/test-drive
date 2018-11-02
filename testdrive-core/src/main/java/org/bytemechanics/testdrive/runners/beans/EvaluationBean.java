@@ -43,7 +43,7 @@ public class EvaluationBean extends TestBean implements EvaluationId{
 		this.evaluationCounter = _counter;
 		this.evaluationName = Optional.of(_evaluation.name())
 										.filter(val -> !val.isEmpty())
-										.map(val -> SimpleFormat.format("{}[{}]", val,_counter))
+										.map(val -> SimpleFormat.format("{}(\"{}\")",_counter,val))
 										.orElseGet(() -> String.valueOf(_counter));
 		this.evaluationArguments = _evaluation.args();
 		this.evaluationResult=null;

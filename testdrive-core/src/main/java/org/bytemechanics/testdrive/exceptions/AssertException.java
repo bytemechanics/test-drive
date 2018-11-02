@@ -15,9 +15,7 @@
  */
 package org.bytemechanics.testdrive.exceptions;
 
-import java.lang.reflect.Method;
 import java.util.Objects;
-import org.bytemechanics.testdrive.Specification;
 import org.bytemechanics.testdrive.internal.commons.string.SimpleFormat;
 
 /**
@@ -28,44 +26,56 @@ import org.bytemechanics.testdrive.internal.commons.string.SimpleFormat;
  */
 public class AssertException extends RuntimeException{
 
-	private final Class<? extends Specification> specification;
-	private final Method test;
+	private final String evaluation;
 	private final String assertion;
 	private final Object expected;
 	private final Object actual;
+
+	/**
+	 * Assertion failure exception constructor
+	 * @param _evaluation evaluation
+	 * @param _cause Assertion error cause
+	 */
+	public AssertException(final String _evaluation,final AssertionError _cause) {
+		super(SimpleFormat.format("evaluation {}, line {}: {}", _evaluation,_cause.getStackTrace()[0].getLineNumber(),_cause.getMessage()),_cause);
+		this.evaluation=_evaluation;
+		this.assertion=null;
+		this.expected=null;
+		this.actual=null;
+	}
 	
 	/**
 	 * Assertion failure exception constructor
-	 * @param _specification specification where the exception happen
-	 * @param _test test method where the exception happen
+	 * @param _evaluation evaluation
+	 * @param _cause Assertion exception cause
+	 */
+	public AssertException(final String _evaluation,final AssertException _cause) {
+		super(SimpleFormat.format("evaluation {}, line {} ({}):\n\tExpected:\t{}\n\tActual:\t{}", _evaluation,_cause.getStackTrace()[0].getLineNumber(),_cause.getAssertion(),_cause.getExpected(),_cause.getActual(),_cause.getCause().getMessage()),_cause);
+		this.evaluation=_evaluation;
+		this.assertion=_cause.getAssertion();
+		this.expected=_cause.getExpected();
+		this.actual=_cause.getActual();
+	}
+
+	/**
+	 * Assertion failure exception constructor
 	 * @param _assertion Failed assertion
 	 * @param _expected expected result
 	 * @param _actual actual result
 	 * @param _cause exception cause
 	 */
-	public AssertException(final Class<? extends Specification> _specification,final Method _test,final String _assertion,final Object _expected,final Object _actual,final Throwable _cause) {
-		super(SimpleFormat.format("Specification {}, test {}, assertion {} failed:\n\tExpected:\t{}\n\tActual:\t{}", _specification.getSimpleName(),_test.getName(),_test.getParameterTypes(),_assertion,_expected,_actual),_cause);
-		this.specification=_specification;
-		this.test=_test;
+	public AssertException(final String _assertion,final Object _expected,final Object _actual,final Throwable _cause) {
+		super(SimpleFormat.format("({}):\n\tExpected:\t{}\n\tActual:\t{}",_assertion,_expected,_actual,_cause.getMessage()),_cause);
+		this.evaluation=null;
 		this.assertion=_assertion;
 		this.expected=_expected;
 		this.actual=_actual;
 	}
 
-	/**
-	 * Retrieve the specification where exception happens
-	 * @return class where the exception happen
-	 */
-	public Class<? extends Specification> getSpecification() {
-		return specification;
+	public String getEvaluation() {
+		return evaluation;
 	}
-	/**
-	 * Retrieve the test where exception happens
-	 * @return method where the exception happen
-	 */
-	public Method getTest() {
-		return test;
-	}
+	
 	/**
 	 * Retrieve the test assertion failed
 	 * @return assertion name that failed
@@ -88,19 +98,16 @@ public class AssertException extends RuntimeException{
 		return actual;
 	}
 
-	/** @see Object#hashCode()  */
 	@Override
 	public int hashCode() {
-		int hash = 7;
-		hash = 43 * hash + Objects.hashCode(this.specification);
-		hash = 43 * hash + Objects.hashCode(this.test);
-		hash = 43 * hash + Objects.hashCode(this.assertion);
-		hash = 43 * hash + Objects.hashCode(this.expected);
-		hash = 43 * hash + Objects.hashCode(this.actual);
+		int hash = 3;
+		hash = 97 * hash + Objects.hashCode(this.evaluation);
+		hash = 97 * hash + Objects.hashCode(this.assertion);
+		hash = 97 * hash + Objects.hashCode(this.expected);
+		hash = 97 * hash + Objects.hashCode(this.actual);
 		return hash;
 	}
 
-	/** @see Object#equals(java.lang.Object)  */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -113,13 +120,10 @@ public class AssertException extends RuntimeException{
 			return false;
 		}
 		final AssertException other = (AssertException) obj;
+		if (!Objects.equals(this.evaluation, other.evaluation)) {
+			return false;
+		}
 		if (!Objects.equals(this.assertion, other.assertion)) {
-			return false;
-		}
-		if (!Objects.equals(this.specification, other.specification)) {
-			return false;
-		}
-		if (!Objects.equals(this.test, other.test)) {
 			return false;
 		}
 		if (!Objects.equals(this.expected, other.expected)) {
@@ -127,4 +131,5 @@ public class AssertException extends RuntimeException{
 		}
 		return Objects.equals(this.actual, other.actual);
 	}
+
 }

@@ -29,6 +29,6 @@ public interface EvaluationId extends TestId{
 
 	@Override
 	public default String name(){
-		return SimpleFormat.format("{}:{}", TestId.super.name(getEvaluationArguments()),getEvaluationName());
+		return SimpleFormat.format("{}: {}", getEvaluationName(),TestId.super.name(getEvaluationArguments()));
 	}
 }

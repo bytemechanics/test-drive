@@ -15,12 +15,16 @@
  */
 package org.bytemechanics.testdrive.surefire.listener;
 
+import java.lang.reflect.Method;
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.maven.surefire.report.CategorizedReportEntry;
 import org.apache.maven.surefire.report.PojoStackTraceWriter;
+import org.apache.maven.surefire.report.ReportEntry;
 import org.apache.maven.surefire.report.RunListener;
 import org.apache.maven.surefire.report.SimpleReportEntry;
+import org.apache.maven.surefire.report.StackTraceWriter;
 import org.apache.maven.surefire.report.TestSetReportEntry;
 import org.apache.maven.surefire.util.internal.ObjectUtils;
 import org.bytemechanics.testdrive.adapter.EvaluationId;
@@ -123,29 +127,23 @@ public class TestDriveListener implements TestListener,SpecificationListener,Eva
 
 	@Override
 	public <T extends EvaluationId> void endEvaluation(T _evaluation, Result _result) {
-		System.out.println(SimpleFormat.format("{} >> {} >> {}",_evaluation.specName(),_evaluation.name(),_result.getLog()));
+		
 		switch(_result.getStatus()){
 			//TODO
-			case SUCCESS:	this.reporter.testSucceeded(CategorizedReportEntry.reportEntry(_evaluation.getSpecificationClass().getName()
-																							, _evaluation.getTestMethod().getName()
-																							,_evaluation.name()
-																							,null
-																							,((Long)_result.getDuration().toMillis()).intValue()
-																							, _result.getMessage()
-																							, ObjectUtils.systemProps()));
-													//new SimpleReportEntry(_evaluation.getSpecificationClass().getName(), _evaluation.name(), ((Long)_result.getDuration().toMillis()).intValue()));
+			case SUCCESS:	this.reporter.testSucceeded(
+											getReport(_evaluation.getSpecificationClass(), _evaluation.getTestMethod(), _evaluation.name(),  _result.getMessage(), _result.getDuration()));
 							break;
 			case ERROR:		this.reporter.testError(
-											SimpleReportEntry.withException(_evaluation.getSpecificationClass().getName(), _evaluation.name(),
-													new PojoStackTraceWriter(_evaluation.getSpecificationClass().getName(),_evaluation.getTestMethod().getName(),_result.getError())));
+											getReport(_evaluation.getSpecificationClass(), _evaluation.getTestMethod(), _evaluation.name(),  _result.getMessage(),_result.getError()));
+							_result.getError().printStackTrace(System.err);
 							break;
 			case FAILURE:	this.reporter.testFailed(
-											SimpleReportEntry.withException(_evaluation.getSpecificationClass().getName(), _evaluation.name(),
-													new PojoStackTraceWriter(_evaluation.getSpecificationClass().getName(),_evaluation.getTestMethod().getName(),_result.getError())));
+											getReport(_evaluation.getSpecificationClass(), _evaluation.getTestMethod(), _evaluation.name(),  _result.getMessage(),_result.getError()));
 							break;
 			default:		this.reporter.testSkipped(
-											SimpleReportEntry.ignored(_evaluation.getSpecificationClass().getName(), _evaluation.name(), _result.getMessage()));
+											getReport(_evaluation.getSpecificationClass(), _evaluation.getTestMethod(), _evaluation.name(),  _result.getMessage(), _result.getDuration()));
 		}
+		System.out.println(SimpleFormat.format("{} >> {} >> {}",_evaluation.specName(),_evaluation.name(),_result.getLog()));
 	}
 	
 	@Override
@@ -176,5 +174,13 @@ public class TestDriveListener implements TestListener,SpecificationListener,Eva
 		System.out.println(SimpleFormat.format("{} >> {}",_specification.name(),_result.getLog()));
 		final TestSetReportEntry reportEntry=this.specs.get(_specification);
 		this.reporter.testSetCompleted(reportEntry);
+	}
+	
+	protected ReportEntry getReport(final Class _class,final Method _method,final String _group,final String _message,final Duration _duration){
+		return CategorizedReportEntry.reportEntry(_class.getName(), _method.getName(),_group,null,((Long)_duration.toMillis()).intValue(), _message, ObjectUtils.systemProps());
+	}
+	protected ReportEntry getReport(final Class _class,final Method _method,final String _group,final String _message,final Throwable _error){
+		final StackTraceWriter errorWriter=new PojoStackTraceWriter(_class.getName(),_method.getName(),_error);
+		return CategorizedReportEntry.reportEntry(_class.getName(), _method.getName(),_group,errorWriter,0, _message, ObjectUtils.systemProps());
 	}
 }
