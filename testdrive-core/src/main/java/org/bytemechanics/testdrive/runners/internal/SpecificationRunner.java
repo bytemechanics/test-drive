@@ -19,6 +19,8 @@ import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Stream;
 import org.bytemechanics.testdrive.ResultStatus;
 import org.bytemechanics.testdrive.adapter.Result;
@@ -98,15 +100,29 @@ public abstract class SpecificationRunner extends TestRunner{
 	}
 
 	protected SpecificationBean executeSpecificationSetup(final SpecificationBean _specification){
-		this.startSpecificationSetup.apply(_specification);
-		_specification.getSpecification().setupSpec();
-		this.endSpecificationSetup.apply(_specification);
+		
+		try {
+			if(_specification.getSpecificationClass().getDeclaredMethod("setupSpec").getDeclaringClass().equals(_specification.getSpecificationClass())){
+				this.startSpecificationSetup.apply(_specification);
+				_specification.getSpecification().setupSpec();
+				this.endSpecificationSetup.apply(_specification);
+			}
+		} catch (NoSuchMethodException | SecurityException ex) {
+			Logger.getLogger(SpecificationRunner.class.getName()).log(Level.FINEST, "setupSpec not declared, skip execution", ex);
+		}
+		
 		return _specification;
 	}
 	protected SpecificationBean executeSpecificationCleanup(final SpecificationBean _specification){
-		this.startSpecificationCleanup.apply(_specification);
-		_specification.getSpecification().cleanupSpec();
-		this.endSpecificationCleanup.apply(_specification);
+		try {
+			if(_specification.getSpecificationClass().getDeclaredMethod("cleanupSpec").getDeclaringClass().equals(_specification.getSpecificationClass())){
+				this.startSpecificationCleanup.apply(_specification);
+				_specification.getSpecification().cleanupSpec();
+				this.endSpecificationCleanup.apply(_specification);
+			}
+		} catch (NoSuchMethodException | SecurityException ex) {
+			Logger.getLogger(SpecificationRunner.class.getName()).log(Level.FINEST, "cleanupSpec not declared, skip execution", ex);
+		}
 		return _specification;
 	}
 	

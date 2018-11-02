@@ -16,6 +16,7 @@
 package org.bytemechanics.testdrive.adapter;
 
 import java.time.Duration;
+import java.util.Optional;
 import org.bytemechanics.testdrive.ResultStatus;
 import org.bytemechanics.testdrive.internal.commons.string.SimpleFormat;
 import org.bytemechanics.testdrive.internal.commons.string.Stringify;
@@ -33,9 +34,13 @@ public interface Result {
 
 	@SuppressWarnings("ThrowableResultIgnored")
 	public default String getLog(){
-		return SimpleFormat.format("[{}] >> in {} >> {}"
-				, getStatus().name()
+		return SimpleFormat.format("[{}] >> in {}{}"
+				,getStatus().name()
 				,Stringify.toString(getDuration(), "m:ss.SSS")
-				,getMessage());
+				,Optional.ofNullable(getMessage())
+							.map(String::trim)
+							.filter(message -> !message.isEmpty())
+							.map(message -> " >> "+message)
+							.orElse(""));
 	}
 }

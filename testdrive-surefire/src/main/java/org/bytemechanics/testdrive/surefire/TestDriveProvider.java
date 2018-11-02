@@ -40,6 +40,7 @@ import org.bytemechanics.testdrive.Specification;
 import org.bytemechanics.testdrive.TestDriveRunner;
 import org.bytemechanics.testdrive.runners.DefaultTestDriveRunner;
 import org.bytemechanics.testdrive.surefire.listener.TestDriveListener;
+import org.bytemechanics.testdrive.surefire.utils.TestDriveLogger;
 
 /**
  *
@@ -55,6 +56,7 @@ public class TestDriveProvider extends AbstractProvider{
     private final ScanResult scanResult;
     private final int rerunFailingTestsCount;
     private final CommandReader commandsReader;
+	private final TestDriveLogger logger;
 	private TestsToRun testsToRun;
 
 	
@@ -68,6 +70,7 @@ public class TestDriveProvider extends AbstractProvider{
         final TestRequest testRequest = _parameters.getTestRequest();
         this.testResolver = testRequest.getTestListResolver();
 		this.rerunFailingTestsCount = testRequest.getRerunFailingTestsCount();
+		this.logger=new TestDriveLogger(_parameters.getConsoleLogger());
 		this.testsToRun=null;
 	}
 	
@@ -106,7 +109,7 @@ public class TestDriveProvider extends AbstractProvider{
 			//Create runner
 			final TestDriveRunner runner=new DefaultTestDriveRunner(this.providerParameters.getSkipAfterFailureCount());
 			//add listener to runner
-			runner.registerListener(new TestDriveListener(reporter));
+			runner.registerListener(new TestDriveListener(reporter,this.logger));
 			//Evaluate
 			runner.evaluateStream(specStream(testsToRun));
         }finally{

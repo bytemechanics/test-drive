@@ -28,51 +28,50 @@ import org.bytemechanics.testdrive.exceptions.AssertException;
  */
 public class AddIntegerSpec implements Specification {
 
-	@Override
-	public void cleanupSpec() {
-		System.out.println("execute: cleanupSpec");
-	}
-	@Override
-	public void setup() {
-		System.out.println("execute: setup");
-	}
-	@Override
-	public void cleanup() {
-		System.out.println("execute: cleanup");
-	}
-	@Override
-	public void setupSpec() {
-		System.out.println("execute:setupSpec");
-	}
-
-	public AddIntegerSpec(){
-		System.out.println("execute: new");
-	}
-
-	@Test(evaluations = {
-		@Evaluation(name = "zero",args = {"0","0","0","0"}),
-		@Evaluation(name = "one",args = {"1","1","0","0"})
+	
+	
+	
+	@Test(name="accumulate {} and {} should result with {} with driven test", evaluations = {
+		@Evaluation(name = "one",args = {"1","1","0","0"}),
+		@Evaluation(name = "zero",args = {"0","0","0","0"})
 	})
-	public DrivenTest accumulate(final int _base,final int _val1,final int _val2,final int _expected){
-		System.out.println("execute: accumulate");
+	public DrivenTest accumulateDriven(final int _base,final int _val1,final int _val2,final int _expected){
 		return new DrivenTest() {
 			
 			AddInteger add;
 			int actual;
-
-			@Override
-			public void given() {
-				this.add=new AddInteger((int)_base);
-			}
 			
 			@Override
+			public void given() {
+				this.add=new AddInteger(_base);
+			}
+			@Override
 			public void when() {
-				this.actual=this.add.accumulate((int)_val1,(int)_val2);
+				this.actual=this.add.accumulate(_val1,_val2);
 			}
 			@Override
 			public void then() throws AssertException {
-				assert(this.actual==(int)_expected);
+				assert(this.actual==_expected);
 			}
 		};
+	}
+	
+	@Test(evaluations = {
+		@Evaluation(name = "zero",args = {"0","0","0","0"}),
+		@Evaluation(name = "one",args = {"1","1","0","0"})
+	})
+	public void accumulate2(final int _base,final int _val1,final int _val2,final int _expected){
+
+		AddInteger add;
+		int actual;
+		
+		given:
+			add=new AddInteger(_base);
+		
+		when:
+			actual=add.accumulate(_val1,_val2);
+		
+		then:
+			assert(actual==_expected);
 	}
 }

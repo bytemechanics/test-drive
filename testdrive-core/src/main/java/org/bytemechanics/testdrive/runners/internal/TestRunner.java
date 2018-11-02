@@ -20,6 +20,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Stream;
 import org.bytemechanics.testdrive.ResultStatus;
 import org.bytemechanics.testdrive.adapter.Result;
@@ -94,15 +96,27 @@ public abstract class TestRunner extends EvaluationRunner{
 	}
 	
 	protected TestBean executeSetup(final TestBean _test){
-		this.startTestSetup.apply(_test);
-		_test.getSpecification().setup();
-		this.endTestSetup.apply(_test);
+		try {
+			if(_test.getSpecificationClass().getDeclaredMethod("setup").getDeclaringClass().equals(_test.getSpecificationClass())){
+				this.startTestSetup.apply(_test);
+				_test.getSpecification().setup();
+				this.endTestSetup.apply(_test);
+			}
+		} catch (NoSuchMethodException | SecurityException ex) {
+			Logger.getLogger(SpecificationRunner.class.getName()).log(Level.FINEST, "setup not declared, skip execution", ex);
+		}
 		return _test;
 	}
 	protected TestBean executeCleanup(final TestBean _test){
-		this.startTestCleanup.apply(_test);
-		_test.getSpecification().cleanup();
-		this.endTestCleanup.apply(_test);
+		try {
+			if(_test.getSpecificationClass().getDeclaredMethod("cleanup").getDeclaringClass().equals(_test.getSpecificationClass())){
+				this.startTestCleanup.apply(_test);
+				_test.getSpecification().cleanup();
+				this.endTestCleanup.apply(_test);
+			}
+		} catch (NoSuchMethodException | SecurityException ex) {
+			Logger.getLogger(SpecificationRunner.class.getName()).log(Level.FINEST, "cleanup not declared, skip execution", ex);
+		}
 		return _test;
 	}
 	

@@ -19,6 +19,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.bytemechanics.testdrive.DrivenTest;
 import org.bytemechanics.testdrive.exceptions.AssertException;
 import org.bytemechanics.testdrive.exceptions.DrivenTestCleanException;
@@ -110,13 +112,19 @@ public class DrivenTestRunner{
 
 	protected EvaluationBean executeDrivenTestGivenEvaluation(final DrivenTest _drivenTest,final EvaluationBean _evaluation){
 
-		try{
-			this.drivenTestGivenBegin.apply(_evaluation);
-			_drivenTest.given();
-		}catch(Exception e){
-			throw new DrivenTestGivenException(_evaluation, e);
-		}finally{
-			this.drivenTestGivenBegin.apply(_evaluation);
+		try {
+			if(_drivenTest.getClass().getDeclaredMethod("given").getDeclaringClass().equals(_drivenTest.getClass())){
+				try{
+					this.drivenTestGivenBegin.apply(_evaluation);
+					_drivenTest.given();
+				}catch(Exception e){
+					throw new DrivenTestGivenException(_evaluation, e);
+				}finally{
+					this.drivenTestGivenEnd.apply(_evaluation);
+				}
+			}
+		} catch (NoSuchMethodException | SecurityException ex) {
+			Logger.getLogger(SpecificationRunner.class.getName()).log(Level.FINEST, "given not declared, skip execution", ex);
 		}
 		
 		return _evaluation;
@@ -152,13 +160,19 @@ public class DrivenTestRunner{
 	}	
 	protected EvaluationBean executeDrivenTestCleanEvaluation(final DrivenTest _drivenTest,final EvaluationBean _evaluation){
 
-		try{
-			this.drivenTestCleanBegin.apply(_evaluation);
-			_drivenTest.clean();
-		}catch(Exception e){
-			throw new DrivenTestCleanException(_evaluation, e);
-		}finally{
-			this.drivenTestCleanEnd.apply(_evaluation);
+		try {
+			if(_drivenTest.getClass().getDeclaredMethod("clean").getDeclaringClass().equals(_drivenTest.getClass())){
+				try{
+					this.drivenTestCleanBegin.apply(_evaluation);
+					_drivenTest.clean();
+				}catch(Exception e){
+					throw new DrivenTestCleanException(_evaluation, e);
+				}finally{
+					this.drivenTestCleanEnd.apply(_evaluation);
+				}
+			}
+		} catch (NoSuchMethodException | SecurityException ex) {
+			Logger.getLogger(SpecificationRunner.class.getName()).log(Level.FINEST, "clean not declared, skip execution", ex);
 		}
 		
 		return _evaluation;
@@ -177,6 +191,8 @@ public class DrivenTestRunner{
 		}catch(InvocationTargetException e) {
 			if(AssertException.class.isAssignableFrom(e.getCause().getClass())){
 				throw (AssertException)e.getCause();
+			}else if(AssertionError.class.isAssignableFrom(e.getCause().getClass())){
+				throw (AssertionError)e.getCause();
 			}else{
 				throw new UnexpectedTestError(_evaluation.getSpecificationClass(),_evaluation.getTestMethod(),e);
 			}

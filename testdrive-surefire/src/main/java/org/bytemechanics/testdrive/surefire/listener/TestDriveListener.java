@@ -36,6 +36,7 @@ import org.bytemechanics.testdrive.listeners.DrivenTestListener;
 import org.bytemechanics.testdrive.listeners.EvaluationListener;
 import org.bytemechanics.testdrive.listeners.SpecificationListener;
 import org.bytemechanics.testdrive.listeners.TestListener;
+import org.bytemechanics.testdrive.surefire.utils.TestDriveLogger;
 
 /**
  *
@@ -43,17 +44,19 @@ import org.bytemechanics.testdrive.listeners.TestListener;
  */
 public class TestDriveListener implements TestListener,SpecificationListener,EvaluationListener,DrivenTestListener{
 	
+	private final TestDriveLogger logger;
 	private final RunListener reporter;
 	private final Map<SpecificationId,TestSetReportEntry> specs;
 	
-	public TestDriveListener(final RunListener _reporter){
+	public TestDriveListener(final RunListener _reporter,final TestDriveLogger _logger){
 		this.reporter=_reporter;
 		this.specs=new HashMap<>();
+		this.logger=_logger;
 	}
 
 	@Override
 	public <T extends SpecificationId> void startSpecification(final T _specification) {
-		System.out.println(SimpleFormat.format("{} >> {}",_specification.name(),"begin"));
+		this.logger.debug("{} >> begin",_specification.name());
 		final TestSetReportEntry reportEntry=new SimpleReportEntry(_specification.getSpecificationClass().getName(), _specification.name(), ObjectUtils.systemProps());
 		this.specs.put(_specification, reportEntry);
 		this.reporter.testSetStarting(reportEntry);
@@ -61,67 +64,67 @@ public class TestDriveListener implements TestListener,SpecificationListener,Eva
 
 	@Override
 	public <T extends SpecificationId> void startSpecificationSetup(final T _specification) {
-		System.out.println(SimpleFormat.format("{} >> {}",_specification.name(),"setup >> begin"));
+		this.logger.debug("{} >> setup >> begin",_specification.name());
 	}
 	@Override
 	public <T extends SpecificationId> void endSpecificationSetup(final T _specification) {
-		System.out.println(SimpleFormat.format("{} >> {}",_specification.name(),"setup >> end"));
+		this.logger.info("{} >> setup >> end",_specification.name());
 	}
 
 
 	@Override
 	public <T extends TestId> void startTest(T _test) {
-		System.out.println(SimpleFormat.format("{} >> {} >> {}", _test.specName(),_test.name(),"begin"));
+		this.logger.debug("{} >> {} >> begin", _test.specName(),_test.name());
 	}
 
 	@Override
 	public <T extends TestId> void startTestSetup(T _test) {
-		System.out.println(SimpleFormat.format("{} >> {} >> {}",_test.specName(),_test.name(),"setup >> begin"));
+		this.logger.debug("{} >> {} >> setup >> begin",_test.specName(),_test.name());
 	}
 	@Override
 	public <T extends TestId> void endTestSetup(T _test) {
-		System.out.println(SimpleFormat.format("{} >> {} >> {}",_test.specName(),_test.name(),"setup >> end"));
+		this.logger.info("{} >> {} >> setup >> end",_test.specName(),_test.name());
 	}
 
 	@Override
 	public <T extends EvaluationId> void startEvaluation(T _evaluation) {
-		System.out.println(SimpleFormat.format("{} >> {} >> {}",_evaluation.specName(),_evaluation.name(),"begin"));
+		this.logger.debug("{} >> {} >> begin",_evaluation.specName(),_evaluation.name());
 	}
 
 	@Override
 	public <T extends EvaluationId> void drivenTestGivenBegin(T _evaluation) {
-		System.out.println(SimpleFormat.format("{} >> {} >> {}",_evaluation.specName(),_evaluation.name(),"test-driven >> begin"));
+		this.logger.debug("{} >> {} >> test-driven >> begin",_evaluation.specName(),_evaluation.name());
 	}
 	@Override
 	public <T extends EvaluationId> void drivenTestWhenBegin(T _evaluation) {
-		System.out.println(SimpleFormat.format("{} >> {} >> {}",_evaluation.specName(),_evaluation.name(),"test-driven >> when >> begin"));
+		this.logger.debug("{} >> {} >> test-driven >> when >> begin",_evaluation.specName(),_evaluation.name());
 	}
 
 	@Override
 	public <T extends EvaluationId> void drivenTestWhenEnd(T _evaluation) {
-		System.out.println(SimpleFormat.format("{} >> {} >> {}",_evaluation.specName(),_evaluation.name(),"test-driven >> when >> end"));
+		this.logger.debug("{} >> {} >> test-driven >> when >> end",_evaluation.specName(),_evaluation.name());
 	}
 	@Override
 	public <T extends EvaluationId> void drivenTestThenBegin(T _evaluation) {
-		System.out.println(SimpleFormat.format("{} >> {} >> {}",_evaluation.specName(),_evaluation.name(),"test-driven >> then >> begin"));
+		this.logger.debug("{} >> {} >> test-driven >> then >> begin",_evaluation.specName(),_evaluation.name());
 	}
 
 	@Override
 	public <T extends EvaluationId> void drivenTestThenEnd(T _evaluation) {
-		System.out.println(SimpleFormat.format("{} >> {} >> {}",_evaluation.specName(),_evaluation.name(),"test-driven >> then >> end"));
+		this.logger.debug("{} >> {} >> test-driven >> then >> end",_evaluation.specName(),_evaluation.name());
 	}
 	@Override
 	public <T extends EvaluationId> void drivenTestCleanBegin(T _evaluation) {
-		System.out.println(SimpleFormat.format("{} >> {} >> {}",_evaluation.specName(),_evaluation.name(),"test-driven >> clean >> begin"));
+		this.logger.debug("{} >> {} >> test-driven >> clean >> begin{}",_evaluation.specName(),_evaluation.name());
 	}
 
 	@Override
 	public <T extends EvaluationId> void drivenTestCleanEnd(T _evaluation) {
-		System.out.println(SimpleFormat.format("{} >> {} >> {}",_evaluation.specName(),_evaluation.name(),"test-driven >> clean >> end"));
+		this.logger.debug("{} >> {} >> test-driven >> clean >> end",_evaluation.specName(),_evaluation.name());
 	}
 	@Override
 	public <T extends EvaluationId> void drivenTestGivenEnd(T _evaluation) {
-		System.out.println(SimpleFormat.format("{} >> {} >> {}",_evaluation.specName(),_evaluation.name(),"test-driven >> end"));
+		this.logger.debug("{} >> {} >> test-driven >> end",_evaluation.specName(),_evaluation.name());
 	}
 
 
@@ -132,46 +135,49 @@ public class TestDriveListener implements TestListener,SpecificationListener,Eva
 			//TODO
 			case SUCCESS:	this.reporter.testSucceeded(
 											getReport(_evaluation.getSpecificationClass(), _evaluation.getTestMethod(), _evaluation.name(),  _result.getMessage(), _result.getDuration()));
+							this.logger.info("{} >> {} >> {}",_evaluation.specName(),_evaluation.name(),_result.getLog());
 							break;
 			case ERROR:		this.reporter.testError(
 											getReport(_evaluation.getSpecificationClass(), _evaluation.getTestMethod(), _evaluation.name(),  _result.getMessage(),_result.getError()));
-							_result.getError().printStackTrace(System.err);
+							this.logger.error(_result.getError());
+							this.logger.error("{} >> {} >> {}",null,_evaluation.specName(),_evaluation.name(),_result.getLog());
 							break;
 			case FAILURE:	this.reporter.testFailed(
 											getReport(_evaluation.getSpecificationClass(), _evaluation.getTestMethod(), _evaluation.name(),  _result.getMessage(),_result.getError()));
+							this.logger.warning("{} >> {} >> {}",_evaluation.specName(),_evaluation.name(),_result.getLog());
 							break;
 			default:		this.reporter.testSkipped(
 											getReport(_evaluation.getSpecificationClass(), _evaluation.getTestMethod(), _evaluation.name(),  _result.getMessage(), _result.getDuration()));
+							this.logger.info("{} >> {} >> {}",_evaluation.specName(),_evaluation.name(),_result.getLog());
 		}
-		System.out.println(SimpleFormat.format("{} >> {} >> {}",_evaluation.specName(),_evaluation.name(),_result.getLog()));
 	}
 	
 	@Override
 	public <T extends TestId> void startTestCleanup(T _test) {
-		System.out.println(SimpleFormat.format("{} >> {} >> {}",_test.specName(),_test.name(),"cleanup >> begin"));
+		this.logger.debug("{} >> {} >> cleanup >> begin",_test.specName(),_test.name());
 	}
 	@Override
 	public <T extends TestId> void endTestCleanup(T _test) {
-		System.out.println(SimpleFormat.format("{} >> {} >> {}",_test.specName(),_test.name(),"cleanup >> end"));
+		this.logger.info("{} >> {} >> cleanup >> end",_test.specName(),_test.name());
 	}
 
 	@Override
 	public <T extends TestId> void endTest(T _test, Result _result) {
-		System.out.println(SimpleFormat.format("{{} >> {} >> {}",_test.specName(),_test.name(),_result.getLog()));
+		this.logger.info("{} >> {} >> {}",_test.specName(),_test.name(),_result.getLog());
 	}
 
 	@Override
 	public <T extends SpecificationId> void startSpecificationCleanup(final T _specification) {
-		System.out.println(SimpleFormat.format("{} >> {}",_specification.name(),"cleanup >> begin"));
+		this.logger.debug("{} >> cleanup >> begin",_specification.name());
 	}
 	@Override
 	public <T extends SpecificationId> void endSpecificationCleanup(final T _specification) {
-		System.out.println(SimpleFormat.format("{} >> {}",_specification.name(),"cleanup >> end"));
+		this.logger.info("{} >> cleanup >> end",_specification.name());
 	}
 
 	@Override
 	public <T extends SpecificationId> void endSpecification(final T _specification,final Result _result) {
-		System.out.println(SimpleFormat.format("{} >> {}",_specification.name(),_result.getLog()));
+		this.logger.info(SimpleFormat.format("{} >> {}",_specification.name(),_result.getLog()));
 		final TestSetReportEntry reportEntry=this.specs.get(_specification);
 		this.reporter.testSetCompleted(reportEntry);
 	}
