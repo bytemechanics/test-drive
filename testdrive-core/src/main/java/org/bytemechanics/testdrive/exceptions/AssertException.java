@@ -30,6 +30,7 @@ public class AssertException extends RuntimeException{
 	private final String assertion;
 	private final Object expected;
 	private final Object actual;
+	private final String description;
 
 	/**
 	 * Assertion failure exception constructor
@@ -42,6 +43,7 @@ public class AssertException extends RuntimeException{
 		this.assertion=null;
 		this.expected=null;
 		this.actual=null;
+		this.description=_cause.getMessage();
 	}
 	
 	/**
@@ -55,6 +57,7 @@ public class AssertException extends RuntimeException{
 		this.assertion=_cause.getAssertion();
 		this.expected=_cause.getExpected();
 		this.actual=_cause.getActual();
+		this.description=_cause.getDescription();
 	}
 
 	/**
@@ -62,18 +65,23 @@ public class AssertException extends RuntimeException{
 	 * @param _assertion Failed assertion
 	 * @param _expected expected result
 	 * @param _actual actual result
-	 * @param _cause exception cause
+	 * @param _description assertion failure message
 	 */
-	public AssertException(final String _assertion,final Object _expected,final Object _actual,final Throwable _cause) {
-		super(SimpleFormat.format("({}):\n\tExpected:\t{}\n\tActual:\t{}",_assertion,_expected,_actual,_cause.getMessage()),_cause);
+	public AssertException(final String _assertion,final Object _expected,final Object _actual,final String _description) {
+		super(SimpleFormat.format("({}):\n\tExpected:\t{}\n\tActual:\t{}",_assertion,_expected,_actual,_description));
 		this.evaluation=null;
 		this.assertion=_assertion;
 		this.expected=_expected;
 		this.actual=_actual;
+		this.description=_description;
 	}
 
 	public String getEvaluation() {
 		return evaluation;
+	}
+
+	public String getDescription() {
+		return description;
 	}
 	
 	/**

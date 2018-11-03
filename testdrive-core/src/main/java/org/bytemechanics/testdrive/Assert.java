@@ -15,10 +15,12 @@
  */
 package org.bytemechanics.testdrive;
 
+import org.bytemechanics.testdrive.assertions.NumericAssertion;
+
 /**
  *
  * @author afarre
  */
-public class Assert {
+public class Assert implements NumericAssertion {
 	
 }
