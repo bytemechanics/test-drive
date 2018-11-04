@@ -18,6 +18,10 @@
 		</dependency>
 	</dependencies>
 	
+	<properties>
+		<javadoc.excluded.packages>org.bytemechanics.testdrive.example.*</javadoc.excluded.packages>
+	</properties>
+	
 	<build>
 		<plugins>
 			<plugin>

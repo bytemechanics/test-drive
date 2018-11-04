@@ -4,13 +4,13 @@
     <parent>
         <groupId>org.bytemechanics</groupId>
         <artifactId>testdrive</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>0.1.0</version>
     </parent>
     <artifactId>testdrive-core</artifactId>
     <packaging>jar</packaging>
     <name>TestDrive-Core</name>
 	<description>Pure Java implementation of spock testing framework</description>
-	<url>https://jspock.bytemechanics.org</url>
+	<url>https://test-drive.bytemechanics.org</url>
 	<developers>
 		<developer>
 			<name>Albert Farré Figueras</name>
@@ -34,9 +34,13 @@
 		<url>http://www.bytemechanics.org</url>
 	</organization>
 	<scm>
-		<connection>https://github.com/bytemechanics/jspock.git</connection>
-		<url>https://github.com/bytemechanics/jspock</url>
+		<connection>https://github.com/bytemechanics/test-drive.git</connection>
+		<url>https://github.com/bytemechanics/test-drive</url>
 	</scm>
+	
+	<properties>
+		<javadoc.excluded.packages>org.bytemechanics.testdrive.internal.*</javadoc.excluded.packages>
+	</properties>
 
 	<build>
 		<plugins>

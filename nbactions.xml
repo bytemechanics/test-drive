@@ -16,7 +16,7 @@
             <displayName>Update Javadoc</displayName>
             <goals>
                 <goal>clean</goal>
-                <goal>deploy</goal>
+<!--                <goal>deploy</goal>-->
             </goals>
             <activatedProfiles>
                 <activatedProfile>javadoc</activatedProfile>

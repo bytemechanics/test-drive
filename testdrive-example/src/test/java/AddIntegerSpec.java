@@ -32,7 +32,7 @@ public class AddIntegerSpec implements Specification {
 	
 	
 	@Test(name="accumulate {} and {} should result with {} with driven test", evaluations = {
-		@Evaluation(name = "one",args = {"1","1","0","0"}),
+		@Evaluation(name = "one",args = {"1","1","0","2"}),
 		@Evaluation(name = "zero",args = {"0","0","0","0"})
 	})
 	public DrivenTest accumulateDriven(final int _base,final int _val1,final int _val2,final int _expected){
@@ -58,7 +58,7 @@ public class AddIntegerSpec implements Specification {
 	
 	@Test(evaluations = {
 		@Evaluation(name = "zero",args = {"0","0","0","0"}),
-		@Evaluation(name = "one",args = {"1","1","0","0"})
+		@Evaluation(name = "one",args = {"1","1","0","2"})
 	})
 	public void accumulate2(final int _base,final int _val1,final int _val2,final int _expected){
 
