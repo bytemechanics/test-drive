@@ -10,7 +10,7 @@ Pure java testing framework implementation
 Spock framework is fantastic but use groovy to test java always will be become a mess. After executing a test that should fail and does not fail. Decided that this must be done in pure java.
 
 ## Quick start
-(Please read our [Javadoc](https://test-drive.bytemechanics.org/javadoc/index.html) for further information)
+(Please read our [Javadoc](https://test-drive.bytemechanics.org/docs/javadoc/index.html) for further information)
 
 1. First of all include the Jar file in your compile and execution classpath.
 
