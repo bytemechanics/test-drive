@@ -2,11 +2,7 @@ org.bytemechanics.testdrive
 org.bytemechanics.testdrive.adapter
 org.bytemechanics.testdrive.annotations
 org.bytemechanics.testdrive.assertions
-org.bytemechanics.testdrive.example
 org.bytemechanics.testdrive.exceptions
-org.bytemechanics.testdrive.internal.commons.functional
-org.bytemechanics.testdrive.internal.commons.reflection
-org.bytemechanics.testdrive.internal.commons.string
 org.bytemechanics.testdrive.listeners
 org.bytemechanics.testdrive.runners
 org.bytemechanics.testdrive.runners.beans
