@@ -6,8 +6,8 @@
 		<artifactId>bytemechanics-maven</artifactId>
 		<version>1.1.0</version>
 	</parent>
-	<artifactId>testdrive</artifactId>
-	<version>0.1.0</version>
+	<artifactId>test-drive-parent</artifactId>
+	<version>0.3.0</version>
 	<packaging>pom</packaging>
 	<name>TestDrive</name>
 	<description>Pure Java testing library</description>
@@ -40,9 +40,9 @@
 	</scm>
 
 	<modules>
-		<module>testdrive-core</module>
-		<module>testdrive-surefire</module>
-		<module>testdrive-example</module>
+		<module>test-drive</module>
+		<module>test-drive-surefire</module>
+		<module>test-drive-example</module>
 	</modules>
 	
 	<build>
@@ -54,7 +54,9 @@
 				<configuration>
 					<excludePackageNames>${javadoc.excluded.packages}</excludePackageNames>
 					<charset>UTF-8</charset>
-					<outputDirectory>${project.reporting.outputDirectory}/apidocs</outputDirectory>
+					<reportOutputDirectory>${basedir}/docs</reportOutputDirectory>
+					<destDir>javadoc</destDir>
+					<outputDirectory>${project.reporting.outputDirectory}/javadoc</outputDirectory>
 				</configuration>
 				<executions>
 					<execution>
@@ -68,37 +70,4 @@
 			</plugin>
 		</plugins>
 	</build>
-	
-	<reporting>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<configuration>
-					<excludePackageNames>${javadoc.excluded.packages}</excludePackageNames>
-					<charset>UTF-8</charset>
-				</configuration>
-				<reportSets>
-					<reportSet>
-						<id>non-aggregate</id>
-						<configuration>
-							<outputDirectory>${project.reporting.outputDirectory}/apidocs</outputDirectory>
-						</configuration>
-						<reports>
-							<report>javadoc</report>
-						</reports>
-					</reportSet>
-					<reportSet>
-						<id>aggregate</id>
-						<configuration>
-							<outputDirectory>${basedir}/docs/javadoc</outputDirectory>
-						</configuration>
-						<reports>
-							<report>aggregate</report>
-						</reports>
-					</reportSet>
-				</reportSets>
-			</plugin>
-		</plugins>
-	</reporting>
 </project>

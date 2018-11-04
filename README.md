@@ -1,7 +1,7 @@
 # Copy Commons
 [![Latest version](https://maven-badges.herokuapp.com/maven-central/org.bytemechanics/test-drive/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.bytemechanics/test-drive/badge.svg)
-[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=org.bytemechanics%3Atest-drive&metric=alert_status)](https://sonarcloud.io/dashboard/index/org.bytemechanics%3Atest-drive)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=org.bytemechanics%3Atest-drive&metric=coverage)](https://sonarcloud.io/dashboard/index/org.bytemechanics%3Atest-drive)
+[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=org.bytemechanics%3Atest-drive-parent&metric=alert_status)](https://sonarcloud.io/dashboard/index/org.bytemechanics%3Atest-drive-parent)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=org.bytemechanics%3Atest-drive-parent&metric=coverage)](https://sonarcloud.io/dashboard/index/org.bytemechanics%3Atest-drive-parent)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 Pure java testing framework implementation

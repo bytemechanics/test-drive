@@ -16,6 +16,7 @@
             <displayName>Update Javadoc</displayName>
             <goals>
                 <goal>clean</goal>
+                <goal>javadoc:aggregate</goal>
 <!--                <goal>deploy</goal>-->
             </goals>
             <activatedProfiles>
@@ -36,5 +37,24 @@
                 <sonar.organization>bytemechanics-github</sonar.organization>
                 <sonar.login>219ee1739efe09bba41c7ffbea4094014b0c149d</sonar.login>
             </properties>
+        </action>
+        <action>
+            <actionName>CUSTOM-Update version</actionName>
+            <displayName>Update version</displayName>
+            <goals>
+                <goal>versions:set</goal>
+                <goal>-DnewVersion=0.3.0</goal>
+            </goals>
+        </action>
+        <action>
+            <actionName>javadoc</actionName>
+            <packagings>
+                <packaging>*</packaging>
+            </packagings>
+            <goals>
+                <goal>generate-sources</goal>
+                <goal>javadoc:aggregate</goal>
+                
+            </goals>
         </action>
     </actions>
