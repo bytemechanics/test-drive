@@ -39,8 +39,13 @@ import org.bytemechanics.testdrive.listeners.TestListener;
 import org.bytemechanics.testdrive.surefire.utils.TestDriveLogger;
 
 /**
- *
+ * Listener to report to maven surefire the tests executed and their results. As maven surefire does not implement all functionalities of TestDrive, some logs are reported to system.out
+ * @see TestListener
+ * @see SpecificationListener
+ * @see EvaluationListener
+ * @see DrivenTestListener
  * @author afarre
+ * @since 0.3.0
  */
 public class TestDriveListener implements TestListener,SpecificationListener,EvaluationListener,DrivenTestListener{
 	
@@ -54,6 +59,10 @@ public class TestDriveListener implements TestListener,SpecificationListener,Eva
 		this.logger=_logger;
 	}
 
+	/** 
+	 * @see SpecificationListener#startSpecification(org.bytemechanics.testdrive.adapter.SpecificationId)   
+	 * @since 0.3.0
+	 */
 	@Override
 	public <T extends SpecificationId> void startSpecification(final T _specification) {
 		this.logger.debug("{} >> begin",_specification.name());
@@ -62,72 +71,132 @@ public class TestDriveListener implements TestListener,SpecificationListener,Eva
 		this.reporter.testSetStarting(reportEntry);
 	}
 
+	/** 
+	 * @see SpecificationListener#startSpecificationSetup(org.bytemechanics.testdrive.adapter.SpecificationId)   
+	 * @since 0.3.0
+	 */
 	@Override
 	public <T extends SpecificationId> void startSpecificationSetup(final T _specification) {
 		this.logger.debug("{} >> setup >> begin",_specification.name());
 	}
+	/** 
+	 * @see SpecificationListener#endSpecificationSetup(org.bytemechanics.testdrive.adapter.SpecificationId)   
+	 * @since 0.3.0
+	 */
 	@Override
 	public <T extends SpecificationId> void endSpecificationSetup(final T _specification) {
 		this.logger.info("{} >> setup >> end",_specification.name());
 	}
 
 
+	/** 
+	 * @see TestListener#startTest(org.bytemechanics.testdrive.adapter.TestId)   
+	 * @since 0.3.0
+	 */
 	@Override
 	public <T extends TestId> void startTest(T _test) {
 		this.logger.debug("{} >> {} >> begin", _test.specName(),_test.name());
 	}
 
+	/** 
+	 * @see TestListener#startTestSetup(org.bytemechanics.testdrive.adapter.TestId)   
+	 * @since 0.3.0
+	 */
 	@Override
 	public <T extends TestId> void startTestSetup(T _test) {
 		this.logger.debug("{} >> {} >> setup >> begin",_test.specName(),_test.name());
 	}
+	/** 
+	 * @see TestListener#endTestSetup(org.bytemechanics.testdrive.adapter.TestId)   
+	 * @since 0.3.0
+	 */
 	@Override
 	public <T extends TestId> void endTestSetup(T _test) {
 		this.logger.info("{} >> {} >> setup >> end",_test.specName(),_test.name());
 	}
 
+	/** 
+	 * @see EvaluationListener#startEvaluation(org.bytemechanics.testdrive.adapter.EvaluationId)   
+	 * @since 0.3.0
+	 */
 	@Override
 	public <T extends EvaluationId> void startEvaluation(T _evaluation) {
 		this.logger.debug("{} >> {} >> begin",_evaluation.specName(),_evaluation.name());
 	}
 
+	/** 
+	 * @see  DrivenTestListener#drivenTestGivenBegin(org.bytemechanics.testdrive.adapter.EvaluationId)   
+	 * @since 0.3.0
+	 */
 	@Override
 	public <T extends EvaluationId> void drivenTestGivenBegin(T _evaluation) {
-		this.logger.debug("{} >> {} >> test-driven >> begin",_evaluation.specName(),_evaluation.name());
+		this.logger.debug("{} >> {} >> test-driven >> given >> begin",_evaluation.specName(),_evaluation.name());
 	}
+	/** 
+	 * @see  DrivenTestListener#drivenTestGivenEnd(org.bytemechanics.testdrive.adapter.EvaluationId)   
+	 * @since 0.3.0
+	 */
+	@Override
+	public <T extends EvaluationId> void drivenTestGivenEnd(T _evaluation) {
+		this.logger.debug("{} >> {} >> test-driven >> given >> end",_evaluation.specName(),_evaluation.name());
+	}
+
+	/** 
+	 * @see  DrivenTestListener#drivenTestWhenBegin(org.bytemechanics.testdrive.adapter.EvaluationId)   
+	 * @since 0.3.0
+	 */
 	@Override
 	public <T extends EvaluationId> void drivenTestWhenBegin(T _evaluation) {
 		this.logger.debug("{} >> {} >> test-driven >> when >> begin",_evaluation.specName(),_evaluation.name());
 	}
-
+	/** 
+	 * @see  DrivenTestListener#drivenTestWhenEnd(org.bytemechanics.testdrive.adapter.EvaluationId)   
+	 * @since 0.3.0
+	 */
 	@Override
 	public <T extends EvaluationId> void drivenTestWhenEnd(T _evaluation) {
 		this.logger.debug("{} >> {} >> test-driven >> when >> end",_evaluation.specName(),_evaluation.name());
 	}
+
+	/** 
+	 * @see  DrivenTestListener#drivenTestThenBegin(org.bytemechanics.testdrive.adapter.EvaluationId)   
+	 * @since 0.3.0
+	 */
 	@Override
 	public <T extends EvaluationId> void drivenTestThenBegin(T _evaluation) {
 		this.logger.debug("{} >> {} >> test-driven >> then >> begin",_evaluation.specName(),_evaluation.name());
 	}
-
+	/** 
+	 * @see  DrivenTestListener#drivenTestThenEnd(org.bytemechanics.testdrive.adapter.EvaluationId)   
+	 * @since 0.3.0
+	 */
 	@Override
 	public <T extends EvaluationId> void drivenTestThenEnd(T _evaluation) {
 		this.logger.debug("{} >> {} >> test-driven >> then >> end",_evaluation.specName(),_evaluation.name());
 	}
+
+	/** 
+	 * @see  DrivenTestListener#drivenTestCleanBegin(org.bytemechanics.testdrive.adapter.EvaluationId)   
+	 * @since 0.3.0
+	 */
 	@Override
 	public <T extends EvaluationId> void drivenTestCleanBegin(T _evaluation) {
-		this.logger.debug("{} >> {} >> test-driven >> clean >> begin{}",_evaluation.specName(),_evaluation.name());
+		this.logger.debug("{} >> {} >> test-driven >> clean >> begin",_evaluation.specName(),_evaluation.name());
 	}
-
+	/** 
+	 * @see  DrivenTestListener#drivenTestCleanEnd(org.bytemechanics.testdrive.adapter.EvaluationId)   
+	 * @since 0.3.0
+	 */
 	@Override
 	public <T extends EvaluationId> void drivenTestCleanEnd(T _evaluation) {
 		this.logger.debug("{} >> {} >> test-driven >> clean >> end",_evaluation.specName(),_evaluation.name());
 	}
-	@Override
-	public <T extends EvaluationId> void drivenTestGivenEnd(T _evaluation) {
-		this.logger.debug("{} >> {} >> test-driven >> end",_evaluation.specName(),_evaluation.name());
-	}
 
 
+	/** 
+	 * @see EvaluationListener#endEvaluation(org.bytemechanics.testdrive.adapter.EvaluationId, org.bytemechanics.testdrive.adapter.Result)   
+	 * @since 0.3.0
+	 */
 	@Override
 	public <T extends EvaluationId> void endEvaluation(T _evaluation, Result _result) {
 		
@@ -152,29 +221,53 @@ public class TestDriveListener implements TestListener,SpecificationListener,Eva
 		}
 	}
 	
+	/** 
+	 * @see TestListener#startTestCleanup(org.bytemechanics.testdrive.adapter.TestId)   
+	 * @since 0.3.0
+	 */
 	@Override
 	public <T extends TestId> void startTestCleanup(T _test) {
 		this.logger.debug("{} >> {} >> cleanup >> begin",_test.specName(),_test.name());
 	}
+	/** 
+	 * @see TestListener#endTestCleanup(org.bytemechanics.testdrive.adapter.TestId)   
+	 * @since 0.3.0
+	 */
 	@Override
 	public <T extends TestId> void endTestCleanup(T _test) {
 		this.logger.info("{} >> {} >> cleanup >> end",_test.specName(),_test.name());
 	}
 
+	/** 
+	 * @see TestListener#endTest(org.bytemechanics.testdrive.adapter.TestId, org.bytemechanics.testdrive.adapter.Result)   
+	 * @since 0.3.0
+	 */
 	@Override
 	public <T extends TestId> void endTest(T _test, Result _result) {
 		this.logger.info("{} >> {} >> {}",_test.specName(),_test.name(),_result.getLog());
 	}
 
+	/** 
+	 * @see SpecificationListener#startSpecificationCleanup(org.bytemechanics.testdrive.adapter.SpecificationId)   
+	 * @since 0.3.0
+	 */
 	@Override
 	public <T extends SpecificationId> void startSpecificationCleanup(final T _specification) {
 		this.logger.debug("{} >> cleanup >> begin",_specification.name());
 	}
+	/** 
+	 * @see SpecificationListener#endSpecificationCleanup(org.bytemechanics.testdrive.adapter.SpecificationId)   
+	 * @since 0.3.0
+	 */
 	@Override
 	public <T extends SpecificationId> void endSpecificationCleanup(final T _specification) {
 		this.logger.info("{} >> cleanup >> end",_specification.name());
 	}
 
+	/** 
+	 * @see SpecificationListener#endSpecification(org.bytemechanics.testdrive.adapter.SpecificationId, org.bytemechanics.testdrive.adapter.Result)   
+	 * @since 0.3.0
+	 */
 	@Override
 	public <T extends SpecificationId> void endSpecification(final T _specification,final Result _result) {
 		this.logger.info(SimpleFormat.format("{} >> {}",_specification.name(),_result.getLog()));
@@ -182,9 +275,31 @@ public class TestDriveListener implements TestListener,SpecificationListener,Eva
 		this.reporter.testSetCompleted(reportEntry);
 	}
 	
+	/**
+	 * Builds a report entry from the given params
+	 * @param _class test class
+	 * @param _method test method
+	 * @param _group test group
+	 * @param _message test message
+	 * @param  _duration test duration
+	 * @return new report entry instance
+	 * @see ReportEntry
+	 * @since 0.3.0
+	 */
 	protected ReportEntry getReport(final Class _class,final Method _method,final String _group,final String _message,final Duration _duration){
 		return CategorizedReportEntry.reportEntry(_class.getName(), _method.getName(),_group,null,((Long)_duration.toMillis()).intValue(), _message, ObjectUtils.systemProps());
 	}
+	/**
+	 * Builds a error report entry from the given params
+	 * @param _class test class
+	 * @param _method test method
+	 * @param _group test group
+	 * @param _message test message
+	 * @param _error error cause 
+	 * @return new error report entry instance
+	 * @see ReportEntry
+	 * @since 0.3.0
+	 */
 	protected ReportEntry getReport(final Class _class,final Method _method,final String _group,final String _message,final Throwable _error){
 		final StackTraceWriter errorWriter=new PojoStackTraceWriter(_class.getName(),_method.getName(),_error);
 		return CategorizedReportEntry.reportEntry(_class.getName(), _method.getName(),_group,errorWriter,0, _message, ObjectUtils.systemProps());

@@ -68,7 +68,7 @@ public class AssertException extends RuntimeException{
 	 * @param _description assertion failure message
 	 */
 	public AssertException(final String _assertion,final Object _expected,final Object _actual,final String _description) {
-		super(SimpleFormat.format("({}):\n\tExpected:\t{}\n\tActual:\t{}",_assertion,_expected,_actual,_description));
+		super(SimpleFormat.format("{}({}):\n\tExpected:\t{}\n\tActual:\t{}",(_description!=null)? _description : "",_assertion,_expected,_actual));
 		this.evaluation=null;
 		this.assertion=_assertion;
 		this.expected=_expected;

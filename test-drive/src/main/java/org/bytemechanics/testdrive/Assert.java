@@ -16,10 +16,16 @@
 package org.bytemechanics.testdrive;
 
 import org.bytemechanics.testdrive.assertions.ArrayAssertions;
+import org.bytemechanics.testdrive.assertions.ObjectAssertions;
+import org.bytemechanics.testdrive.assertions.PrimitiveAssertions;
 
 /**
- *
+ * Assertion class to put all inbuild assertions under the same class
+ * @see ArrayAssertions
+ * @see ObjectAssertions
+ * @see PrimitiveAssertions
  * @author afarre
+ * @since 0.3.0
  */
 public class Assert extends ArrayAssertions{
 	

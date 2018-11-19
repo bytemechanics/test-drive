@@ -4,11 +4,11 @@
     <parent>
         <groupId>org.bytemechanics</groupId>
         <artifactId>test-drive-parent</artifactId>
-        <version>0.3.0</version>
+        <version>0.3.1</version>
     </parent>
     <artifactId>test-drive</artifactId>
     <packaging>jar</packaging>
-    <name>TestDrive</name>
+    <name>TestDrive Core</name>
 	<description>Pure Java implementation of spock testing framework</description>
 	<url>https://test-drive.bytemechanics.org</url>
 	<developers>

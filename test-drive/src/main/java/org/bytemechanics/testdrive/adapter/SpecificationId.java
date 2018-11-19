@@ -34,12 +34,12 @@ public interface SpecificationId {
 		return SimpleFormat.format("{}{}"
 									,Optional.ofNullable(getSpecificationGroup())
 												.map(String::trim)
-												.filter(String::isEmpty)
+												.filter(group -> !group.isEmpty())
 												.map(group -> SimpleFormat.format("{}:", group))
 												.orElse("")
 									, Optional.ofNullable(getSpecificationName())
 												.map(String::trim)
-												.filter(String::isEmpty)
+												.filter(name -> !name.isEmpty())
 												.orElseGet(() -> getSpecificationClass().getSimpleName())
 );
 	}

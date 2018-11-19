@@ -30,8 +30,6 @@ import org.apache.maven.surefire.report.ReporterException;
 import org.apache.maven.surefire.report.ReporterFactory;
 import org.apache.maven.surefire.report.RunListener;
 import org.apache.maven.surefire.suite.RunResult;
-import org.apache.maven.surefire.testset.TestListResolver;
-import org.apache.maven.surefire.testset.TestRequest;
 import org.apache.maven.surefire.testset.TestSetFailedException;
 import org.apache.maven.surefire.util.RunOrderCalculator;
 import org.apache.maven.surefire.util.ScanResult;
@@ -43,18 +41,17 @@ import org.bytemechanics.testdrive.surefire.listener.TestDriveListener;
 import org.bytemechanics.testdrive.surefire.utils.TestDriveLogger;
 
 /**
- *
+ * TestDrive provider for maven surefire. This is the main class to make maven surefire work with TestDrive
+ * @see AbstractProvider
  * @author afarre
+ * @since 0.3.0
  */
 public class TestDriveProvider extends AbstractProvider{
 
 	private final ClassLoader testClassLoader;
-    private final String customRunListeners;
-    private final TestListResolver testResolver;
     private final ProviderParameters providerParameters;
     private final RunOrderCalculator runOrderCalculator;
     private final ScanResult scanResult;
-    private final int rerunFailingTestsCount;
     private final CommandReader commandsReader;
 	private final TestDriveLogger logger;
 	private TestsToRun testsToRun;
@@ -66,14 +63,11 @@ public class TestDriveProvider extends AbstractProvider{
         this.testClassLoader = _parameters.getTestClassLoader();
         this.scanResult = _parameters.getScanResult();
         this.runOrderCalculator = _parameters.getRunOrderCalculator();
-        this.customRunListeners = _parameters.getProviderProperties().get( "listener" );
-        final TestRequest testRequest = _parameters.getTestRequest();
-        this.testResolver = testRequest.getTestListResolver();
-		this.rerunFailingTestsCount = testRequest.getRerunFailingTestsCount();
-		this.logger=new TestDriveLogger(_parameters.getConsoleLogger());
+        this.logger=new TestDriveLogger(_parameters.getConsoleLogger());
 		this.testsToRun=null;
 	}
 	
+	/** @see AbstractProvider#getSuites() */
 	@Override
 	public Iterable<Class<?>> getSuites() {
 		return scanClassPath()
@@ -81,6 +75,13 @@ public class TestDriveProvider extends AbstractProvider{
 					.orElse(Collections.emptyList());
 	}
 	
+	/**
+	 * Return an optional list of tests to run
+	 * @return an optional of TestsToRun
+	 * @see Optional
+	 * @see TestsToRun
+	 * @since 0.3.0
+	 */
 	protected Optional<TestsToRun> scanClassPath() {
 		return Optional.ofNullable(this.scanResult)
 						.map(result -> result.applyFilter(Specification.class::isAssignableFrom, testClassLoader))
@@ -88,6 +89,7 @@ public class TestDriveProvider extends AbstractProvider{
 	}
 
 	
+	/** @see AbstractProvider#invoke(java.lang.Object) */
 	@Override
 	public RunResult invoke(final Object _forkTestSet) throws TestSetFailedException, ReporterException, InvocationTargetException {
 

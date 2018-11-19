@@ -43,7 +43,7 @@
             <displayName>Update version</displayName>
             <goals>
                 <goal>versions:set</goal>
-                <goal>-DnewVersion=0.3.0</goal>
+                <goal>-DnewVersion=0.3.1</goal>
             </goals>
         </action>
         <action>
