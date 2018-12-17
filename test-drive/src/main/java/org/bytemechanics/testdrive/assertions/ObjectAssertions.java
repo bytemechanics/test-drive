@@ -16,7 +16,6 @@
 package org.bytemechanics.testdrive.assertions;
 
 import org.bytemechanics.testdrive.exceptions.AssertException;
-import org.bytemechanics.testdrive.internal.commons.string.SimpleFormat;
 
 /**
  *
@@ -53,7 +52,7 @@ public class ObjectAssertions extends PrimitiveAssertions{
 	 */
 	public static final <T extends Boolean> void assertTrue(final T _actual,final String _message){
 		if(!isTrue(_actual))
-			throw new AssertException(SimpleFormat.format("{}.equals(true)", _actual,true), true, _actual, _message);
+			throw new AssertException("~", _actual, true, _message);
 	}
 	/**
 	 * Asserts if the _actual value is false
@@ -73,7 +72,7 @@ public class ObjectAssertions extends PrimitiveAssertions{
 	 */
 	public static final <T extends Boolean> void assertFalse(final T _actual,final String _message){
 		if(isTrue(_actual))
-			throw new AssertException(SimpleFormat.format("{}.equals(false)", _actual,true), false, _actual, _message);
+			throw new AssertException("~", _actual, false, _message);
 	}
 	/**
 	 * Asserts if the _actual and the _expected values are equal
@@ -234,7 +233,7 @@ public class ObjectAssertions extends PrimitiveAssertions{
 	 */
 	public static final <T extends Number> void assertZero(final T _actual,final String _message){
 		if(!isZero(_actual))
-			throw new AssertException(SimpleFormat.format("{}==0", _actual), 0, _actual, _message);
+			throw new AssertException("=", _actual, 0, _message);
 	}
 	
 	/**
@@ -268,7 +267,7 @@ public class ObjectAssertions extends PrimitiveAssertions{
 	 */
 	public static final <T extends Number & Comparable> void assertEquals(final T _actual,final T _expected,final String _message){
 		if(!isEqual(_actual, _expected))
-			throw new AssertException(SimpleFormat.format("{}.equals({})", _actual,_expected), _expected, _actual, _message);
+			throw new AssertException("~", _actual,_expected, _message);
 	}
 	/**
 	 * Asserts if the _actual and the _expected values are not equal
@@ -290,7 +289,7 @@ public class ObjectAssertions extends PrimitiveAssertions{
 	 */
 	public static final <T extends Number & Comparable> void assertNotEquals(final T _actual,final T _expected,final String _message){
 		if(isEqual(_actual, _expected))
-			throw new AssertException(SimpleFormat.format("!{}.equals({})", _actual,_expected), _expected, _actual, _message);
+			throw new AssertException("!~", _actual,_expected, _message);
 	}
 	
 	/**
@@ -335,7 +334,7 @@ public class ObjectAssertions extends PrimitiveAssertions{
 	 */
 	public static final <T extends Number & Comparable> void assertGreater(final T _actual,final T _limit,final String _message){
 		if(!isGreater(_actual, _limit))
-			throw new AssertException(SimpleFormat.format("{}>{}", _actual,_limit),_limit, _actual, _message);
+			throw new AssertException(">", _actual,_limit, _message);
 	}
 	/**
 	 * Asserts if the _actual is greater or equal than _limit
@@ -357,7 +356,7 @@ public class ObjectAssertions extends PrimitiveAssertions{
 	 */
 	public static final <T extends Number & Comparable> void assertGreaterOrEqual(final T _actual,final T _limit,final String _message){
 		if(!isGreaterOrEqual(_actual, _limit))
-			throw new AssertException(SimpleFormat.format("{}>={}", _actual,_limit),_limit, _actual, _message);
+			throw new AssertException(">=", _actual,_limit, _message);
 	}
 	/**
 	 * Asserts if the _actual is smaller than _limit
@@ -379,7 +378,7 @@ public class ObjectAssertions extends PrimitiveAssertions{
 	 */
 	public static final <T extends Number & Comparable> void assertSmaller(final T _actual,final T _limit,final String _message){
 		if(isGreaterOrEqual(_actual, _limit))
-			throw new AssertException(SimpleFormat.format("{}<{}", _actual,_limit),_limit, _actual, _message);
+			throw new AssertException("<", _actual,_limit, _message);
 	}
 	/**
 	 * Asserts if the _actual is smaller or equal than _limit
@@ -401,7 +400,7 @@ public class ObjectAssertions extends PrimitiveAssertions{
 	 */
 	public static final <T extends Number & Comparable> void assertSmallerOrEqual(final T _actual,final T _limit,final String _message){
 		if(isGreater(_actual, _limit))
-			throw new AssertException(SimpleFormat.format("{}<={}", _actual,_limit),_limit, _actual, _message);
+			throw new AssertException("<=", _actual,_limit, _message);
 	}
 
 	
@@ -433,7 +432,7 @@ public class ObjectAssertions extends PrimitiveAssertions{
 	 */
 	public static final <T extends Object> void assertNull(final T _actual,final String _message){
 		if(!isNull(_actual))
-			throw new AssertException(SimpleFormat.format("{}==null", _actual), null, _actual, _message);
+			throw new AssertException("=", _actual, null, _message);
 	}
 	/**
 	 * Asserts if the _actual value is not null
@@ -453,7 +452,7 @@ public class ObjectAssertions extends PrimitiveAssertions{
 	 */
 	public static final <T extends Object> void assertNotNull(final T _actual,final String _message){
 		if(isNull(_actual))
-			throw new AssertException(SimpleFormat.format("{}!=null", _actual), null, _actual, _message);
+			throw new AssertException("!=", _actual, null, _message);
 	}
 
 	/**
@@ -487,7 +486,7 @@ public class ObjectAssertions extends PrimitiveAssertions{
 	 */
 	public static final <T extends Object> void equals(final T _actual,final T _expected,final String _message){
 		if(!isEqual(_actual,_expected))
-			throw new AssertException(SimpleFormat.format("{}.equals({})", _actual,_expected), _expected, _actual, _message);
+			throw new AssertException("~", _actual,_expected, _message);
 	}
 	/**
 	 * Asserts if the _actual and the _expected values are not equal
@@ -509,7 +508,7 @@ public class ObjectAssertions extends PrimitiveAssertions{
 	 */
 	public static final <T extends Object> void notEquals(final T _actual,final T _expected,final String _message){
 		if(isEqual(_actual,_expected))
-			throw new AssertException(SimpleFormat.format("!{}.equals({})", _actual,_expected), 0, _actual, _message);
+			throw new AssertException("!~", _actual, 0, _message);
 	}
 
 	/**
@@ -543,7 +542,7 @@ public class ObjectAssertions extends PrimitiveAssertions{
 	 */
 	public static final <T extends Object> void same(final T _actual,final T _expected,final String _message){
 		if(!isSame(_actual,_expected))
-			throw new AssertException(SimpleFormat.format("{}=={}", _actual,_expected), _expected, _actual, _message);
+			throw new AssertException("=", _actual,_expected, _message);
 	}
 	/**
 	 * Asserts if the _actual and the _expected values are not the same instance
@@ -565,6 +564,6 @@ public class ObjectAssertions extends PrimitiveAssertions{
 	 */
 	public static final <T extends Object> void notSame(final T _actual,final T _expected,final String _message){
 		if(isSame(_actual,_expected))
-			throw new AssertException(SimpleFormat.format("{}!={}", _actual,_expected), 0, _actual, _message);
+			throw new AssertException("!=", _actual, 0, _message);
 	}
 }

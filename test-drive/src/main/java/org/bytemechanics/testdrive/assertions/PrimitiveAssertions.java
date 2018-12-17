@@ -16,7 +16,6 @@
 package org.bytemechanics.testdrive.assertions;
 
 import org.bytemechanics.testdrive.exceptions.AssertException;
-import org.bytemechanics.testdrive.internal.commons.string.SimpleFormat;
 
 /**
  * Primitive assertions library
@@ -50,7 +49,7 @@ public class PrimitiveAssertions {
 	 */
 	public static final void assertTrue(final boolean _actual,final String _message){
 		if(!isTrue(_actual))
-			throw new AssertException(SimpleFormat.format("{}==true", _actual,true), true, _actual, _message);
+			throw new AssertException("=", _actual, true, _message);
 	}
 	/**
 	 * Asserts if the _actual value is false
@@ -68,7 +67,7 @@ public class PrimitiveAssertions {
 	 */
 	public static final void assertFalse(final boolean _actual,final String _message){
 		if(isTrue(_actual))
-			throw new AssertException(SimpleFormat.format("{}==false", _actual,false), false, _actual, _message);
+			throw new AssertException("=", _actual, false, _message);
 	}
 	/**
 	 * Asserts if the _actual and the _expected values are equal
@@ -98,7 +97,7 @@ public class PrimitiveAssertions {
 	 */
 	public static final void assertEquals(final boolean _actual,final boolean _expected,final String _message){
 		if(!isEqual(_actual, _expected))
-			throw new AssertException(SimpleFormat.format("{}=={}", _actual,_expected), _expected, _actual, _message);
+			throw new AssertException("=", _actual,_expected , _message);
 	}
 	/**
 	 * Asserts if the _actual and the _expected values are not equal
@@ -118,7 +117,7 @@ public class PrimitiveAssertions {
 	 */
 	public static final void assertNotEquals(final boolean _actual,final boolean _expected,final String _message){
 		if(isEqual(_actual, _expected))
-			throw new AssertException(SimpleFormat.format("{}!={}", _actual,_expected), _expected, _actual, _message);
+			throw new AssertException("!=", _actual,_expected, _message);
 	}
 
 
@@ -150,7 +149,7 @@ public class PrimitiveAssertions {
 	 */
 	public static final void assertEquals(final byte _actual,final byte _expected,final String _message){
 		if(!isEqual(_actual, _expected))
-			throw new AssertException(SimpleFormat.format("{}=={}", _actual,_expected), _expected, _actual, _message);
+			throw new AssertException("=", _actual,_expected, _message);
 	}
 	/**
 	 * Asserts if the _actual and the _expected values are not equal
@@ -170,7 +169,7 @@ public class PrimitiveAssertions {
 	 */
 	public static final void assertNotEquals(final byte _actual,final byte	 _expected,final String _message){
 		if(isEqual(_actual, _expected))
-			throw new AssertException(SimpleFormat.format("{}!={}", _actual,_expected), _expected, _actual, _message);
+			throw new AssertException("!=",  _actual,_expected, _message);
 	}
 
 	
@@ -202,7 +201,7 @@ public class PrimitiveAssertions {
 	 */
 	public static final void assertEquals(final char _actual,final char _expected,final String _message){
 		if(!isEqual(_actual, _expected))
-			throw new AssertException(SimpleFormat.format("{}=={}", _actual,_expected), _expected, _actual, _message);
+			throw new AssertException("=", _actual,_expected, _message);
 	}
 	/**
 	 * Asserts if the _actual and the _expected values are not equal
@@ -222,7 +221,7 @@ public class PrimitiveAssertions {
 	 */
 	public static final void assertNotEquals(final char _actual,final char _expected,final String _message){
 		if(isEqual(_actual, _expected))
-			throw new AssertException(SimpleFormat.format("{}!={}", _actual,_expected), _expected, _actual, _message);
+			throw new AssertException("!=",  _actual,_expected, _message);
 	}
 
 	
@@ -251,7 +250,7 @@ public class PrimitiveAssertions {
 	 */
 	public static final void assertZero(final short _actual,final String _message){
 		if(!isZero(_actual))
-			throw new AssertException(SimpleFormat.format("{}==0", _actual), 0, _actual, _message);
+			throw new AssertException("=", _actual, 0, _message);
 	}
 	
 	/**
@@ -282,7 +281,7 @@ public class PrimitiveAssertions {
 	 */
 	public static final void assertEquals(final short _actual,final short _expected,final String _message){
 		if(!isEqual(_actual,_expected))
-			throw new AssertException(SimpleFormat.format("{}=={}", _actual,_expected), _expected, _actual, _message);
+			throw new AssertException("=", _actual,_expected, _message);
 	}
 	/**
 	 * Asserts if the _actual and the _expected values are not equal
@@ -302,7 +301,7 @@ public class PrimitiveAssertions {
 	 */
 	public static final void assertNotEquals(final short _actual,final short _expected,final String _message){
 		if(!isEqual(_actual,_expected))
-			throw new AssertException(SimpleFormat.format("{}!={}", _actual,_expected), _expected, _actual, _message);
+			throw new AssertException("!=", _actual,_expected, _message);
 	}
 	
 	/**
@@ -343,7 +342,7 @@ public class PrimitiveAssertions {
 	 */
 	public static final void assertGreater(final short _actual,final short _limit,final String _message){
 		if(!isGreater(_actual,_limit))
-			throw new AssertException(SimpleFormat.format("{}>{}", _actual,_limit), _limit, _actual, _message);
+			throw new AssertException(">", _actual, _limit, _message);
 	}
 	/**
 	 * Asserts if the _actual is greater or equal than _limit
@@ -363,7 +362,7 @@ public class PrimitiveAssertions {
 	 */
 	public static final void assertGreaterOrEqual(final short _actual,final short _limit,final String _message){
 		if(!isGreaterOrEqual(_actual,_limit))
-			throw new AssertException(SimpleFormat.format("{}>={}", _actual,_limit), _limit, _actual, _message);
+			throw new AssertException(">=", _actual, _limit, _message);
 	}
 	/**
 	 * Asserts if the _actual is smaller than _limit
@@ -383,7 +382,7 @@ public class PrimitiveAssertions {
 	 */
 	public static final void assertSmaller(final short _actual,final short _limit,final String _message){
 		if(isGreaterOrEqual(_actual,_limit))
-			throw new AssertException(SimpleFormat.format("{}<{}", _actual,_limit), _limit, _actual, _message);
+			throw new AssertException("<", _actual, _limit, _message);
 	}
 	/**
 	 * Asserts if the _actual is smaller or equal than _limit
@@ -403,7 +402,7 @@ public class PrimitiveAssertions {
 	 */
 	public static final void assertSmallerOrEqual(final short _actual,final short _limit,final String _message){
 		if(isGreater(_actual,_limit))
-			throw new AssertException(SimpleFormat.format("{}<={}", _actual,_limit), _limit, _actual, _message);
+			throw new AssertException("<=", _actual, _limit, _message);
 	}
 
 
@@ -433,7 +432,7 @@ public class PrimitiveAssertions {
 	 */
 	public static final void assertZero(final int _actual,final String _message){
 		if(!isZero(_actual))
-			throw new AssertException(SimpleFormat.format("{}==0", _actual), 0, _actual, _message);
+			throw new AssertException("=", _actual, 0, _message);
 	}
 	
 	/**
@@ -464,7 +463,7 @@ public class PrimitiveAssertions {
 	 */
 	public static final void assertEquals(final int _actual,final int _expected,final String _message){
 		if(!isEqual(_actual,_expected))
-			throw new AssertException(SimpleFormat.format("{}=={}", _actual,_expected), _expected, _actual, _message);
+			throw new AssertException("=", _actual,_expected, _message);
 	}
 	/**
 	 * Asserts if the _actual and the _expected values are not equal
@@ -484,7 +483,7 @@ public class PrimitiveAssertions {
 	 */
 	public static final void assertNotEquals(final int _actual,final int _expected,final String _message){
 		if(!isEqual(_actual,_expected))
-			throw new AssertException(SimpleFormat.format("{}!={}", _actual,_expected), _expected, _actual, _message);
+			throw new AssertException("!=", _actual,_expected, _message);
 	}
 	
 	/**
@@ -525,7 +524,7 @@ public class PrimitiveAssertions {
 	 */
 	public static final void assertGreater(final int _actual,final int _limit,final String _message){
 		if(!isGreater(_actual,_limit))
-			throw new AssertException(SimpleFormat.format("{}>{}", _actual,_limit), _limit, _actual, _message);
+			throw new AssertException(">", _actual, _limit, _message);
 	}
 	/**
 	 * Asserts if the _actual is greater or equal than _limit
@@ -545,7 +544,7 @@ public class PrimitiveAssertions {
 	 */
 	public static final void assertGreaterOrEqual(final int _actual,final int _limit,final String _message){
 		if(!isGreaterOrEqual(_actual,_limit))
-			throw new AssertException(SimpleFormat.format("{}>={}", _actual,_limit), _limit, _actual, _message);
+			throw new AssertException(">=", _actual, _limit, _message);
 	}
 	/**
 	 * Asserts if the _actual is smaller than _limit
@@ -565,7 +564,7 @@ public class PrimitiveAssertions {
 	 */
 	public static final void assertSmaller(final int _actual,final int _limit,final String _message){
 		if(isGreaterOrEqual(_actual,_limit))
-			throw new AssertException(SimpleFormat.format("{}<{}", _actual,_limit), _limit, _actual, _message);
+			throw new AssertException("<", _actual, _limit, _message);
 	}
 	/**
 	 * Asserts if the _actual is smaller or equal than _limit
@@ -585,7 +584,7 @@ public class PrimitiveAssertions {
 	 */
 	public static final void assertSmallerOrEqual(final int _actual,final int _limit,final String _message){
 		if(isGreater(_actual,_limit))
-			throw new AssertException(SimpleFormat.format("{}<={}", _actual,_limit), _limit, _actual, _message);
+			throw new AssertException("<=", _actual, _limit, _message);
 	}
 
 
@@ -614,7 +613,7 @@ public class PrimitiveAssertions {
 	 */
 	public static final void assertZero(final long _actual,final String _message){
 		if(!isZero(_actual))
-			throw new AssertException(SimpleFormat.format("{}==0l", _actual), 0, _actual, _message);
+			throw new AssertException("=", _actual, 0, _message);
 	}
 	
 	/**
@@ -645,7 +644,7 @@ public class PrimitiveAssertions {
 	 */
 	public static final void assertEquals(final long _actual,final long _expected,final String _message){
 		if(!isEqual(_actual,_expected))
-			throw new AssertException(SimpleFormat.format("{}=={}", _actual,_expected), _expected, _actual, _message);
+			throw new AssertException("=", _actual,_expected, _message);
 	}
 	/**
 	 * Asserts if the _actual and the _expected values are not equal
@@ -665,7 +664,7 @@ public class PrimitiveAssertions {
 	 */
 	public static final void assertNotEquals(final long _actual,final long _expected,final String _message){
 		if(!isEqual(_actual,_expected))
-			throw new AssertException(SimpleFormat.format("{}!={}", _actual,_expected), _expected, _actual, _message);
+			throw new AssertException("!=", _actual,_expected, _message);
 	}
 	
 	/**
@@ -706,7 +705,7 @@ public class PrimitiveAssertions {
 	 */
 	public static final void assertGreater(final long _actual,final long _limit,final String _message){
 		if(!isGreater(_actual,_limit))
-			throw new AssertException(SimpleFormat.format("{}>{}", _actual,_limit), _limit, _actual, _message);
+			throw new AssertException(">", _actual, _limit, _message);
 	}
 	/**
 	 * Asserts if the _actual is greater or equal than _limit
@@ -726,7 +725,7 @@ public class PrimitiveAssertions {
 	 */
 	public static final void assertGreaterOrEqual(final long _actual,final long _limit,final String _message){
 		if(!isGreaterOrEqual(_actual,_limit))
-			throw new AssertException(SimpleFormat.format("{}>={}", _actual,_limit), _limit, _actual, _message);
+			throw new AssertException(">=", _actual, _limit, _message);
 	}
 	/**
 	 * Asserts if the _actual is smaller than _limit
@@ -746,7 +745,7 @@ public class PrimitiveAssertions {
 	 */
 	public static final void assertSmaller(final long _actual,final long _limit,final String _message){
 		if(isGreaterOrEqual(_actual,_limit))
-			throw new AssertException(SimpleFormat.format("{}<{}", _actual,_limit), _limit, _actual, _message);
+			throw new AssertException("<", _actual, _limit, _message);
 	}
 	/**
 	 * Asserts if the _actual is smaller or equal than _limit
@@ -766,7 +765,7 @@ public class PrimitiveAssertions {
 	 */
 	public static final void assertSmallerOrEqual(final long _actual,final long _limit,final String _message){
 		if(isGreater(_actual,_limit))
-			throw new AssertException(SimpleFormat.format("{}<={}", _actual,_limit), _limit, _actual, _message);
+			throw new AssertException("<=", _actual, _limit, _message);
 	}
 
 	
@@ -795,7 +794,7 @@ public class PrimitiveAssertions {
 	 */
 	public static final void assertZero(final float _actual,final String _message){
 		if(!isZero(_actual))
-			throw new AssertException(SimpleFormat.format("{}==0.0f", _actual), 0, _actual, _message);
+			throw new AssertException("=", _actual, 0.0f, _message);
 	}
 	
 	/**
@@ -826,7 +825,7 @@ public class PrimitiveAssertions {
 	 */
 	public static final void assertEquals(final float _actual,final float _expected,final String _message){
 		if(!isEqual(_actual,_expected))
-			throw new AssertException(SimpleFormat.format("{}=={}", _actual,_expected), _expected, _actual, _message);
+			throw new AssertException("=", _actual,_expected, _message);
 	}
 	/**
 	 * Asserts if the _actual and the _expected values are not equal
@@ -846,7 +845,7 @@ public class PrimitiveAssertions {
 	 */
 	public static final void assertNotEquals(final float _actual,final float _expected,final String _message){
 		if(!isEqual(_actual,_expected))
-			throw new AssertException(SimpleFormat.format("{}!={}", _actual,_expected), _expected, _actual, _message);
+			throw new AssertException("!=", _actual,_expected, _message);
 	}
 	
 	/**
@@ -887,7 +886,7 @@ public class PrimitiveAssertions {
 	 */
 	public static final void assertGreater(final float _actual,final float _limit,final String _message){
 		if(!isGreater(_actual,_limit))
-			throw new AssertException(SimpleFormat.format("{}>{}", _actual,_limit), _limit, _actual, _message);
+			throw new AssertException(">", _actual, _limit, _message);
 	}
 	/**
 	 * Asserts if the _actual is greater or equal than _limit
@@ -907,7 +906,7 @@ public class PrimitiveAssertions {
 	 */
 	public static final void assertGreaterOrEqual(final float _actual,final float _limit,final String _message){
 		if(!isGreaterOrEqual(_actual,_limit))
-			throw new AssertException(SimpleFormat.format("{}>={}", _actual,_limit), _limit, _actual, _message);
+			throw new AssertException(">=", _actual, _limit, _message);
 	}
 	/**
 	 * Asserts if the _actual is smaller than _limit
@@ -927,7 +926,7 @@ public class PrimitiveAssertions {
 	 */
 	public static final void assertSmaller(final float _actual,final float _limit,final String _message){
 		if(isGreaterOrEqual(_actual,_limit))
-			throw new AssertException(SimpleFormat.format("{}<{}", _actual,_limit), _limit, _actual, _message);
+			throw new AssertException("<", _actual, _limit, _message);
 	}
 	/**
 	 * Asserts if the _actual is smaller or equal than _limit
@@ -947,7 +946,7 @@ public class PrimitiveAssertions {
 	 */
 	public static final void assertSmallerOrEqual(final float _actual,final float _limit,final String _message){
 		if(isGreater(_actual,_limit))
-			throw new AssertException(SimpleFormat.format("{}<={}", _actual,_limit), _limit, _actual, _message);
+			throw new AssertException("<=", _actual, _limit, _message);
 	}
 
 	
@@ -976,7 +975,7 @@ public class PrimitiveAssertions {
 	 */
 	public static final void assertZero(final double _actual,final String _message){
 		if(!isZero(_actual))
-			throw new AssertException(SimpleFormat.format("{}==0.0d", _actual), 0, _actual, _message);
+			throw new AssertException("=", _actual, 0.0d, _message);
 	}
 	
 	/**
@@ -1007,7 +1006,7 @@ public class PrimitiveAssertions {
 	 */
 	public static final void assertEquals(final double _actual,final double _expected,final String _message){
 		if(!isEqual(_actual,_expected))
-			throw new AssertException(SimpleFormat.format("{}=={}", _actual,_expected), _expected, _actual, _message);
+			throw new AssertException("=", _actual,_expected, _message);
 	}
 	/**
 	 * Asserts if the _actual and the _expected values are not equal
@@ -1027,7 +1026,7 @@ public class PrimitiveAssertions {
 	 */
 	public static final void assertNotEquals(final double _actual,final double _expected,final String _message){
 		if(!isEqual(_actual,_expected))
-			throw new AssertException(SimpleFormat.format("{}!={}", _actual,_expected), _expected, _actual, _message);
+			throw new AssertException("!=", _actual,_expected, _message);
 	}
 	
 	/**
@@ -1068,7 +1067,7 @@ public class PrimitiveAssertions {
 	 */
 	public static final void assertGreater(final double _actual,final double _limit,final String _message){
 		if(!isGreater(_actual,_limit))
-			throw new AssertException(SimpleFormat.format("{}>{}", _actual,_limit), _limit, _actual, _message);
+			throw new AssertException(">", _actual, _limit, _message);
 	}
 	/**
 	 * Asserts if the _actual is greater or equal than _limit
@@ -1088,7 +1087,7 @@ public class PrimitiveAssertions {
 	 */
 	public static final void assertGreaterOrEqual(final double _actual,final double _limit,final String _message){
 		if(!isGreaterOrEqual(_actual,_limit))
-			throw new AssertException(SimpleFormat.format("{}>={}", _actual,_limit), _limit, _actual, _message);
+			throw new AssertException(">=", _actual, _limit, _message);
 	}
 	/**
 	 * Asserts if the _actual is smaller than _limit
@@ -1108,7 +1107,7 @@ public class PrimitiveAssertions {
 	 */
 	public static final void assertSmaller(final double _actual,final double _limit,final String _message){
 		if(isGreaterOrEqual(_actual,_limit))
-			throw new AssertException(SimpleFormat.format("{}<{}", _actual,_limit), _limit, _actual, _message);
+			throw new AssertException("<", _actual, _limit, _message);
 	}
 	/**
 	 * Asserts if the _actual is smaller or equal than _limit
@@ -1128,6 +1127,6 @@ public class PrimitiveAssertions {
 	 */
 	public static final void assertSmallerOrEqual(final double _actual,final double _limit,final String _message){
 		if(isGreater(_actual,_limit))
-			throw new AssertException(SimpleFormat.format("{}<={}", _actual,_limit), _limit, _actual, _message);
+			throw new AssertException("<=", _actual, _limit, _message);
 	}
 }

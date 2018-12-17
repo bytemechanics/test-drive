@@ -18,6 +18,7 @@ package org.bytemechanics.testdrive;
 import org.bytemechanics.testdrive.assertions.ArrayAssertions;
 import org.bytemechanics.testdrive.assertions.ObjectAssertions;
 import org.bytemechanics.testdrive.assertions.PrimitiveAssertions;
+import org.bytemechanics.testdrive.exceptions.AssertException;
 
 /**
  * Assertion class to put all inbuild assertions under the same class
@@ -29,4 +30,17 @@ import org.bytemechanics.testdrive.assertions.PrimitiveAssertions;
  */
 public class Assert extends ArrayAssertions{
 	
+	/**
+	 * Force assertion failure
+	 */
+	public static void fail(){
+		Assert.fail("Force assertion failure");
+	}
+	/**
+	 * Force assertion failure
+	 * @param _message message to show
+	 */
+	public static void fail(final String _message){
+		throw new AssertException(_message);
+	}
 }

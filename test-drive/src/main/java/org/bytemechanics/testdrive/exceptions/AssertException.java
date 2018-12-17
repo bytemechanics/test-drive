@@ -28,10 +28,22 @@ public class AssertException extends RuntimeException{
 
 	private final String evaluation;
 	private final String assertion;
-	private final Object expected;
 	private final Object actual;
+	private final Object expected;
 	private final String description;
 
+	/**
+	 * Assertion failure exception constructor
+	 * @param _message message
+	 */
+	public AssertException(final String _message) {
+		super(_message);
+		this.evaluation=_message;
+		this.assertion=null;
+		this.actual=null;
+		this.expected=null;
+		this.description=_message;
+	}
 	/**
 	 * Assertion failure exception constructor
 	 * @param _evaluation evaluation
@@ -41,8 +53,8 @@ public class AssertException extends RuntimeException{
 		super(SimpleFormat.format("evaluation {}, line {}: {}", _evaluation,_cause.getStackTrace()[0].getLineNumber(),_cause.getMessage()),_cause);
 		this.evaluation=_evaluation;
 		this.assertion=null;
-		this.expected=null;
 		this.actual=null;
+		this.expected=null;
 		this.description=_cause.getMessage();
 	}
 	
@@ -52,27 +64,27 @@ public class AssertException extends RuntimeException{
 	 * @param _cause Assertion exception cause
 	 */
 	public AssertException(final String _evaluation,final AssertException _cause) {
-		super(SimpleFormat.format("evaluation {}, line {} ({}):\n\tExpected:\t{}\n\tActual:\t{}", _evaluation,_cause.getStackTrace()[0].getLineNumber(),_cause.getAssertion(),_cause.getExpected(),_cause.getActual(),_cause.getCause().getMessage()),_cause);
+		super(SimpleFormat.format("evaluation {}, line {} ({}{}{}):\n\tActual=\t\t{}\n\tExpected{}\t{}", _evaluation,_cause.getStackTrace()[0].getLineNumber(),_cause.getActual(),_cause.getAssertion(),_cause.getExpected(),_cause.getActual(),_cause.getAssertion(),_cause.getExpected(),_cause.getCause().getMessage()),_cause);
 		this.evaluation=_evaluation;
 		this.assertion=_cause.getAssertion();
-		this.expected=_cause.getExpected();
 		this.actual=_cause.getActual();
+		this.expected=_cause.getExpected();
 		this.description=_cause.getDescription();
 	}
 
 	/**
 	 * Assertion failure exception constructor
 	 * @param _assertion Failed assertion
-	 * @param _expected expected result
 	 * @param _actual actual result
+	 * @param _expected expected result
 	 * @param _description assertion failure message
 	 */
-	public AssertException(final String _assertion,final Object _expected,final Object _actual,final String _description) {
-		super(SimpleFormat.format("{}({}):\n\tExpected:\t{}\n\tActual:\t{}",(_description!=null)? _description : "",_assertion,_expected,_actual));
+	public AssertException(final String _assertion,final Object _actual,final Object _expected,final String _description) {
+		super(SimpleFormat.format("{}({}{}{}):\n\tActual=\t\t{}\n\tExpected{}\t{}",(_description!=null)? _description : "",_actual,_assertion,_expected,_actual,_assertion,_expected));
 		this.evaluation=null;
 		this.assertion=_assertion;
-		this.expected=_expected;
 		this.actual=_actual;
+		this.expected=_expected;
 		this.description=_description;
 	}
 
@@ -111,8 +123,8 @@ public class AssertException extends RuntimeException{
 		int hash = 3;
 		hash = 97 * hash + Objects.hashCode(this.evaluation);
 		hash = 97 * hash + Objects.hashCode(this.assertion);
-		hash = 97 * hash + Objects.hashCode(this.expected);
 		hash = 97 * hash + Objects.hashCode(this.actual);
+		hash = 97 * hash + Objects.hashCode(this.expected);
 		return hash;
 	}
 
@@ -134,10 +146,10 @@ public class AssertException extends RuntimeException{
 		if (!Objects.equals(this.assertion, other.assertion)) {
 			return false;
 		}
-		if (!Objects.equals(this.expected, other.expected)) {
+		if (!Objects.equals(this.actual, other.actual)) {
 			return false;
 		}
-		return Objects.equals(this.actual, other.actual);
+		return Objects.equals(this.expected, other.expected);
 	}
 
 }

@@ -12,3 +12,4 @@ buildNumber.properties
 !/.mvn/wrapper/maven-wrapper.jar
 /nbproject/
 /test-drive-surefire/nbproject/
+/test-drive/nbproject/

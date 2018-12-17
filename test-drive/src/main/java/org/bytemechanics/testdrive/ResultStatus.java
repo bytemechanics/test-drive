@@ -27,11 +27,11 @@ public enum ResultStatus {
 	/** Evaluation successful */
 	SUCCESS(0),
 	/** Evaluation not executed by some rules */
-	SKIPPED(0),
+	SKIPPED(1),
 	/** Evaluation failed, an assertion was not accomplished */
-	FAILURE(1),
+	FAILURE(2),
 	/** Evaluation result with an exception, an unexpected exception not related with the assertion happened during evaluation */
-	ERROR(2),
+	ERROR(3),
 	;
 	
 	private final int weight;
