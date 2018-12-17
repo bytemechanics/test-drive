@@ -24,20 +24,22 @@ import java.util.logging.Logger;
 import org.bytemechanics.testdrive.DrivenTest;
 import org.bytemechanics.testdrive.exceptions.AssertException;
 import org.bytemechanics.testdrive.exceptions.DrivenTestCleanException;
+import org.bytemechanics.testdrive.exceptions.DrivenTestException;
 import org.bytemechanics.testdrive.exceptions.DrivenTestGivenException;
+import org.bytemechanics.testdrive.exceptions.DrivenTestInstanceParametersNotMatch;
+import org.bytemechanics.testdrive.exceptions.DrivenTestNotAccessible;
 import org.bytemechanics.testdrive.exceptions.DrivenTestThenException;
 import org.bytemechanics.testdrive.exceptions.DrivenTestWhenException;
-import org.bytemechanics.testdrive.exceptions.TestNotAccessible;
-import org.bytemechanics.testdrive.exceptions.TestParametersNotMatch;
-import org.bytemechanics.testdrive.exceptions.UnexpectedTestError;
+import org.bytemechanics.testdrive.internal.commons.lang.AutoCloseableResource;
 import org.bytemechanics.testdrive.listeners.DrivenTestListener;
 import org.bytemechanics.testdrive.listeners.ExecutionListener;
 import org.bytemechanics.testdrive.runners.beans.EvaluationBean;
 
 
 /**
- *
+ * Driven test runner
  * @author afarre
+ * @since 0.3.0
  */
 public class DrivenTestRunner{
 
@@ -51,6 +53,9 @@ public class DrivenTestRunner{
 	private Function<EvaluationBean,EvaluationBean> drivenTestCleanEnd;
 	
 	
+	/**
+	 * Driven test runner constructor
+	 */
 	public DrivenTestRunner(){
 		this.drivenTestGivenBegin=(EvaluationBean evaluation) -> evaluation;
 		this.drivenTestGivenEnd=(EvaluationBean evaluation) -> evaluation;
@@ -67,6 +72,12 @@ public class DrivenTestRunner{
 		return (EvaluationBean t) -> { _consumer.accept(t); return t;};
 	}
 	
+	/**
+	 * Registers a listener for driven test runner. Uses only DrivenTestListener methods
+	 * @param <T> execution listener
+	 * @param _listener listener to register
+	 * @see DrivenTestListener
+	 */
 	public <T extends ExecutionListener> void registerListener(final T _listener) {
 		this.drivenTestGivenBegin=Optional.ofNullable(_listener)
 											.filter(DrivenTestListener.class::isInstance)
@@ -110,18 +121,24 @@ public class DrivenTestRunner{
 											.orElse(this.drivenTestCleanEnd);
 	}
 
+	/**
+	 * Execute driven test given phase and return the evaluationBean completed
+	 * @param _drivenTest driven test to evaluate
+	 * @param _evaluation evaluation to use
+	 * @return the same evaluation bean provided
+	 * @throws DrivenTestGivenException if any error happens during given phase
+	 */
 	protected EvaluationBean executeDrivenTestGivenEvaluation(final DrivenTest _drivenTest,final EvaluationBean _evaluation){
 
 		try {
 			if(_drivenTest.getClass().getDeclaredMethod("given").getDeclaringClass().equals(_drivenTest.getClass())){
-				try{
-					this.drivenTestGivenBegin.apply(_evaluation);
+				try(AutoCloseableResource listeners=new AutoCloseableResource(() -> this.drivenTestGivenBegin.apply(_evaluation),() -> this.drivenTestGivenEnd.apply(_evaluation))){
 					_drivenTest.given();
 				}catch(Exception e){
 					throw new DrivenTestGivenException(_evaluation, e);
-				}finally{
-					this.drivenTestGivenEnd.apply(_evaluation);
 				}
+			}else{
+				Logger.getLogger(SpecificationRunner.class.getName()).log(Level.FINEST, "given not declared, skip execution");
 			}
 		} catch (NoSuchMethodException | SecurityException ex) {
 			Logger.getLogger(SpecificationRunner.class.getName()).log(Level.FINEST, "given not declared, skip execution", ex);
@@ -129,47 +146,61 @@ public class DrivenTestRunner{
 		
 		return _evaluation;
 	}	
+	/**
+	 * Execute driven test when phase and return the evaluationBean completed
+	 * @param _drivenTest driven test to evaluate
+	 * @param _evaluation evaluation to use
+	 * @return the same evaluation bean provided
+	 * @throws DrivenTestWhenException if any error happens during when phase
+	 */
 	protected EvaluationBean executeDrivenTestWhenEvaluation(final DrivenTest _drivenTest,final EvaluationBean _evaluation){
 
-		try{
-			this.drivenTestWhenBegin.apply(_evaluation);
+		try(AutoCloseableResource listeners=new AutoCloseableResource(() -> this.drivenTestWhenBegin.apply(_evaluation),() -> this.drivenTestWhenEnd.apply(_evaluation))){
 			_drivenTest.when();
 		}catch(Exception e){
 			throw new DrivenTestWhenException(_evaluation, e);
-		}finally{
-			this.drivenTestWhenEnd.apply(_evaluation);
 		}
 		
 		return _evaluation;
 	}	
+	/**
+	 * Execute driven test then phase and return the evaluationBean completed
+	 * @param _drivenTest driven test to evaluate
+	 * @param _evaluation evaluation to use
+	 * @return the same evaluation bean provided
+	 * @throws DrivenTestThenException if any error happens during test phase
+	 */
 	protected EvaluationBean executeDrivenTestThenEvaluation(final DrivenTest _drivenTest,final EvaluationBean _evaluation){
 
-		try{
-			this.drivenTestThenBegin.apply(_evaluation);
+		try(AutoCloseableResource listeners=new AutoCloseableResource(() -> this.drivenTestThenBegin.apply(_evaluation),() -> this.drivenTestThenEnd.apply(_evaluation))){
 			_drivenTest.then();
 		}catch(AssertException e){
 			throw e;
 		}catch(Exception e){
 			throw new DrivenTestThenException(_evaluation, e);
-		}finally{
-			this.drivenTestThenEnd.apply(_evaluation);
 		}
 
 		
 		return _evaluation;
 	}	
+	/**
+	 * Execute driven test clean phase and return the evaluationBean completed
+	 * @param _drivenTest driven test to evaluate
+	 * @param _evaluation evaluation to use
+	 * @return the same evaluation bean provided
+	 * @throws DrivenTestCleanException if any error happens during clean phase
+	 */
 	protected EvaluationBean executeDrivenTestCleanEvaluation(final DrivenTest _drivenTest,final EvaluationBean _evaluation){
 
 		try {
 			if(_drivenTest.getClass().getDeclaredMethod("clean").getDeclaringClass().equals(_drivenTest.getClass())){
-				try{
-					this.drivenTestCleanBegin.apply(_evaluation);
+				try(AutoCloseableResource listeners=new AutoCloseableResource(() -> this.drivenTestCleanBegin.apply(_evaluation),() -> this.drivenTestCleanEnd.apply(_evaluation))){
 					_drivenTest.clean();
 				}catch(Exception e){
 					throw new DrivenTestCleanException(_evaluation, e);
-				}finally{
-					this.drivenTestCleanEnd.apply(_evaluation);
 				}
+			}else{
+				Logger.getLogger(SpecificationRunner.class.getName()).log(Level.FINEST, "clean not declared, skip execution");
 			}
 		} catch (NoSuchMethodException | SecurityException ex) {
 			Logger.getLogger(SpecificationRunner.class.getName()).log(Level.FINEST, "clean not declared, skip execution", ex);
@@ -177,39 +208,42 @@ public class DrivenTestRunner{
 		
 		return _evaluation;
 	}	
-	protected Object executeMethod(final EvaluationBean _evaluation){
 
-		Object reply;
+
+	private DrivenTest getDrivenTest(final EvaluationBean _evaluation){
+
+		DrivenTest reply;
 		
 		try{
-			reply=_evaluation.getTestMethod()
-						.invoke(_evaluation.getSpecification(),_evaluation.getParsedArguments());
+			reply=(DrivenTest)_evaluation.getTestMethod()
+											.invoke(_evaluation.getSpecification(),_evaluation.getParsedArguments());
 		}catch(IllegalArgumentException e){
-			throw new TestParametersNotMatch(_evaluation.getSpecificationClass(),_evaluation.getTestMethod(),_evaluation.getParsedArguments(),e);
+			throw new DrivenTestInstanceParametersNotMatch(_evaluation,_evaluation.getParsedArguments(),e);
 		}catch(IllegalAccessException e){
-			throw new TestNotAccessible(_evaluation.getSpecificationClass(),_evaluation.getTestMethod(),e);
-		}catch(InvocationTargetException e) {
-			if(AssertException.class.isAssignableFrom(e.getCause().getClass())){
-				throw (AssertException)e.getCause();
-			}else if(AssertionError.class.isAssignableFrom(e.getCause().getClass())){
-				throw (AssertionError)e.getCause();
-			}else{
-				throw new UnexpectedTestError(_evaluation.getSpecificationClass(),_evaluation.getTestMethod(),e);
-			}
-		}catch(Exception e){
-			throw new UnexpectedTestError(_evaluation.getSpecificationClass(),_evaluation.getTestMethod(),e);
+			throw new DrivenTestNotAccessible(_evaluation,e);
+		}catch(InvocationTargetException e){
+			throw new DrivenTestException(_evaluation,e);
 		}
 		
 		return reply;
 	}
 
+	/**
+	 * Executes the driven test with the given evaluation bean
+	 * @param _evaluation evaluation to execute
+	 * @throws DrivenTestException if some exeption happens in any of the phases
+	 */
 	public void driveTest(final EvaluationBean _evaluation){
 		
-		final DrivenTest drivenTest=(DrivenTest)executeMethod(_evaluation);
-		
-		executeDrivenTestGivenEvaluation(drivenTest,_evaluation);
-		executeDrivenTestWhenEvaluation(drivenTest,_evaluation);
-		executeDrivenTestThenEvaluation(drivenTest,_evaluation);
-		executeDrivenTestCleanEvaluation(drivenTest,_evaluation);
+		final DrivenTest drivenTest=getDrivenTest(_evaluation);
+
+		try(AutoCloseableResource testDriveEval=new AutoCloseableResource(() -> executeDrivenTestGivenEvaluation(drivenTest,_evaluation),() -> executeDrivenTestCleanEvaluation(drivenTest,_evaluation))){
+			executeDrivenTestWhenEvaluation(drivenTest,_evaluation);
+			executeDrivenTestThenEvaluation(drivenTest,_evaluation);
+		}catch(DrivenTestException e){
+			throw e;
+		}catch(Exception e){
+			throw new DrivenTestException(_evaluation,e);
+		}
 	}
 }

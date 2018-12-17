@@ -20,10 +20,25 @@ import org.bytemechanics.testdrive.adapter.Result;
 
 
 /**
+ * Evaluation listener interface
  * @author afarre
+ * @see ExecutionListener
+ * @see EvaluationId
  */
 public interface EvaluationListener extends ExecutionListener{
 	
+	/**
+	 * Evaluation start event method
+	 * @param <T> evaluation identifier implementing EvaluationId interface
+	 * @param _specificationTest evaluation test
+	 */
 	public <T extends EvaluationId> void startEvaluation(final T _specificationTest);
+	/**
+	 * Evaluation end event method
+	 * @param <T> evaluation identifier implementing EvaluationId interface
+	 * @param _specificationTest evaluation test
+	 * @param _result result of this evaluation
+	 * @see Result
+	 */
 	public <T extends EvaluationId> void endEvaluation(final T _specificationTest,final Result _result);
 }

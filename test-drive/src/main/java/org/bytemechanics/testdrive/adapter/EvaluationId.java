@@ -15,18 +15,38 @@
  */
 package org.bytemechanics.testdrive.adapter;
 
+import org.bytemechanics.testdrive.annotations.Evaluation;
 import org.bytemechanics.testdrive.internal.commons.string.SimpleFormat;
 
 /**
- *
+ * Evaluation identifier interface
  * @author afarre
+ * @since 0.3.0
+ * @see TestId
  */
 public interface EvaluationId extends TestId{
 	
+	/**
+	 * Return the evaluation number for this test
+	 * @return evaluation counter
+	 */
 	public int getEvaluationCounter();
+	/**
+	 * Returns the name of the evaluation accordingly with the Evaluation#name()
+	 * @return evaluation name
+	 * @see Evaluation#name() 
+	 */
 	public String getEvaluationName();
+	/**
+	 * Returns the arguments of the test used for this evaluation
+	 * @return evaluation arguments
+	 */
 	public String[] getEvaluationArguments();
 
+	/**
+	 * Return the cannonical name of this evaluation
+	 * @return an string representing the cannonical name of the evaluation
+	 */
 	@Override
 	public default String name(){
 		return SimpleFormat.format("{}: {}", getEvaluationName(),TestId.super.name(getEvaluationArguments()));

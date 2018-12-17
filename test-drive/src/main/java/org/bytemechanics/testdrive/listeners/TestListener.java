@@ -19,15 +19,49 @@ import org.bytemechanics.testdrive.adapter.Result;
 import org.bytemechanics.testdrive.adapter.TestId;
 
 /**
- *
+ * Test listener interface
  * @author afarre
+ * @since 0.3.0
+ * @see ExecutionListener
+ * @see TestId
  */
 public interface TestListener extends ExecutionListener{
 
-	public <T extends TestId> void startTest(final T _specificationTest);
+	/**
+	 * Test evaluation start event method
+	 * @param <T> evaluation identifier implementing TestId interface
+	 * @param _specification test
+	 */
+	public <T extends TestId> void startTest(final T _specification);
+	/**
+	 * Test evaluation start setup phase event method
+	 * @param <T> evaluation identifier implementing TestId interface
+	 * @param _specification test
+	 */
 	public <T extends TestId> void startTestSetup(final T _specification);
+	/**
+	 * Test evaluation end setup phase event method
+	 * @param <T> evaluation identifier implementing TestId interface
+	 * @param _specification test
+	 */
 	public <T extends TestId> void endTestSetup(final T _specification);
+	/**
+	 * Test evaluation start cleanup phase event method
+	 * @param <T> evaluation identifier implementing TestId interface
+	 * @param _specification test
+	 */
 	public <T extends TestId> void startTestCleanup(final T _specification);
+	/**
+	 * Test evaluation end cleanup phase event method
+	 * @param <T> evaluation identifier implementing TestId interface
+	 * @param _specification test
+	 */
 	public <T extends TestId> void endTestCleanup(final T _specification);
-	public <T extends TestId> void endTest(final T _specificationTest,final Result _result);	
+	/**
+	 * Test evaluation end event method
+	 * @param <T> evaluation identifier implementing TestId interface
+	 * @param _specification test
+	 * @param _result test result
+	 */
+	public <T extends TestId> void endTest(final T _specification,final Result _result);	
 }

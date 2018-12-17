@@ -22,7 +22,7 @@ import org.bytemechanics.testdrive.internal.commons.string.SimpleFormat;
  * Exception thrown when some assertion fail
  * @see RuntimeException
  * @author afarre
- * @since 1.0.0
+ * @since 0.3.0
  */
 public class AssertException extends RuntimeException{
 
@@ -37,7 +37,7 @@ public class AssertException extends RuntimeException{
 	 * @param _evaluation evaluation
 	 * @param _cause Assertion error cause
 	 */
-	public AssertException(final String _evaluation,final AssertionError _cause) {
+	public AssertException(final String _evaluation,final Throwable _cause) {
 		super(SimpleFormat.format("evaluation {}, line {}: {}", _evaluation,_cause.getStackTrace()[0].getLineNumber(),_cause.getMessage()),_cause);
 		this.evaluation=_evaluation;
 		this.assertion=null;

@@ -113,7 +113,8 @@ public class TestDriveProvider extends AbstractProvider{
 			//add listener to runner
 			runner.registerListener(new TestDriveListener(reporter,this.logger));
 			//Evaluate
-			runner.evaluateStream(specStream(testsToRun));
+			runner.completeStream(specStream(testsToRun))
+					.count();
         }finally{
             reply = reporterFactory.close();
         }

@@ -23,8 +23,10 @@ import org.bytemechanics.testdrive.exceptions.SpecificationNotInstantiable;
 import org.bytemechanics.testdrive.internal.commons.reflection.ObjectFactory;
 
 /**
- *
+ * Specification bean
  * @author afarre
+ * @since 0.3.0
+ * @see SpecificationId
  */
 public class SpecificationBean implements SpecificationId {
 	
@@ -34,7 +36,12 @@ public class SpecificationBean implements SpecificationId {
 	private final Specification specification;
 	private ResultBean specificationResult;
 
-	
+
+	/**
+	 * Builds specification bean from specification test class
+	 * @param _testClass specification test class
+	 * @see Specification
+	 */
 	public SpecificationBean(final Class<? extends Specification> _testClass) {
 		this.specificationClass=_testClass;
 		this.specificationName=Optional.ofNullable(_testClass)
@@ -53,6 +60,10 @@ public class SpecificationBean implements SpecificationId {
 														.orElseThrow(() -> new SpecificationNotInstantiable(this.specificationClass));
 		this.specificationResult=null;
 	}
+	/**
+	 * Clone specification bean from the given _spec
+	 * @param _spec specification bean to clone
+	 */
 	public SpecificationBean(final SpecificationBean _spec) {
 		this.specificationClass=_spec.getSpecificationClass();
 		this.specificationName=_spec.getSpecificationName();
@@ -61,35 +72,50 @@ public class SpecificationBean implements SpecificationId {
 		this.specificationResult=_spec.getSpecificationResult();
 	}
 
-	
+	/**
+	 * Return the specification instance represented by this bean
+	 * @return the specification instance represented by this bean
+	 */
 	public Specification getSpecification() {
 		return specification;
 	}
+	/** @see SpecificationId#getSpecificationClass() */
 	@Override
 	public Class<? extends Specification> getSpecificationClass() {
 		return this.specificationClass;
 	}
+	/** @see SpecificationId#getSpecificationName() */
 	@Override
 	public String getSpecificationName() {
 		return this.specificationName;
 	}
+	/** @see SpecificationId#getSpecificationGroup() */
 	@Override
 	public String getSpecificationGroup() {
 		return this.specificationGroup;
 	}
+	/**
+	 * Returns the specification result after executing the specification represented by this bean
+	 * @return specification result after executing the specification represented by this bean
+	 */
 	public ResultBean getSpecificationResult() {
 		return specificationResult;
 	}
-	public void setSpecificationResult(ResultBean result) {
-		this.specificationResult = result;
+	/**
+	 * Sets the specification evaluation result
+	 * @param _result result to register
+	 */
+	public void setSpecificationResult(ResultBean _result) {
+		this.specificationResult = _result;
 	}
 	
-
+	/** @see Object#hashCode() */
 	@Override
 	public int hashCode() {
 		return getSpecificationClass().hashCode();
 	}
 
+	/** @see Object#equals(java.lang.Object) */
 	@Override
 	@SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
 	public boolean equals(Object obj) {

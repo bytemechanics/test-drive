@@ -16,28 +16,57 @@
 package org.bytemechanics.testdrive.adapter;
 
 import java.lang.reflect.Method;
+import org.bytemechanics.testdrive.annotations.Test;
 import org.bytemechanics.testdrive.internal.commons.string.SimpleFormat;
 
 /**
- * Bean to idenfity the one particular specification test
+ * Interface to idenfity the one particular specification test
  * @author afarre
- * @since 1.0.0
+ * @since 0.3.0
+ * @see SpecificationId
  */
 public interface TestId extends SpecificationId{
 	
-
+	/**
+	 * Returns the test method
+	 * @return the test method
+	 */
 	public Method getTestMethod();
+	/**
+	 * Returns the test method parameter classes
+	 * @return parameter classes of the test method
+	 */
 	public Class[] getTestMethodParameters();
+	/**
+	 * Returns the name of the test accordingly with the Test#name()
+	 * @return test name
+	 * @see Test#name() 
+	 */
 	public String getTestName();
 
+	/**
+	 * Return the cannonical name of the test
+	 * @return an string representing the cannonical name of the test
+	 */
 	@Override
 	public default String name(){
 		return SimpleFormat.format(getTestName(),(Object[])getTestMethod().getParameterTypes());
 	}
+	/**
+	 * Return the cannonical name of the test with the given parameters
+	 * @param _args arguments
+	 * @return an string representing the cannonical name of the test with the given parameters
+	 */
 	public default String name(final String... _args){
 		return SimpleFormat.format(getTestName(),(Object[])_args);
 	}
 
+	
+	/**
+	 * Return the specification cannonical name of this test
+	 * @return the specification cannonical name of this test
+	 * @see SpecificationId#name() 
+	 */
 	public default String specName(){
 		return SpecificationId.super.name();
 	}

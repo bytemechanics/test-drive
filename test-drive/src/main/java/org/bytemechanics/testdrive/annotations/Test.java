@@ -21,12 +21,23 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- *
+ * Test additional parameters
  * @author afarre
+ * @since 0.3.0
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface Test {
+	/**
+	 * Test human name (OPTIONAL)
+	 * @return test name
+	 */
 	public String name() default "";
+	/**
+	 * Test evaluations (OPTIONAL)<br>
+	 * If no evaluations pointed the test will be evaluated at least one time without parameters
+	 * @return Array of evaluation
+	 * @see Evaluation
+	 */
 	public Evaluation[] evaluations() default {};
 }

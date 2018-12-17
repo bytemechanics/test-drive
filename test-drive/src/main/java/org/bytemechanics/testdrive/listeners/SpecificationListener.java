@@ -20,15 +20,49 @@ import org.bytemechanics.testdrive.adapter.SpecificationId;
 
 
 /**
- *
+ * Specification listener interface
  * @author afarre
+ * @since 0.3.0
+ * @see ExecutionListener
+ * @see SpecificationId
  */
 public interface SpecificationListener extends ExecutionListener{
 
+	/**
+	 * Specification evaluation start event method
+	 * @param <T> evaluation identifier implementing SpecificationId interface
+	 * @param _specification specification
+	 */
 	public <T extends SpecificationId> void startSpecification(final T _specification);
+	/**
+	 * Specification evaluation start setup phase event method
+	 * @param <T> evaluation identifier implementing SpecificationId interface
+	 * @param _specification specification
+	 */
 	public <T extends SpecificationId> void startSpecificationSetup(final T _specification);
+	/**
+	 * Specification evaluation end setup phase event method
+	 * @param <T> evaluation identifier implementing SpecificationId interface
+	 * @param _specification specification
+	 */
 	public <T extends SpecificationId> void endSpecificationSetup(final T _specification);
+	/**
+	 * Specification evaluation start cleanup phase event method
+	 * @param <T> evaluation identifier implementing SpecificationId interface
+	 * @param _specification specification
+	 */
 	public <T extends SpecificationId> void startSpecificationCleanup(final T _specification);
+	/**
+	 * Specification evaluation end cleanup phase event method
+	 * @param <T> evaluation identifier implementing SpecificationId interface
+	 * @param _specification specification
+	 */
 	public <T extends SpecificationId> void endSpecificationCleanup(final T _specification);
+	/**
+	 * Specification evaluation end event method
+	 * @param <T> evaluation identifier implementing SpecificationId interface
+	 * @param _specification specification
+	 * @param _result specification evaluation result
+	 */
 	public <T extends SpecificationId> void endSpecification(final T _specification,final Result _result);
 }

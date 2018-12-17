@@ -26,6 +26,10 @@ import java.util.stream.Stream;
 import org.bytemechanics.testdrive.ResultStatus;
 import org.bytemechanics.testdrive.adapter.Result;
 import org.bytemechanics.testdrive.annotations.Skip;
+import org.bytemechanics.testdrive.exceptions.TestCleanException;
+import org.bytemechanics.testdrive.exceptions.TestException;
+import org.bytemechanics.testdrive.exceptions.TestSetupException;
+import org.bytemechanics.testdrive.internal.commons.lang.AutoCloseableResource;
 import org.bytemechanics.testdrive.internal.commons.string.SimpleFormat;
 import org.bytemechanics.testdrive.listeners.ExecutionListener;
 import org.bytemechanics.testdrive.listeners.TestListener;
@@ -35,8 +39,9 @@ import org.bytemechanics.testdrive.runners.beans.TestBean;
 
 
 /**
- *
+ * Test runner
  * @author afarre
+ * @since 0.3.0
  */
 public abstract class TestRunner extends EvaluationRunner{
 
@@ -47,6 +52,9 @@ public abstract class TestRunner extends EvaluationRunner{
 	private Function<TestBean,TestBean> endTestCleanup;
 	private Function<TestBean,TestBean> endTest;
 	
+	/**
+	 * Test runner constructor
+	 */
 	public TestRunner(){
 		super();
 		this.startTest=(TestBean test) -> test;
@@ -60,6 +68,12 @@ public abstract class TestRunner extends EvaluationRunner{
 		return (TestBean t) -> { _consumer.accept(t,t.getTestResult()); return t;};
 	}
 	
+	/**
+	 * Registers a listener for test runner. Uses only TestListener methods
+	 * @param <T> execution listener
+	 * @param _listener listener to register
+	 * @see TestListener
+	 */
 	@Override
 	public <T extends ExecutionListener> void registerListener(final T _listener) {
 		super.registerListener(_listener);
@@ -95,31 +109,57 @@ public abstract class TestRunner extends EvaluationRunner{
 											.orElse(this.endTest);
 	}
 	
+	/**
+	 * Execute specification setup phase and return the SpecificationBean completed
+	 * @param _test evaluation to use
+	 * @return the same _specification bean provided
+	 * @throws TestSetupException if any error happens during setup
+	 */
 	protected TestBean executeSetup(final TestBean _test){
 		try {
 			if(_test.getSpecificationClass().getDeclaredMethod("setup").getDeclaringClass().equals(_test.getSpecificationClass())){
-				this.startTestSetup.apply(_test);
-				_test.getSpecification().setup();
-				this.endTestSetup.apply(_test);
+				try(AutoCloseableResource listeners=new AutoCloseableResource(() -> this.startTestSetup.apply(_test),() -> this.endTestSetup.apply(_test))){
+					_test.getSpecification().setup();
+				}catch(Exception e){
+					throw new TestSetupException(_test, e);
+				}
+			}else{
+				Logger.getLogger(SpecificationRunner.class.getName()).log(Level.FINEST, "setup not declared, skip execution");
 			}
 		} catch (NoSuchMethodException | SecurityException ex) {
 			Logger.getLogger(SpecificationRunner.class.getName()).log(Level.FINEST, "setup not declared, skip execution", ex);
 		}
 		return _test;
 	}
+	/**
+	 * Execute specification cleanup phase and return the SpecificationBean completed
+	 * @param _test evaluation to use
+	 * @return the same _specification bean provided
+	 * @throws TestCleanException if any error happens during cleanup
+	 */
 	protected TestBean executeCleanup(final TestBean _test){
 		try {
 			if(_test.getSpecificationClass().getDeclaredMethod("cleanup").getDeclaringClass().equals(_test.getSpecificationClass())){
-				this.startTestCleanup.apply(_test);
-				_test.getSpecification().cleanup();
-				this.endTestCleanup.apply(_test);
+				try(AutoCloseableResource listeners=new AutoCloseableResource(() -> this.startTestCleanup.apply(_test),() -> this.endTestCleanup.apply(_test))){
+					_test.getSpecification().cleanup();
+				}catch(Exception e){
+					throw new TestCleanException(_test, e);
+				}
+			}else{
+				Logger.getLogger(SpecificationRunner.class.getName()).log(Level.FINEST, "cleanup not declared, skip execution");
 			}
 		} catch (NoSuchMethodException | SecurityException ex) {
 			Logger.getLogger(SpecificationRunner.class.getName()).log(Level.FINEST, "cleanup not declared, skip execution", ex);
 		}
+
 		return _test;
 	}
 	
+	/**
+	 * Evaluate test without setup and cleanup
+	 * @param _test test to evaluate
+	 * @return TestBean provided as parameter with the result informed
+	 */
 	protected TestBean executeTest(final TestBean _test) {
 		
 		final TestBean reply=_test;
@@ -162,12 +202,26 @@ public abstract class TestRunner extends EvaluationRunner{
 		return _test;
 	}
 	
-	public TestBean test(final TestBean _evaluation){
-		return this.startTest
-					.andThen(this::executeSetup)
-					.andThen(this::executeTest)
-					.andThen(this::executeCleanup)
-					.andThen(this.endTest)
-					.apply(_evaluation);
+	/**
+	 * Evaluate test with setup and cleanup
+	 * @param _test test to evaluate
+	 * @return TestBean provided as parameter with the result informed
+	 */
+	public TestBean test(final TestBean _test){
+
+		
+		try(AutoCloseableResource environment=new AutoCloseableResource(() -> this.executeSetup(_test),() -> this.executeCleanup(_test))){
+			try(AutoCloseableResource listeners=new AutoCloseableResource(() -> this.startTest.apply(_test),() -> this.startTest.apply(_test))){
+				return this.executeTest(_test);
+			}catch(TestException e){
+				throw e;
+			}catch(Exception e){
+				throw new TestException(_test, e);
+			}
+		}catch(TestException e){
+			throw e;
+		}catch(Exception e){
+			throw new TestException(_test, e);
+		}
 	}
 }

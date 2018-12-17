@@ -21,8 +21,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- *
+ * Annotation to make a particular test or specification to be skipped<br>
+ * This annotation over class, skips all methods, this annotation over a method execute specification without the annotated method.
  * @author afarre
+ * @since 0.3.0
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE,ElementType.METHOD})

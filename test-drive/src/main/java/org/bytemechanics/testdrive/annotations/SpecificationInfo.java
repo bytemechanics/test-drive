@@ -21,12 +21,22 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- *
+ * Specification additional information
  * @author afarre
+ * @since 0.3.0
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface SpecificationInfo {
+	
+	/**
+	 * Name of the specification for human users (OPTIONAL)
+	 * @return specification name
+	 */
 	public String name() default "";
+	/**
+	 * Group of the specification for human users (OPTIONAL)
+	 * @return specification group
+	 */
 	public String group() default "";
 }

@@ -22,16 +22,40 @@ import org.bytemechanics.testdrive.internal.commons.string.SimpleFormat;
 import org.bytemechanics.testdrive.internal.commons.string.Stringify;
 
 /**
- *
+ * Execution evaluation result
  * @author afarre
+ * @since 0.3.0
  */
 public interface Result {
 
+	/**
+	 * Return the evaluation execution duration
+	 * @return evaluation execution duration
+	 * @see Duration
+	 */
 	public Duration getDuration();
+	/**
+	 * Return the evaluation execution result status
+	 * @return evaluation execution result status
+	 * @see ResultStatus
+	 */
 	public ResultStatus getStatus();
+	/**
+	 * Return the evaluation execution message
+	 * @return evaluation execution message
+	 */
 	public String getMessage();
+	/**
+	 * Return the evaluation execution error
+	 * @return evaluation execution error
+	 * @see Throwable
+	 */
 	public Throwable getError();
 
+	/**
+	 * Build a String log with the evaluation execution result
+	 * @return log with the evaluation execution result
+	 */
 	@SuppressWarnings("ThrowableResultIgnored")
 	public default String getLog(){
 		return SimpleFormat.format("[{}] >> in {}{}"

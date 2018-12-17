@@ -24,11 +24,13 @@ import java.util.stream.Stream;
 import org.bytemechanics.testdrive.adapter.TestId;
 import org.bytemechanics.testdrive.annotations.Evaluation;
 import org.bytemechanics.testdrive.annotations.Test;
-import org.bytemechanics.testdrive.internal.commons.string.SimpleFormat;
 
 /**
- *
+ * Test bean
  * @author afarre
+ * @since 0.3.0
+ * @see SpecificationBean
+ * @see TestId
  */
 public class TestBean extends SpecificationBean implements TestId {
 	
@@ -37,6 +39,12 @@ public class TestBean extends SpecificationBean implements TestId {
 	private final Class[] testMethodParameters;
 	private ResultBean testResult;
 
+	/**
+	 * Builds test bean from SpecificationBean and method
+	 * @param _specification specification where test is defined
+	 * @param _method test method
+	 * @see SpecificationBean
+	 */
 	public TestBean(final SpecificationBean _specification,final Method _method) {
 		super(_specification);
 		this.testMethod = _method;
@@ -52,19 +60,15 @@ public class TestBean extends SpecificationBean implements TestId {
 											.orElseGet(() -> new Class[0]);
 		this.testResult=null;
 	}
-
 	private String buildTestPattern(final Method _method){
 		return Stream.of(_method.getParameters())
 						.map(parameter -> "{}")
 						.collect(Collectors.joining(",",getTestMethod().getName()+"(", ")"));
 	}
-	private String buildTestName(final Method _method){
-		return Stream.of(_method.getParameters())
-						.map(parameter -> SimpleFormat.format("{} {}",parameter.getType().getSimpleName(),parameter.getName()))
-						.collect(Collectors.joining(",",getTestMethod().getName()+"(", ")"));
-	}
-	
-	
+	/**
+	 * Clone testbean from the given one
+	 * @param _test testbean to clone
+	 */
 	public TestBean(final TestBean _test) {
 		super(_test);
 		this.testMethod = _test.getTestMethod();
@@ -73,25 +77,40 @@ public class TestBean extends SpecificationBean implements TestId {
 		this.testResult = _test.getTestResult();
 	}
 
+	/** @see TestId#getTestMethod() */
 	@Override
 	public Method getTestMethod() {
 		return testMethod;
 	}
+	/** @see TestId#getTestMethodParameters() */
 	@Override
 	public Class[] getTestMethodParameters() {
 		return testMethodParameters;
 	}
+	/** @see TestId#getSpecificationGroup() */
 	@Override
 	public String getTestName() {
 		return testName;
 	}
+	/**
+	 * Returns the test result after executing the test represented by this bean
+	 * @return test result after executing the test represented by this bean
+	 */
 	public ResultBean getTestResult() {
 		return testResult;
 	}
-	public void setTestResult(ResultBean result) {
-		this.testResult = result;
+	/**
+	 * Sets the test evaluation result
+	 * @param _result result to register
+	 */
+	public void setTestResult(ResultBean _result) {
+		this.testResult = _result;
 	}
 
+	/**
+	 * Returns all evaluation instances on this test
+	 * @return Array of evaluations
+	 */
 	public Evaluation[] getEvaluations(){
 		return Optional.ofNullable(getTestMethod())
 						.map(method -> method.getAnnotation(Test.class))
@@ -99,6 +118,7 @@ public class TestBean extends SpecificationBean implements TestId {
 						.orElseGet(() -> new Evaluation[0]);
 	}
 
+	/** @see Object#hashCode() */
 	@Override
 	public int hashCode() {
 		int hash = super.hashCode();
@@ -109,6 +129,7 @@ public class TestBean extends SpecificationBean implements TestId {
 		return hash;
 	}
 
+	/** @see Object#equals(java.lang.Object) */
 	@Override
 	@SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
 	public boolean equals(Object obj) {

@@ -17,19 +17,39 @@ package org.bytemechanics.testdrive.adapter;
 
 import java.util.Optional;
 import org.bytemechanics.testdrive.Specification;
+import org.bytemechanics.testdrive.annotations.SpecificationInfo;
 import org.bytemechanics.testdrive.internal.commons.string.SimpleFormat;
 
 /**
- * Bean to idenfity the one particular specification 
+ * Interface to idenfity the one particular specification 
  * @author afarre
- * @since 1.0.0
+ * @since 0.3.0
  */
 public interface SpecificationId {
 	
+	/**
+	 * Returns the class of the specification
+	 * @return specification class
+	 * @see Specification
+	 */
 	public Class<? extends Specification> getSpecificationClass();
+	/**
+	 * Returns the name of the specification accordingly with the SpecificationInfo#name()
+	 * @return specification name
+	 * @see SpecificationInfo#name() 
+	 */
 	public String getSpecificationName();
+	/**
+	 * Returns the group of the specification accordingly with the SpecificationInfo#group()
+	 * @return specification group
+	 * @see SpecificationInfo#group() 
+	 */
 	public String getSpecificationGroup();
 
+	/**
+	 * Return the cannonical name of the specification
+	 * @return an string representing the cannonical name of the specification
+	 */
 	public default String name(){
 		return SimpleFormat.format("{}{}"
 									,Optional.ofNullable(getSpecificationGroup())
@@ -40,7 +60,6 @@ public interface SpecificationId {
 									, Optional.ofNullable(getSpecificationName())
 												.map(String::trim)
 												.filter(name -> !name.isEmpty())
-												.orElseGet(() -> getSpecificationClass().getSimpleName())
-);
+												.orElseGet(() -> getSpecificationClass().getSimpleName()));
 	}
 }

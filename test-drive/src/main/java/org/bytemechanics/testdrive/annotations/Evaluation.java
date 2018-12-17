@@ -21,13 +21,28 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- *
+ * Evaluation annotation over a test method the only mandatory attribute are the arguments because any test is evaluated at least one time therefore to have more than one should have distinct arguments
  * @author afarre
+ * @since 0.3.0
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface Evaluation {
+	
+	/**
+	 * Name of the evaluation (OPTIONAL)
+	 * @return name
+	 */
 	public String name() default "";
+	/**
+	 * Arguments of the evaluation (MANDATORY)
+	 * @return arguments
+	 */
 	public String[] args();
+	/**
+	 * Flag to indicate that this test should be skipped (OPTIONAL)<br>
+	 * Default value is false
+	 * @return true if is skipped
+	 */
 	public boolean skip() default false;
 }

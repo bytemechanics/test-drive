@@ -16,22 +16,20 @@
 package org.bytemechanics.testdrive.exceptions;
 
 import org.bytemechanics.testdrive.adapter.EvaluationId;
-import org.bytemechanics.testdrive.internal.commons.string.SimpleFormat;
 
 /**
- *
+ * Driven test when phase unexpected exception
  * @author afarre
- */
-public class DrivenTestWhenException extends RuntimeException{
+ * @since 0.3.0
+v */
+public class DrivenTestWhenException extends DrivenTestException{
 	
-	private final EvaluationId evaluation;
-	
+	/**
+	 * Constructor for this evaluation
+	 * @param _evaluation identifier where error happened
+	 * @param _cause cause of this exception
+	 */
 	public DrivenTestWhenException(final EvaluationId _evaluation,final Throwable _cause){
-		super(SimpleFormat.format("{}, failed during driven test \"when\" phase by {}", _evaluation.name(),_cause.getMessage()),_cause);
-		this.evaluation=_evaluation;
-	}
-
-	public EvaluationId getEvaluation() {
-		return evaluation;
+		super("{}, failed during driven test \"when\" phase by {}", _evaluation,_cause);
 	}
 }

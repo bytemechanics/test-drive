@@ -19,14 +19,17 @@ import java.util.Objects;
 import java.util.Optional;
 import org.bytemechanics.testdrive.adapter.EvaluationId;
 import org.bytemechanics.testdrive.annotations.Evaluation;
-import org.bytemechanics.testdrive.exceptions.TestParametersNotMatch;
-import org.bytemechanics.testdrive.exceptions.UnparseableParameter;
+import org.bytemechanics.testdrive.exceptions.EvaluationParametersNotMatch;
+import org.bytemechanics.testdrive.exceptions.EvaluationUnparseableParameter;
 import org.bytemechanics.testdrive.internal.commons.string.GenericTextParser;
 import org.bytemechanics.testdrive.internal.commons.string.SimpleFormat;
 
 /**
- *
+ * Evaluation bean
  * @author afarre
+ * @since 0.3.0
+ * @see TestBean
+ * @see EvaluationId
  */
 public class EvaluationBean extends TestBean implements EvaluationId{
 	
@@ -37,6 +40,14 @@ public class EvaluationBean extends TestBean implements EvaluationId{
 	private ResultBean evaluationResult;
 
 	
+	/**
+	 * Builds evaluation bean from testbean counter and evaluation instance¡
+	 * @param _test testBean where this evaluatio is executed
+	 * @param _counter number of evaluation in order of definition
+	 * @param _evaluation evaluation annotation
+	 * @see TestBean
+	 * @see Evaluation
+	 */
 	public EvaluationBean(final TestBean _test,final int _counter,final Evaluation _evaluation) {
 		super(_test);
 		this.evaluation=_evaluation;
@@ -48,6 +59,10 @@ public class EvaluationBean extends TestBean implements EvaluationId{
 		this.evaluationArguments = _evaluation.args();
 		this.evaluationResult=null;
 	}
+	/**
+	 * Builds a basic evaluation bean from the given _test with one single evaluation without parameters
+	 * @param _test test bean
+	 */
 	public EvaluationBean(final TestBean _test) {
 		super(_test);
 		this.evaluationCounter = 1;
@@ -57,14 +72,17 @@ public class EvaluationBean extends TestBean implements EvaluationId{
 		this.evaluation=null;
 	}
 
+	/** @see EvaluationId#getEvaluationCounter() */
 	@Override
 	public int getEvaluationCounter() {
 		return evaluationCounter;
 	}
+	/** @see EvaluationId#getEvaluationName() */
 	@Override
 	public String getEvaluationName() {
 		return evaluationName;
 	}
+	/** @see EvaluationId#getEvaluationArguments() */
 	@Override
 	public String[] getEvaluationArguments() {
 		return evaluationArguments;
@@ -72,11 +90,19 @@ public class EvaluationBean extends TestBean implements EvaluationId{
 	public Evaluation getEvaluation() {
 		return evaluation;
 	}
+	/**
+	 * Returns the evaluation result after executing the evaluation represented by this bean
+	 * @return evaluation result after executing the evaluation represented by this bean
+	 */
 	public ResultBean getEvaluationResult() {
 		return evaluationResult;
 	}
-	public void setEvaluationResult(ResultBean result) {
-		this.evaluationResult = result;
+	/**
+	 * Sets the evaluation evaluation result
+	 * @param _result result to register
+	 */
+	public void setEvaluationResult(ResultBean _result) {
+		this.evaluationResult = _result;
 	}
 	
 	
@@ -88,9 +114,9 @@ public class EvaluationBean extends TestBean implements EvaluationId{
 			try {
 				final int position=ic1;
 				reply[position]=GenericTextParser.toValue(_classes[position], _values[position])
-						.orElseThrow(() -> new UnparseableParameter(position, _classes[position], _values[position]));
+						.orElseThrow(() -> new EvaluationUnparseableParameter(this,position, _classes[position], _values[position]));
 			} catch (Throwable ex) {
-				throw (UnparseableParameter)ex;
+				throw (EvaluationUnparseableParameter)ex;
 			}
 		}
 		
@@ -100,10 +126,11 @@ public class EvaluationBean extends TestBean implements EvaluationId{
 		return Optional.ofNullable(getTestMethodParameters())
 						.filter(parameters -> parameters.length<=getEvaluationArguments().length)
 						.map(parameters -> parseArguments(parameters, getEvaluationArguments()))
-						.orElseThrow(() -> new TestParametersNotMatch(getSpecificationClass(),getTestMethod(),getEvaluationArguments()));
+						.orElseThrow(() -> new EvaluationParametersNotMatch(this,getEvaluationArguments()));
 	}
 	
 	
+	/** @see Object#hashCode() */
 	@Override
 	public int hashCode() {
 		int hash = super.hashCode();
@@ -111,6 +138,7 @@ public class EvaluationBean extends TestBean implements EvaluationId{
 		return hash;
 	}
 
+	/** @see Object#equals(java.lang.Object) */
 	@Override
 	@SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
 	public boolean equals(Object obj) {

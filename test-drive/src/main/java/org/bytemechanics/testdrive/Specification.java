@@ -15,17 +15,10 @@
  */
 package org.bytemechanics.testdrive;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import org.bytemechanics.testdrive.exceptions.AssertException;
-import org.bytemechanics.testdrive.exceptions.TestNotAccessible;
-import org.bytemechanics.testdrive.exceptions.TestParametersNotMatch;
-import org.bytemechanics.testdrive.exceptions.UnexpectedTestError;
-
 /**
  * Interface any specification class should implement
  * @author afarre
- * @since 1.0.0
+ * @since 0.3.0
  */
 public interface Specification {
 	
@@ -45,27 +38,4 @@ public interface Specification {
 	 * runs once - after the last feature method
 	 */
 	public default void cleanupSpec() {} 
-
-
-	/**
-	 * Executes the given method with the given arguments
-	 * @param _method method to test
-	 * @param _args arguments to pass to method
-	 */
-	public default void executeTest(final Method _method,final Object... _args){
-		
-		try{
-			_method.invoke(_method, _args);
-		}catch(IllegalArgumentException e){
-			throw new TestParametersNotMatch(this.getClass(),_method,_args,e);
-		}catch(IllegalAccessException e){
-			throw new TestNotAccessible(this.getClass(),_method,e);
-		}catch(InvocationTargetException e) {
-			if(AssertException.class.isAssignableFrom(e.getCause().getClass())){
-				throw (AssertException)e.getCause();
-			}else{
-				throw new UnexpectedTestError(this.getClass(),_method,e);
-			}
-		}
-	}
 }

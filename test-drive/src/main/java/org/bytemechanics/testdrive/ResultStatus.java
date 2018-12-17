@@ -18,13 +18,19 @@ package org.bytemechanics.testdrive;
 import java.util.stream.Stream;
 
 /**
+ * Enumerate to represent evaluation result status
  * @author afarre
+ * @since 0.3.0
  */
 public enum ResultStatus {
 
+	/** Evaluation successful */
 	SUCCESS(0),
+	/** Evaluation not executed by some rules */
 	SKIPPED(0),
+	/** Evaluation failed, an assertion was not accomplished */
 	FAILURE(1),
+	/** Evaluation result with an exception, an unexpected exception not related with the assertion happened during evaluation */
 	ERROR(2),
 	;
 	
@@ -34,11 +40,22 @@ public enum ResultStatus {
 		this.weight=_weight;
 	}
 	
+	/**
+	 * Evaluate true if the current status is in the list of _statuses given
+	 * @param _statuses statuses to check if contains this status
+	 * @return true if _statuses contains this status
+	 */
 	public boolean in(final ResultStatus... _statuses){
 		return Stream.of(_statuses)
 						.anyMatch(this::equals);
 	}
 	
+	/**
+	 * Compare both statuses and return the worst possible outcome
+	 * @param _status1 first status to compare
+	 * @param _status2 second status to compare
+	 * @return the worst status outcome from the both provided statuses _status1 and _status2
+	 */
 	public static ResultStatus worst(final ResultStatus _status1,final ResultStatus _status2){
 		return (_status1.weight>_status2.weight)? _status1 : _status2;
 	}

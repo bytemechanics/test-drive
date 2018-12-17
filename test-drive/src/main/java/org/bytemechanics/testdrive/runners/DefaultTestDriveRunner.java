@@ -76,7 +76,7 @@ public class DefaultTestDriveRunner extends SpecificationRunner implements TestD
 	}
 	
 	@Override
-	public void evaluateStream(final Stream<Class<? extends Specification>> _specifications) {
-		_specifications.forEach(this::evaluateSpecification);
+	public Stream<Result> completeStream(final Stream<Class<? extends Specification>> _specifications) {
+		return _specifications.map(this::evaluateSpecification);
 	}
 }

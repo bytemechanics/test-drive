@@ -18,17 +18,60 @@ package org.bytemechanics.testdrive.listeners;
 import org.bytemechanics.testdrive.adapter.EvaluationId;
 
 /**
- *
+ * Driven test listener interface
  * @author afarre
+ * @since 0.3.0
+ * @see ExecutionListener
+ * @see EvaluationId
  */
 public interface DrivenTestListener extends ExecutionListener{
 
+	/**
+	 * Driven test evaluation given phase begin event method
+	 * @param <T> evaluation identifier implementing EvaluationId interface
+	 * @param _evaluation evaluation
+	 */
 	public <T extends EvaluationId> void drivenTestGivenBegin(final T _evaluation);
+	/**
+	 * Driven test evaluation given phase end event method
+	 * @param <T> evaluation identifier implementing EvaluationId interface
+	 * @param _evaluation evaluation
+	 */
 	public <T extends EvaluationId> void drivenTestGivenEnd(final T _evaluation);
+	/**
+	 * Driven test evaluation when phase begin event method
+	 * @param <T> evaluation identifier implementing EvaluationId interface
+	 * @param _evaluation evaluation
+	 */
 	public <T extends EvaluationId> void drivenTestWhenBegin(final T _evaluation);
+	/**
+	 * Driven test evaluation when phase end event method
+	 * @param <T> evaluation identifier implementing EvaluationId interface
+	 * @param _evaluation evaluation
+	 */
 	public <T extends EvaluationId> void drivenTestWhenEnd(final T _evaluation);
+	/**
+	 * Driven test evaluation then phase begin event method
+	 * @param <T> evaluation identifier implementing EvaluationId interface
+	 * @param _evaluation evaluation
+	 */
 	public <T extends EvaluationId> void drivenTestThenBegin(final T _evaluation);
+	/**
+	 * Driven test evaluation then phase end event method
+	 * @param <T> evaluation identifier implementing EvaluationId interface
+	 * @param _evaluation evaluation
+	 */
 	public <T extends EvaluationId> void drivenTestThenEnd(final T _evaluation);
+	/**
+	 * Driven test evaluation clean phase begin event method
+	 * @param <T> evaluation identifier implementing EvaluationId interface
+	 * @param _evaluation evaluation
+	 */
 	public <T extends EvaluationId> void drivenTestCleanBegin(final T _evaluation);
+	/**
+	 * Driven test evaluation clean phase end event method
+	 * @param <T> evaluation identifier implementing EvaluationId interface
+	 * @param _evaluation evaluation
+	 */
 	public <T extends EvaluationId> void drivenTestCleanEnd(final T _evaluation);
 }

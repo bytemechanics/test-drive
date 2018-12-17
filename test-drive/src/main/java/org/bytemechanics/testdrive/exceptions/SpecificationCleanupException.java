@@ -13,12 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.bytemechanics.testdrive;
+package org.bytemechanics.testdrive.exceptions;
+
+import org.bytemechanics.testdrive.adapter.SpecificationId;
 
 /**
- *
+ * Exception raised during specification cleanup phase
+ * @see RuntimeException
  * @author afarre
+ * @since 0.3.0
  */
-public class GlobalTest {
+public class SpecificationCleanupException extends SpecificationException{
 	
+	/**
+	 * Builds specification cleanup exception
+	 * @param _specification specification failed
+	 * @param _cause cause of the setup phase
+	 */
+	public SpecificationCleanupException(final SpecificationId _specification,final Throwable _cause){
+		super("{}, failed during specification \"cleanup\" phase by {}",_specification,_cause);
+	}
 }

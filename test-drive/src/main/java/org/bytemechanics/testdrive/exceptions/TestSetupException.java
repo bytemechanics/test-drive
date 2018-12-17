@@ -15,21 +15,22 @@
  */
 package org.bytemechanics.testdrive.exceptions;
 
-import org.bytemechanics.testdrive.internal.commons.string.SimpleFormat;
+import org.bytemechanics.testdrive.adapter.TestId;
 
 /**
- * Exception to identify a non parseable parameter to the necessary class
+ * Exception raised during test setup phase
+ * @see RuntimeException
  * @author afarre
+ * @since 0.3.0
  */
-public class UnparseableParameter extends RuntimeException{
-
+public class TestSetupException extends TestException{
+	
 	/**
-	 * Test parameters not match exception constructor
-	 * @param _parameter
-	 * @param _toClass
-	 * @param _value
+	 * Builds test setup exception
+	 * @param _test test failed
+	 * @param _cause cause of the setup phase
 	 */
-	public UnparseableParameter(final int _parameter,final Class _toClass,final String _value) {
-		super(SimpleFormat.format("Unparseable parameter {} with value {} to class {}", _parameter,_value,_toClass));
+	public TestSetupException(final TestId _test,final Throwable _cause){
+		super("{}, failed during test \"setup\" phase by {}",_test,_cause);
 	}
 }

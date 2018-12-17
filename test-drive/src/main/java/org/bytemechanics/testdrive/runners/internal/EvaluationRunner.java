@@ -15,6 +15,7 @@
  */
 package org.bytemechanics.testdrive.runners.internal;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -22,6 +23,10 @@ import java.util.function.Function;
 import org.bytemechanics.testdrive.DrivenTest;
 import org.bytemechanics.testdrive.adapter.Result;
 import org.bytemechanics.testdrive.exceptions.AssertException;
+import org.bytemechanics.testdrive.exceptions.EvaluationException;
+import org.bytemechanics.testdrive.exceptions.EvaluationNotAccessible;
+import org.bytemechanics.testdrive.exceptions.EvaluationParametersNotMatch;
+import org.bytemechanics.testdrive.internal.commons.lang.AutoCloseableResource;
 import org.bytemechanics.testdrive.internal.commons.string.SimpleFormat;
 import org.bytemechanics.testdrive.listeners.EvaluationListener;
 import org.bytemechanics.testdrive.listeners.ExecutionListener;
@@ -30,8 +35,10 @@ import org.bytemechanics.testdrive.runners.beans.ResultBean;
 
 
 /**
- *
+ * Evaluation test runner
  * @author afarre
+ * @since 0.3.0
+ * @see DrivenTestRunner
  */
 public abstract class EvaluationRunner extends DrivenTestRunner{
 
@@ -39,13 +46,19 @@ public abstract class EvaluationRunner extends DrivenTestRunner{
 	private Function<EvaluationBean,EvaluationBean> endEvaluation;
 	
 	
+	/** Evaluation test runner constructor*/
 	public EvaluationRunner(){
 		super();
 		this.startEvaluation=(EvaluationBean evaluation) -> evaluation;
 		this.endEvaluation=(EvaluationBean evaluation) -> evaluation;
 	}
 
+	/** Add failure as a result of this evaluation */
 	protected abstract void addFailure();
+	/** 
+	 * User has requested to skip this evaluation
+	 * @return true if user has requested skip
+	 */
 	protected abstract boolean hasUserRequestedSkip();
 	
 	private Function<EvaluationBean,EvaluationBean> fromConsumerToFunction(final Consumer<EvaluationBean> _consumer){
@@ -55,6 +68,12 @@ public abstract class EvaluationRunner extends DrivenTestRunner{
 		return (EvaluationBean t) -> { _consumer.accept(t,t.getEvaluationResult()); return t;};
 	}
 	
+	/**
+	 * Registers a listener for evaluation runner. Uses only EvaluationListener methods
+	 * @param <T> execution listener
+	 * @param _listener listener to register
+	 * @see EvaluationListener
+	 */
 	@Override
 	public <T extends ExecutionListener> void registerListener(final T _listener) {
 		super.registerListener(_listener);
@@ -70,6 +89,37 @@ public abstract class EvaluationRunner extends DrivenTestRunner{
 											.orElse(this.endEvaluation);
 	}
 
+	private Object executeMethod(final EvaluationBean _evaluation){
+
+		Object reply;
+		
+		try{
+			reply=_evaluation.getTestMethod()
+						.invoke(_evaluation.getSpecification(),_evaluation.getParsedArguments());
+		}catch(IllegalArgumentException e){
+			throw new EvaluationParametersNotMatch(_evaluation,_evaluation.getParsedArguments(),e);
+		}catch(IllegalAccessException e){
+			throw new EvaluationNotAccessible(_evaluation,e);
+		}catch(InvocationTargetException e) {
+			if(AssertException.class.isAssignableFrom(e.getCause().getClass())){
+				throw (AssertException)e.getCause();
+			}else if(AssertionError.class.isAssignableFrom(e.getCause().getClass())){
+				throw (AssertionError)e.getCause();
+			}else{
+				throw new EvaluationException(_evaluation,e);
+			}
+		}catch(Exception e){
+			throw new EvaluationException(_evaluation,e);
+		}
+		
+		return reply;
+	}	
+	
+	/**
+	 * Executes test evaluation
+	 * @param _evaluation evaluation bean to test
+	 * @return the same _evaluation received with the result
+	 */
 	@SuppressWarnings("CallToPrintStackTrace")
 	protected EvaluationBean executeEvaluation(final EvaluationBean _evaluation){
 		
@@ -84,10 +134,7 @@ public abstract class EvaluationRunner extends DrivenTestRunner{
 					}else{
 						executeMethod(_evaluation);
 					}
-				}catch(AssertException e){
-					addFailure();
-					reply.getEvaluationResult().failure(new AssertException(_evaluation.name(),e));
-				}catch(AssertionError e){
+				}catch(AssertException | AssertionError e){
 					addFailure();
 					reply.getEvaluationResult().failure(new AssertException(_evaluation.name(),e));
 				}catch(Exception e){
@@ -104,10 +151,19 @@ public abstract class EvaluationRunner extends DrivenTestRunner{
 		return reply;
 	}
 	
+	/**
+	 * Executes test evaluation
+	 * @param _evaluation evaluation bean to test
+	 * @return the same _evaluation received with the result
+	 * @throws EvaluationException
+	 */
 	public EvaluationBean evaluate(final EvaluationBean _evaluation){
-		return this.startEvaluation
-					.andThen(this::executeEvaluation)
-					.andThen(this.endEvaluation)
-					.apply(_evaluation);
+		try(AutoCloseableResource listeners=new AutoCloseableResource(() -> this.startEvaluation.apply(_evaluation),() -> this.endEvaluation.apply(_evaluation))){
+			return executeEvaluation(_evaluation);
+		}catch(EvaluationException e){
+			throw new EvaluationException(_evaluation, e);
+		}catch(Exception e){
+			throw new EvaluationException(_evaluation, e);
+		}
 	}
 }

@@ -21,14 +21,42 @@ import org.bytemechanics.testdrive.adapter.Result;
 import org.bytemechanics.testdrive.listeners.ExecutionListener;
 
 /**
- *
+ * Test drive runner
  * @author afarre
+ * @since 0.3.0
  */
 public interface TestDriveRunner {
 	
+	/**
+	 * Register a listener for the test drive execution
+	 * @param _listener ExecutionListener to register
+	 * @param <T> type of the listener that must extend ExecutionListener
+	 * @see ExecutionListener
+	 */
 	public <T extends ExecutionListener> void registerListener(final T _listener);
-	
+
+	/**
+	 * Evaluate the given _specification class
+	 * @param _specificationClass class to evaluate
+	 * @return Evaluation result
+	 * @see Result 
+	 * @see Specification
+	 */
 	public Result evaluateSpecification(final Class<? extends Specification> _specificationClass);
+	/**
+	 * Evaluate the given _method of the given _specification class
+	 * @param _specificationClass class to evaluate
+	 * @param _method method to evaluate
+	 * @return Evaluation result
+	 * @see Result 
+	 * @see Specification
+	 */
 	public Result evaluateSpecificationTest(final Class<? extends Specification> _specificationClass,final Method _method);
-	public void evaluateStream(Stream<Class<? extends Specification>> _specifications);
+	/**
+	 * Complete the stream with a mapping to convert the _specifications into results
+	 * @param _specifications stream of Specification classes to evaluate
+	 * @return Stream of results evaluated
+	 * @see Specification
+	 */
+	public Stream<Result> completeStream(Stream<Class<? extends Specification>> _specifications);
 }
