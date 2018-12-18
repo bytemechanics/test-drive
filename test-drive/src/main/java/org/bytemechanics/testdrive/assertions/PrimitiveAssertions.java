@@ -300,7 +300,7 @@ public class PrimitiveAssertions {
 	 * @since 0.3.0
 	 */
 	public static final void assertNotEquals(final short _actual,final short _expected,final String _message){
-		if(!isEqual(_actual,_expected))
+		if(isEqual(_actual,_expected))
 			throw new AssertException("!=", _actual,_expected, _message);
 	}
 	
@@ -482,7 +482,7 @@ public class PrimitiveAssertions {
 	 * @since 0.3.0
 	 */
 	public static final void assertNotEquals(final int _actual,final int _expected,final String _message){
-		if(!isEqual(_actual,_expected))
+		if(isEqual(_actual,_expected))
 			throw new AssertException("!=", _actual,_expected, _message);
 	}
 	
@@ -663,7 +663,7 @@ public class PrimitiveAssertions {
 	 * @since 0.3.0
 	 */
 	public static final void assertNotEquals(final long _actual,final long _expected,final String _message){
-		if(!isEqual(_actual,_expected))
+		if(isEqual(_actual,_expected))
 			throw new AssertException("!=", _actual,_expected, _message);
 	}
 	
@@ -844,7 +844,7 @@ public class PrimitiveAssertions {
 	 * @since 0.3.0
 	 */
 	public static final void assertNotEquals(final float _actual,final float _expected,final String _message){
-		if(!isEqual(_actual,_expected))
+		if(isEqual(_actual,_expected))
 			throw new AssertException("!=", _actual,_expected, _message);
 	}
 	
@@ -1025,7 +1025,7 @@ public class PrimitiveAssertions {
 	 * @since 0.3.0
 	 */
 	public static final void assertNotEquals(final double _actual,final double _expected,final String _message){
-		if(!isEqual(_actual,_expected))
+		if(isEqual(_actual,_expected))
 			throw new AssertException("!=", _actual,_expected, _message);
 	}
 	

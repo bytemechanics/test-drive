@@ -64,7 +64,7 @@ public class AssertException extends RuntimeException{
 	 * @param _cause Assertion exception cause
 	 */
 	public AssertException(final String _evaluation,final AssertException _cause) {
-		super(SimpleFormat.format("evaluation {}, line {} ({}{}{}):\n\tActual=\t\t{}\n\tExpected{}\t{}", _evaluation,_cause.getStackTrace()[0].getLineNumber(),_cause.getActual(),_cause.getAssertion(),_cause.getExpected(),_cause.getActual(),_cause.getAssertion(),_cause.getExpected(),_cause.getCause().getMessage()),_cause);
+		super(SimpleFormat.format("evaluation {}, line {} ({}{}{}):\n\tActual:\t\t{}\n\tExpected:\t{}{}", _evaluation,_cause.getStackTrace()[0].getLineNumber(),_cause.getActual(),_cause.getAssertion(),_cause.getExpected(),_cause.getActual(),_cause.getAssertion(),_cause.getExpected(),_cause.getCause().getMessage()),_cause);
 		this.evaluation=_evaluation;
 		this.assertion=_cause.getAssertion();
 		this.actual=_cause.getActual();
@@ -80,7 +80,7 @@ public class AssertException extends RuntimeException{
 	 * @param _description assertion failure message
 	 */
 	public AssertException(final String _assertion,final Object _actual,final Object _expected,final String _description) {
-		super(SimpleFormat.format("{}({}{}{}):\n\tActual=\t\t{}\n\tExpected{}\t{}",(_description!=null)? _description : "",_actual,_assertion,_expected,_actual,_assertion,_expected));
+		super(SimpleFormat.format("{}({}{}{}):\n\tActual:\t\t{}\n\tExpected:\t{}{}",(_description!=null)? _description : "",_actual,_assertion,_expected,_actual,_assertion,_expected));
 		this.evaluation=null;
 		this.assertion=_assertion;
 		this.actual=_actual;
