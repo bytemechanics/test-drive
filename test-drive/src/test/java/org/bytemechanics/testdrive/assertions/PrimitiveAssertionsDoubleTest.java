@@ -26,7 +26,7 @@ public class PrimitiveAssertionsDoubleTest {
 		
 	@Test
 	public void testIsZero_double() {
-		System.out.println("PrimitiveAssertionsTest >>> testIsZero_double");
+		System.out.println("PrimitiveAssertionsDoubleTest >>> testIsZero_double");
 		double actual = 0.0d;
 		Assert.assertTrue(PrimitiveAssertions.isZero(actual));
 		actual = 2.0d;
@@ -36,13 +36,13 @@ public class PrimitiveAssertionsDoubleTest {
 	}
 	@Test
 	public void testAssertZero_double() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertZero_double");
+		System.out.println("PrimitiveAssertionsDoubleTest >>> testAssertZero_double");
 		double actual = 0.0d;
 		PrimitiveAssertions.assertZero(actual);
 	}
 	@Test
 	public void testAssertZero_double_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertZero_double_failed");
+		System.out.println("PrimitiveAssertionsDoubleTest >>> testAssertZero_double_failed");
 		try{
 			double actual=1.0d;
 			PrimitiveAssertions.assertZero(actual);
@@ -53,13 +53,13 @@ public class PrimitiveAssertionsDoubleTest {
 	}
 	@Test
 	public void testAssertZero_double_message() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertZero_double_message");
+		System.out.println("PrimitiveAssertionsDoubleTest >>> testAssertZero_double_message");
 		double actual = 0.0d;
 		PrimitiveAssertions.assertZero(actual,"Message");
 	}
 	@Test
 	public void testAssertZero_double_message_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertZero_double_message_failed");
+		System.out.println("PrimitiveAssertionsDoubleTest >>> testAssertZero_double_message_failed");
 		try{
 			double actual=1.0d;
 			PrimitiveAssertions.assertZero(actual,"Message");
@@ -70,7 +70,7 @@ public class PrimitiveAssertionsDoubleTest {
 	}
 	@Test
 	public void testIsEqual_double_double() {
-		System.out.println("PrimitiveAssertionsTest >>> testIsEqual_double_double");
+		System.out.println("PrimitiveAssertionsDoubleTest >>> testIsEqual_double_double");
 		double actual=0.0d;
 		double expected=0.0d;
 		Assert.assertTrue(PrimitiveAssertions.isEqual(actual, expected));
@@ -83,7 +83,7 @@ public class PrimitiveAssertionsDoubleTest {
 	}
 	@Test
 	public void testAssertEquals_double_double() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertEquals_double_double");
+		System.out.println("PrimitiveAssertionsDoubleTest >>> testAssertEquals_double_double");
 		double actual=0.0d;
 		double expected=0.0d;
 		PrimitiveAssertions.assertEquals(actual,expected);
@@ -93,7 +93,7 @@ public class PrimitiveAssertionsDoubleTest {
 	}
 	@Test
 	public void testAssertEquals_double_double_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertEquals_double_double_failed");
+		System.out.println("PrimitiveAssertionsDoubleTest >>> testAssertEquals_double_double_failed");
 		try{
 			double actual=1.0d;
 			double expected=0.0d;
@@ -105,7 +105,7 @@ public class PrimitiveAssertionsDoubleTest {
 	}
 	@Test
 	public void testAssertEquals_double_double_message() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertEquals_double_double");
+		System.out.println("PrimitiveAssertionsDoubleTest >>> testAssertEquals_double_double");
 		double actual=0.0d;
 		double expected=0.0d;
 		PrimitiveAssertions.assertEquals(actual,expected,"Message");
@@ -115,7 +115,7 @@ public class PrimitiveAssertionsDoubleTest {
 	}
 	@Test
 	public void testAssertEquals_double_double_message_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertEquals_double_double_failed");
+		System.out.println("PrimitiveAssertionsDoubleTest >>> testAssertEquals_double_double_failed");
 		try{
 			double actual=1.0d;
 			double expected=0.0d;
@@ -127,7 +127,7 @@ public class PrimitiveAssertionsDoubleTest {
 	}
 	@Test
 	public void testAssertNotEquals_double_double() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertNotEquals_double_double");
+		System.out.println("PrimitiveAssertionsDoubleTest >>> testAssertNotEquals_double_double");
 		double actual=1.0d;
 		double expected=0.0d;
 		PrimitiveAssertions.assertNotEquals(actual,expected);
@@ -137,7 +137,7 @@ public class PrimitiveAssertionsDoubleTest {
 	}
 	@Test
 	public void testAssertNotEquals_double_double_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertNotEquals_double_double_failed");
+		System.out.println("PrimitiveAssertionsDoubleTest >>> testAssertNotEquals_double_double_failed");
 		try{
 			double actual=1.0d;
 			double expected=1.0d;
@@ -149,7 +149,7 @@ public class PrimitiveAssertionsDoubleTest {
 	}
 	@Test
 	public void testAssertNotEquals_double_double_message() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertNotEquals_double_double_message");
+		System.out.println("PrimitiveAssertionsDoubleTest >>> testAssertNotEquals_double_double_message");
 		double actual=0.0d;
 		double expected=1.0d;
 		PrimitiveAssertions.assertNotEquals(actual,expected,"Message");
@@ -159,7 +159,7 @@ public class PrimitiveAssertionsDoubleTest {
 	}
 	@Test
 	public void testAssertNotEquals_double_double_message_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertNotEquals_double_double_message_failed");
+		System.out.println("PrimitiveAssertionsDoubleTest >>> testAssertNotEquals_double_double_message_failed");
 		try{
 			double actual=1.0d;
 			double expected=1.0d;
@@ -171,7 +171,7 @@ public class PrimitiveAssertionsDoubleTest {
 	}	
 	@Test
 	public void testIsGreater_double_double() {
-		System.out.println("PrimitiveAssertionsTest >>> testIsGreater_double_double");
+		System.out.println("PrimitiveAssertionsDoubleTest >>> testIsGreater_double_double");
 		double actual=1.0d;
 		double expected=0.0d;
 		Assert.assertTrue(PrimitiveAssertions.isGreater(actual, expected));
@@ -187,7 +187,7 @@ public class PrimitiveAssertionsDoubleTest {
 	}
 	@Test
 	public void testAssertGreater_double_double() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertGreater_double_double");
+		System.out.println("PrimitiveAssertionsDoubleTest >>> testAssertGreater_double_double");
 		double actual=10.0d;
 		double expected=1.0d;
 		PrimitiveAssertions.assertGreater(actual,expected);
@@ -197,7 +197,7 @@ public class PrimitiveAssertionsDoubleTest {
 	}
 	@Test
 	public void testAssertGreater_double_double_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertGreater_double_double_failed");
+		System.out.println("PrimitiveAssertionsDoubleTest >>> testAssertGreater_double_double_failed");
 		try{
 			double actual=1.0d;
 			double expected=1.0d;
@@ -217,7 +217,7 @@ public class PrimitiveAssertionsDoubleTest {
 	}	
 	@Test
 	public void testAssertGreater_double_double_message() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertGreater_double_double_message");
+		System.out.println("PrimitiveAssertionsDoubleTest >>> testAssertGreater_double_double_message");
 		double actual=10.0d;
 		double expected=1.0d;
 		PrimitiveAssertions.assertGreater(actual,expected,"Message");
@@ -227,7 +227,7 @@ public class PrimitiveAssertionsDoubleTest {
 	}
 	@Test
 	public void testAssertGreater_double_double_message_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertGreater_double_double_message_failed");
+		System.out.println("PrimitiveAssertionsDoubleTest >>> testAssertGreater_double_double_message_failed");
 		try{
 			double actual=1.0d;
 			double expected=1.0d;
@@ -247,7 +247,7 @@ public class PrimitiveAssertionsDoubleTest {
 	}	
 	@Test
 	public void testIsGreaterOrEqual_double_double() {
-		System.out.println("PrimitiveAssertionsTest >>> testIsGreaterOrEqual_double_double");
+		System.out.println("PrimitiveAssertionsDoubleTest >>> testIsGreaterOrEqual_double_double");
 		double actual=1.0d;
 		double expected=0.0d;
 		Assert.assertTrue(PrimitiveAssertions.isGreaterOrEqual(actual, expected));
@@ -263,7 +263,7 @@ public class PrimitiveAssertionsDoubleTest {
 	}
 	@Test
 	public void testAssertGreaterOrEqual_double_double() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertGreaterOrEqual_double_double");
+		System.out.println("PrimitiveAssertionsDoubleTest >>> testAssertGreaterOrEqual_double_double");
 		double actual=10.0d;
 		double expected=1.0d;
 		PrimitiveAssertions.assertGreaterOrEqual(actual,expected);
@@ -273,7 +273,7 @@ public class PrimitiveAssertionsDoubleTest {
 	}
 	@Test
 	public void testAssertGreaterOrEqual_double_double_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertGreaterOrEqual_double_double_failed");
+		System.out.println("PrimitiveAssertionsDoubleTest >>> testAssertGreaterOrEqual_double_double_failed");
 		try{
 			double actual=0.0d;
 			double expected=1.0d;
@@ -285,7 +285,7 @@ public class PrimitiveAssertionsDoubleTest {
 	}	
 	@Test
 	public void testAssertGreaterOrEqual_double_double_message() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertGreaterOrEqual_double_double_message");
+		System.out.println("PrimitiveAssertionsDoubleTest >>> testAssertGreaterOrEqual_double_double_message");
 		double actual=10.0d;
 		double expected=1.0d;
 		PrimitiveAssertions.assertGreaterOrEqual(actual,expected,"Message");
@@ -295,7 +295,7 @@ public class PrimitiveAssertionsDoubleTest {
 	}
 	@Test
 	public void testAssertGreaterOrEqual_double_double_message_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertGreaterOrEqual_double_double_message_failed");
+		System.out.println("PrimitiveAssertionsDoubleTest >>> testAssertGreaterOrEqual_double_double_message_failed");
 		try{
 			double actual=0.0d;
 			double expected=1.0d;
@@ -307,7 +307,7 @@ public class PrimitiveAssertionsDoubleTest {
 	}	
 	@Test
 	public void testAssertSmaller_double_double() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertSmaller_double_double");
+		System.out.println("PrimitiveAssertionsDoubleTest >>> testAssertSmaller_double_double");
 		double actual=1.0d;
 		double expected=10.0d;
 		PrimitiveAssertions.assertSmaller(actual,expected);
@@ -317,7 +317,7 @@ public class PrimitiveAssertionsDoubleTest {
 	}
 	@Test
 	public void testAssertSmaller_double_double_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertSmaller_double_double_failed");
+		System.out.println("PrimitiveAssertionsDoubleTest >>> testAssertSmaller_double_double_failed");
 		try{
 			double actual=1.0d;
 			double expected=1.0d;
@@ -337,7 +337,7 @@ public class PrimitiveAssertionsDoubleTest {
 	}	
 	@Test
 	public void testAssertSmaller_double_double_message() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertSmaller_double_double_message");
+		System.out.println("PrimitiveAssertionsDoubleTest >>> testAssertSmaller_double_double_message");
 		double actual=1.0d;
 		double expected=10.0d;
 		PrimitiveAssertions.assertSmaller(actual,expected,"Message");
@@ -347,7 +347,7 @@ public class PrimitiveAssertionsDoubleTest {
 	}
 	@Test
 	public void testAssertSmaller_double_double_message_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertSmaller_double_double_message_failed");
+		System.out.println("PrimitiveAssertionsDoubleTest >>> testAssertSmaller_double_double_message_failed");
 		try{
 			double actual=1.0d;
 			double expected=1.0d;
@@ -367,7 +367,7 @@ public class PrimitiveAssertionsDoubleTest {
 	}	
 	@Test
 	public void testAssertSmallerOrEqual_double_double() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertSmallerOrEqual_double_double");
+		System.out.println("PrimitiveAssertionsDoubleTest >>> testAssertSmallerOrEqual_double_double");
 		double actual=1.0d;
 		double expected=10.0d;
 		PrimitiveAssertions.assertSmallerOrEqual(actual,expected);
@@ -377,7 +377,7 @@ public class PrimitiveAssertionsDoubleTest {
 	}
 	@Test
 	public void testAssertSmallerOrEqual_double_double_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertSmallerOrEqual_double_double_failed");
+		System.out.println("PrimitiveAssertionsDoubleTest >>> testAssertSmallerOrEqual_double_double_failed");
 		try{
 			double actual=1.0d;
 			double expected=0.0d;
@@ -389,7 +389,7 @@ public class PrimitiveAssertionsDoubleTest {
 	}	
 	@Test
 	public void testAssertSmallerOrEqual_double_double_message() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertSmallerOrEqual_double_double_message");
+		System.out.println("PrimitiveAssertionsDoubleTest >>> testAssertSmallerOrEqual_double_double_message");
 		double actual=1.0d;
 		double expected=10.0d;
 		PrimitiveAssertions.assertSmallerOrEqual(actual,expected,"Message");
@@ -399,7 +399,7 @@ public class PrimitiveAssertionsDoubleTest {
 	}
 	@Test
 	public void testAssertSmallerOrEqual_double_double_message_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertSmallerOrEqual_double_double_message_failed");
+		System.out.println("PrimitiveAssertionsDoubleTest >>> testAssertSmallerOrEqual_double_double_message_failed");
 		try{
 			double actual=1.0d;
 			double expected=0.0d;

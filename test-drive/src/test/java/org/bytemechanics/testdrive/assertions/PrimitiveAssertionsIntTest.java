@@ -26,7 +26,7 @@ public class PrimitiveAssertionsIntTest {
 	
 	@Test
 	public void testIsZero_int() {
-		System.out.println("PrimitiveAssertionsTest >>> testIsZero_int");
+		System.out.println("PrimitiveAssertionsIntTest >>> testIsZero_int");
 		int actual = 0;
 		Assert.assertTrue(PrimitiveAssertions.isZero(actual));
 		actual = 2;
@@ -36,13 +36,13 @@ public class PrimitiveAssertionsIntTest {
 	}
 	@Test
 	public void testAssertZero_int() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertZero_int");
+		System.out.println("PrimitiveAssertionsIntTest >>> testAssertZero_int");
 		int actual = 0;
 		PrimitiveAssertions.assertZero(actual);
 	}
 	@Test
 	public void testAssertZero_int_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertZero_int_failed");
+		System.out.println("PrimitiveAssertionsIntTest >>> testAssertZero_int_failed");
 		try{
 			int actual=1;
 			PrimitiveAssertions.assertZero(actual);
@@ -53,13 +53,13 @@ public class PrimitiveAssertionsIntTest {
 	}
 	@Test
 	public void testAssertZero_int_message() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertZero_int_message");
+		System.out.println("PrimitiveAssertionsIntTest >>> testAssertZero_int_message");
 		int actual = 0;
 		PrimitiveAssertions.assertZero(actual,"Message");
 	}
 	@Test
 	public void testAssertZero_int_message_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertZero_int_message_failed");
+		System.out.println("PrimitiveAssertionsIntTest >>> testAssertZero_int_message_failed");
 		try{
 			int actual=1;
 			PrimitiveAssertions.assertZero(actual,"Message");
@@ -70,7 +70,7 @@ public class PrimitiveAssertionsIntTest {
 	}
 	@Test
 	public void testIsEqual_int_int() {
-		System.out.println("PrimitiveAssertionsTest >>> testIsEqual_int_int");
+		System.out.println("PrimitiveAssertionsIntTest >>> testIsEqual_int_int");
 		int actual=0;
 		int expected=0;
 		Assert.assertTrue(PrimitiveAssertions.isEqual(actual, expected));
@@ -83,7 +83,7 @@ public class PrimitiveAssertionsIntTest {
 	}
 	@Test
 	public void testAssertEquals_int_int() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertEquals_int_int");
+		System.out.println("PrimitiveAssertionsIntTest >>> testAssertEquals_int_int");
 		int actual=0;
 		int expected=0;
 		PrimitiveAssertions.assertEquals(actual,expected);
@@ -93,7 +93,7 @@ public class PrimitiveAssertionsIntTest {
 	}
 	@Test
 	public void testAssertEquals_int_int_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertEquals_int_int_failed");
+		System.out.println("PrimitiveAssertionsIntTest >>> testAssertEquals_int_int_failed");
 		try{
 			int actual=1;
 			int expected=0;
@@ -105,7 +105,7 @@ public class PrimitiveAssertionsIntTest {
 	}
 	@Test
 	public void testAssertEquals_int_int_message() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertEquals_int_int");
+		System.out.println("PrimitiveAssertionsIntTest >>> testAssertEquals_int_int");
 		int actual=0;
 		int expected=0;
 		PrimitiveAssertions.assertEquals(actual,expected,"Message");
@@ -115,7 +115,7 @@ public class PrimitiveAssertionsIntTest {
 	}
 	@Test
 	public void testAssertEquals_int_int_message_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertEquals_int_int_failed");
+		System.out.println("PrimitiveAssertionsIntTest >>> testAssertEquals_int_int_failed");
 		try{
 			int actual=1;
 			int expected=0;
@@ -127,7 +127,7 @@ public class PrimitiveAssertionsIntTest {
 	}
 	@Test
 	public void testAssertNotEquals_int_int() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertNotEquals_int_int");
+		System.out.println("PrimitiveAssertionsIntTest >>> testAssertNotEquals_int_int");
 		int actual=1;
 		int expected=0;
 		PrimitiveAssertions.assertNotEquals(actual,expected);
@@ -137,7 +137,7 @@ public class PrimitiveAssertionsIntTest {
 	}
 	@Test
 	public void testAssertNotEquals_int_int_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertNotEquals_int_int_failed");
+		System.out.println("PrimitiveAssertionsIntTest >>> testAssertNotEquals_int_int_failed");
 		try{
 			int actual=1;
 			int expected=1;
@@ -149,7 +149,7 @@ public class PrimitiveAssertionsIntTest {
 	}
 	@Test
 	public void testAssertNotEquals_int_int_message() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertNotEquals_int_int_message");
+		System.out.println("PrimitiveAssertionsIntTest >>> testAssertNotEquals_int_int_message");
 		int actual=0;
 		int expected=1;
 		PrimitiveAssertions.assertNotEquals(actual,expected,"Message");
@@ -159,7 +159,7 @@ public class PrimitiveAssertionsIntTest {
 	}
 	@Test
 	public void testAssertNotEquals_int_int_message_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertNotEquals_int_int_message_failed");
+		System.out.println("PrimitiveAssertionsIntTest >>> testAssertNotEquals_int_int_message_failed");
 		try{
 			int actual=1;
 			int expected=1;
@@ -171,7 +171,7 @@ public class PrimitiveAssertionsIntTest {
 	}	
 	@Test
 	public void testIsGreater_int_int() {
-		System.out.println("PrimitiveAssertionsTest >>> testIsGreater_int_int");
+		System.out.println("PrimitiveAssertionsIntTest >>> testIsGreater_int_int");
 		int actual=1;
 		int expected=0;
 		Assert.assertTrue(PrimitiveAssertions.isGreater(actual, expected));
@@ -187,7 +187,7 @@ public class PrimitiveAssertionsIntTest {
 	}
 	@Test
 	public void testAssertGreater_int_int() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertGreater_int_int");
+		System.out.println("PrimitiveAssertionsIntTest >>> testAssertGreater_int_int");
 		int actual=10;
 		int expected=1;
 		PrimitiveAssertions.assertGreater(actual,expected);
@@ -197,7 +197,7 @@ public class PrimitiveAssertionsIntTest {
 	}
 	@Test
 	public void testAssertGreater_int_int_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertGreater_int_int_failed");
+		System.out.println("PrimitiveAssertionsIntTest >>> testAssertGreater_int_int_failed");
 		try{
 			int actual=1;
 			int expected=1;
@@ -217,7 +217,7 @@ public class PrimitiveAssertionsIntTest {
 	}	
 	@Test
 	public void testAssertGreater_int_int_message() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertGreater_int_int_message");
+		System.out.println("PrimitiveAssertionsIntTest >>> testAssertGreater_int_int_message");
 		int actual=10;
 		int expected=1;
 		PrimitiveAssertions.assertGreater(actual,expected,"Message");
@@ -227,7 +227,7 @@ public class PrimitiveAssertionsIntTest {
 	}
 	@Test
 	public void testAssertGreater_int_int_message_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertGreater_int_int_message_failed");
+		System.out.println("PrimitiveAssertionsIntTest >>> testAssertGreater_int_int_message_failed");
 		try{
 			int actual=1;
 			int expected=1;
@@ -247,7 +247,7 @@ public class PrimitiveAssertionsIntTest {
 	}	
 	@Test
 	public void testIsGreaterOrEqual_int_int() {
-		System.out.println("PrimitiveAssertionsTest >>> testIsGreaterOrEqual_int_int");
+		System.out.println("PrimitiveAssertionsIntTest >>> testIsGreaterOrEqual_int_int");
 		int actual=1;
 		int expected=0;
 		Assert.assertTrue(PrimitiveAssertions.isGreaterOrEqual(actual, expected));
@@ -263,7 +263,7 @@ public class PrimitiveAssertionsIntTest {
 	}
 	@Test
 	public void testAssertGreaterOrEqual_int_int() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertGreaterOrEqual_int_int");
+		System.out.println("PrimitiveAssertionsIntTest >>> testAssertGreaterOrEqual_int_int");
 		int actual=10;
 		int expected=1;
 		PrimitiveAssertions.assertGreaterOrEqual(actual,expected);
@@ -273,7 +273,7 @@ public class PrimitiveAssertionsIntTest {
 	}
 	@Test
 	public void testAssertGreaterOrEqual_int_int_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertGreaterOrEqual_int_int_failed");
+		System.out.println("PrimitiveAssertionsIntTest >>> testAssertGreaterOrEqual_int_int_failed");
 		try{
 			int actual=0;
 			int expected=1;
@@ -285,7 +285,7 @@ public class PrimitiveAssertionsIntTest {
 	}	
 	@Test
 	public void testAssertGreaterOrEqual_int_int_message() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertGreaterOrEqual_int_int_message");
+		System.out.println("PrimitiveAssertionsIntTest >>> testAssertGreaterOrEqual_int_int_message");
 		int actual=10;
 		int expected=1;
 		PrimitiveAssertions.assertGreaterOrEqual(actual,expected,"Message");
@@ -295,7 +295,7 @@ public class PrimitiveAssertionsIntTest {
 	}
 	@Test
 	public void testAssertGreaterOrEqual_int_int_message_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertGreaterOrEqual_int_int_message_failed");
+		System.out.println("PrimitiveAssertionsIntTest >>> testAssertGreaterOrEqual_int_int_message_failed");
 		try{
 			int actual=0;
 			int expected=1;
@@ -307,7 +307,7 @@ public class PrimitiveAssertionsIntTest {
 	}	
 	@Test
 	public void testAssertSmaller_int_int() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertSmaller_int_int");
+		System.out.println("PrimitiveAssertionsIntTest >>> testAssertSmaller_int_int");
 		int actual=1;
 		int expected=10;
 		PrimitiveAssertions.assertSmaller(actual,expected);
@@ -317,7 +317,7 @@ public class PrimitiveAssertionsIntTest {
 	}
 	@Test
 	public void testAssertSmaller_int_int_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertSmaller_int_int_failed");
+		System.out.println("PrimitiveAssertionsIntTest >>> testAssertSmaller_int_int_failed");
 		try{
 			int actual=1;
 			int expected=1;
@@ -337,7 +337,7 @@ public class PrimitiveAssertionsIntTest {
 	}	
 	@Test
 	public void testAssertSmaller_int_int_message() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertSmaller_int_int_message");
+		System.out.println("PrimitiveAssertionsIntTest >>> testAssertSmaller_int_int_message");
 		int actual=1;
 		int expected=10;
 		PrimitiveAssertions.assertSmaller(actual,expected,"Message");
@@ -347,7 +347,7 @@ public class PrimitiveAssertionsIntTest {
 	}
 	@Test
 	public void testAssertSmaller_int_int_message_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertSmaller_int_int_message_failed");
+		System.out.println("PrimitiveAssertionsIntTest >>> testAssertSmaller_int_int_message_failed");
 		try{
 			int actual=1;
 			int expected=1;
@@ -367,7 +367,7 @@ public class PrimitiveAssertionsIntTest {
 	}	
 	@Test
 	public void testAssertSmallerOrEqual_int_int() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertSmallerOrEqual_int_int");
+		System.out.println("PrimitiveAssertionsIntTest >>> testAssertSmallerOrEqual_int_int");
 		int actual=1;
 		int expected=10;
 		PrimitiveAssertions.assertSmallerOrEqual(actual,expected);
@@ -377,7 +377,7 @@ public class PrimitiveAssertionsIntTest {
 	}
 	@Test
 	public void testAssertSmallerOrEqual_int_int_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertSmallerOrEqual_int_int_failed");
+		System.out.println("PrimitiveAssertionsIntTest >>> testAssertSmallerOrEqual_int_int_failed");
 		try{
 			int actual=1;
 			int expected=0;
@@ -389,7 +389,7 @@ public class PrimitiveAssertionsIntTest {
 	}	
 	@Test
 	public void testAssertSmallerOrEqual_int_int_message() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertSmallerOrEqual_int_int_message");
+		System.out.println("PrimitiveAssertionsIntTest >>> testAssertSmallerOrEqual_int_int_message");
 		int actual=1;
 		int expected=10;
 		PrimitiveAssertions.assertSmallerOrEqual(actual,expected,"Message");
@@ -399,7 +399,7 @@ public class PrimitiveAssertionsIntTest {
 	}
 	@Test
 	public void testAssertSmallerOrEqual_int_int_message_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertSmallerOrEqual_int_int_message_failed");
+		System.out.println("PrimitiveAssertionsIntTest >>> testAssertSmallerOrEqual_int_int_message_failed");
 		try{
 			int actual=1;
 			int expected=0;

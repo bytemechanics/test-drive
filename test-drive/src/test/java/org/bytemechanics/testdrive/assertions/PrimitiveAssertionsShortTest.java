@@ -26,7 +26,7 @@ public class PrimitiveAssertionsShortTest {
 	
 	@Test
 	public void testIsZero_short() {
-		System.out.println("PrimitiveAssertionsTest >>> testIsZero_short");
+		System.out.println("PrimitiveAssertionsShortTest >>> testIsZero_short");
 		short actual = 0;
 		Assert.assertTrue(PrimitiveAssertions.isZero(actual));
 		actual = 2;
@@ -36,13 +36,13 @@ public class PrimitiveAssertionsShortTest {
 	}
 	@Test
 	public void testAssertZero_short() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertZero_short");
+		System.out.println("PrimitiveAssertionsShortTest >>> testAssertZero_short");
 		short actual = 0;
 		PrimitiveAssertions.assertZero(actual);
 	}
 	@Test
 	public void testAssertZero_short_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertZero_short_failed");
+		System.out.println("PrimitiveAssertionsShortTest >>> testAssertZero_short_failed");
 		try{
 			short actual=1;
 			PrimitiveAssertions.assertZero(actual);
@@ -53,13 +53,13 @@ public class PrimitiveAssertionsShortTest {
 	}
 	@Test
 	public void testAssertZero_short_message() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertZero_short_message");
+		System.out.println("PrimitiveAssertionsShortTest >>> testAssertZero_short_message");
 		short actual = 0;
 		PrimitiveAssertions.assertZero(actual,"Message");
 	}
 	@Test
 	public void testAssertZero_short_message_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertZero_short_message_failed");
+		System.out.println("PrimitiveAssertionsShortTest >>> testAssertZero_short_message_failed");
 		try{
 			short actual=1;
 			PrimitiveAssertions.assertZero(actual,"Message");
@@ -70,7 +70,7 @@ public class PrimitiveAssertionsShortTest {
 	}
 	@Test
 	public void testIsEqual_short_short() {
-		System.out.println("PrimitiveAssertionsTest >>> testIsEqual_short_short");
+		System.out.println("PrimitiveAssertionsShortTest >>> testIsEqual_short_short");
 		short actual=0;
 		short expected=0;
 		Assert.assertTrue(PrimitiveAssertions.isEqual(actual, expected));
@@ -83,7 +83,7 @@ public class PrimitiveAssertionsShortTest {
 	}
 	@Test
 	public void testAssertEquals_short_short() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertEquals_short_short");
+		System.out.println("PrimitiveAssertionsShortTest >>> testAssertEquals_short_short");
 		short actual=0;
 		short expected=0;
 		PrimitiveAssertions.assertEquals(actual,expected);
@@ -93,7 +93,7 @@ public class PrimitiveAssertionsShortTest {
 	}
 	@Test
 	public void testAssertEquals_short_short_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertEquals_short_short_failed");
+		System.out.println("PrimitiveAssertionsShortTest >>> testAssertEquals_short_short_failed");
 		try{
 			short actual=1;
 			short expected=0;
@@ -105,7 +105,7 @@ public class PrimitiveAssertionsShortTest {
 	}
 	@Test
 	public void testAssertEquals_short_short_message() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertEquals_short_short");
+		System.out.println("PrimitiveAssertionsShortTest >>> testAssertEquals_short_short");
 		short actual=0;
 		short expected=0;
 		PrimitiveAssertions.assertEquals(actual,expected,"Message");
@@ -115,7 +115,7 @@ public class PrimitiveAssertionsShortTest {
 	}
 	@Test
 	public void testAssertEquals_short_short_message_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertEquals_short_short_failed");
+		System.out.println("PrimitiveAssertionsShortTest >>> testAssertEquals_short_short_failed");
 		try{
 			short actual=1;
 			short expected=0;
@@ -127,7 +127,7 @@ public class PrimitiveAssertionsShortTest {
 	}
 	@Test
 	public void testAssertNotEquals_short_short() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertNotEquals_short_short");
+		System.out.println("PrimitiveAssertionsShortTest >>> testAssertNotEquals_short_short");
 		short actual=1;
 		short expected=0;
 		PrimitiveAssertions.assertNotEquals(actual,expected);
@@ -137,7 +137,7 @@ public class PrimitiveAssertionsShortTest {
 	}
 	@Test
 	public void testAssertNotEquals_short_short_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertNotEquals_short_short_failed");
+		System.out.println("PrimitiveAssertionsShortTest >>> testAssertNotEquals_short_short_failed");
 		try{
 			short actual=1;
 			short expected=1;
@@ -149,7 +149,7 @@ public class PrimitiveAssertionsShortTest {
 	}
 	@Test
 	public void testAssertNotEquals_short_short_message() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertNotEquals_short_short_message");
+		System.out.println("PrimitiveAssertionsShortTest >>> testAssertNotEquals_short_short_message");
 		short actual=0;
 		short expected=1;
 		PrimitiveAssertions.assertNotEquals(actual,expected,"Message");
@@ -159,7 +159,7 @@ public class PrimitiveAssertionsShortTest {
 	}
 	@Test
 	public void testAssertNotEquals_short_short_message_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertNotEquals_short_short_message_failed");
+		System.out.println("PrimitiveAssertionsShortTest >>> testAssertNotEquals_short_short_message_failed");
 		try{
 			short actual=1;
 			short expected=1;
@@ -171,7 +171,7 @@ public class PrimitiveAssertionsShortTest {
 	}	
 	@Test
 	public void testIsGreater_short_short() {
-		System.out.println("PrimitiveAssertionsTest >>> testIsGreater_short_short");
+		System.out.println("PrimitiveAssertionsShortTest >>> testIsGreater_short_short");
 		short actual=1;
 		short expected=0;
 		Assert.assertTrue(PrimitiveAssertions.isGreater(actual, expected));
@@ -187,7 +187,7 @@ public class PrimitiveAssertionsShortTest {
 	}
 	@Test
 	public void testAssertGreater_short_short() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertGreater_short_short");
+		System.out.println("PrimitiveAssertionsShortTest >>> testAssertGreater_short_short");
 		short actual=10;
 		short expected=1;
 		PrimitiveAssertions.assertGreater(actual,expected);
@@ -197,7 +197,7 @@ public class PrimitiveAssertionsShortTest {
 	}
 	@Test
 	public void testAssertGreater_short_short_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertGreater_short_short_failed");
+		System.out.println("PrimitiveAssertionsShortTest >>> testAssertGreater_short_short_failed");
 		try{
 			short actual=1;
 			short expected=1;
@@ -217,7 +217,7 @@ public class PrimitiveAssertionsShortTest {
 	}	
 	@Test
 	public void testAssertGreater_short_short_message() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertGreater_short_short_message");
+		System.out.println("PrimitiveAssertionsShortTest >>> testAssertGreater_short_short_message");
 		short actual=10;
 		short expected=1;
 		PrimitiveAssertions.assertGreater(actual,expected,"Message");
@@ -227,7 +227,7 @@ public class PrimitiveAssertionsShortTest {
 	}
 	@Test
 	public void testAssertGreater_short_short_message_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertGreater_short_short_message_failed");
+		System.out.println("PrimitiveAssertionsShortTest >>> testAssertGreater_short_short_message_failed");
 		try{
 			short actual=1;
 			short expected=1;
@@ -247,7 +247,7 @@ public class PrimitiveAssertionsShortTest {
 	}	
 	@Test
 	public void testIsGreaterOrEqual_short_short() {
-		System.out.println("PrimitiveAssertionsTest >>> testIsGreaterOrEqual_short_short");
+		System.out.println("PrimitiveAssertionsShortTest >>> testIsGreaterOrEqual_short_short");
 		short actual=1;
 		short expected=0;
 		Assert.assertTrue(PrimitiveAssertions.isGreaterOrEqual(actual, expected));
@@ -263,7 +263,7 @@ public class PrimitiveAssertionsShortTest {
 	}
 	@Test
 	public void testAssertGreaterOrEqual_short_short() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertGreaterOrEqual_short_short");
+		System.out.println("PrimitiveAssertionsShortTest >>> testAssertGreaterOrEqual_short_short");
 		short actual=10;
 		short expected=1;
 		PrimitiveAssertions.assertGreaterOrEqual(actual,expected);
@@ -273,7 +273,7 @@ public class PrimitiveAssertionsShortTest {
 	}
 	@Test
 	public void testAssertGreaterOrEqual_short_short_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertGreaterOrEqual_short_short_failed");
+		System.out.println("PrimitiveAssertionsShortTest >>> testAssertGreaterOrEqual_short_short_failed");
 		try{
 			short actual=0;
 			short expected=1;
@@ -285,7 +285,7 @@ public class PrimitiveAssertionsShortTest {
 	}	
 	@Test
 	public void testAssertGreaterOrEqual_short_short_message() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertGreaterOrEqual_short_short_message");
+		System.out.println("PrimitiveAssertionsShortTest >>> testAssertGreaterOrEqual_short_short_message");
 		short actual=10;
 		short expected=1;
 		PrimitiveAssertions.assertGreaterOrEqual(actual,expected,"Message");
@@ -295,7 +295,7 @@ public class PrimitiveAssertionsShortTest {
 	}
 	@Test
 	public void testAssertGreaterOrEqual_short_short_message_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertGreaterOrEqual_short_short_message_failed");
+		System.out.println("PrimitiveAssertionsShortTest >>> testAssertGreaterOrEqual_short_short_message_failed");
 		try{
 			short actual=0;
 			short expected=1;
@@ -307,7 +307,7 @@ public class PrimitiveAssertionsShortTest {
 	}	
 	@Test
 	public void testAssertSmaller_short_short() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertSmaller_short_short");
+		System.out.println("PrimitiveAssertionsShortTest >>> testAssertSmaller_short_short");
 		short actual=1;
 		short expected=10;
 		PrimitiveAssertions.assertSmaller(actual,expected);
@@ -317,7 +317,7 @@ public class PrimitiveAssertionsShortTest {
 	}
 	@Test
 	public void testAssertSmaller_short_short_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertSmaller_short_short_failed");
+		System.out.println("PrimitiveAssertionsShortTest >>> testAssertSmaller_short_short_failed");
 		try{
 			short actual=1;
 			short expected=1;
@@ -337,7 +337,7 @@ public class PrimitiveAssertionsShortTest {
 	}	
 	@Test
 	public void testAssertSmaller_short_short_message() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertSmaller_short_short_message");
+		System.out.println("PrimitiveAssertionsShortTest >>> testAssertSmaller_short_short_message");
 		short actual=1;
 		short expected=10;
 		PrimitiveAssertions.assertSmaller(actual,expected,"Message");
@@ -347,7 +347,7 @@ public class PrimitiveAssertionsShortTest {
 	}
 	@Test
 	public void testAssertSmaller_short_short_message_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertSmaller_short_short_message_failed");
+		System.out.println("PrimitiveAssertionsShortTest >>> testAssertSmaller_short_short_message_failed");
 		try{
 			short actual=1;
 			short expected=1;
@@ -367,7 +367,7 @@ public class PrimitiveAssertionsShortTest {
 	}	
 	@Test
 	public void testAssertSmallerOrEqual_short_short() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertSmallerOrEqual_short_short");
+		System.out.println("PrimitiveAssertionsShortTest >>> testAssertSmallerOrEqual_short_short");
 		short actual=1;
 		short expected=10;
 		PrimitiveAssertions.assertSmallerOrEqual(actual,expected);
@@ -377,7 +377,7 @@ public class PrimitiveAssertionsShortTest {
 	}
 	@Test
 	public void testAssertSmallerOrEqual_short_short_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertSmallerOrEqual_short_short_failed");
+		System.out.println("PrimitiveAssertionsShortTest >>> testAssertSmallerOrEqual_short_short_failed");
 		try{
 			short actual=1;
 			short expected=0;
@@ -389,7 +389,7 @@ public class PrimitiveAssertionsShortTest {
 	}	
 	@Test
 	public void testAssertSmallerOrEqual_short_short_message() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertSmallerOrEqual_short_short_message");
+		System.out.println("PrimitiveAssertionsShortTest >>> testAssertSmallerOrEqual_short_short_message");
 		short actual=1;
 		short expected=10;
 		PrimitiveAssertions.assertSmallerOrEqual(actual,expected,"Message");
@@ -399,7 +399,7 @@ public class PrimitiveAssertionsShortTest {
 	}
 	@Test
 	public void testAssertSmallerOrEqual_short_short_message_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertSmallerOrEqual_short_short_message_failed");
+		System.out.println("PrimitiveAssertionsShortTest >>> testAssertSmallerOrEqual_short_short_message_failed");
 		try{
 			short actual=1;
 			short expected=0;

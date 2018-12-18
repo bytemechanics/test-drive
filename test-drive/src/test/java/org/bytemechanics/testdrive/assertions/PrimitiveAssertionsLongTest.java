@@ -26,7 +26,7 @@ public class PrimitiveAssertionsLongTest {
 	
 	@Test
 	public void testIsZero_long() {
-		System.out.println("PrimitiveAssertionsTest >>> testIsZero_long");
+		System.out.println("PrimitiveAssertionsLongTest >>> testIsZero_long");
 		long actual = 0l;
 		Assert.assertTrue(PrimitiveAssertions.isZero(actual));
 		actual = 2;
@@ -36,13 +36,13 @@ public class PrimitiveAssertionsLongTest {
 	}
 	@Test
 	public void testAssertZero_long() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertZero_long");
+		System.out.println("PrimitiveAssertionsLongTest >>> testAssertZero_long");
 		long actual = 0l;
 		PrimitiveAssertions.assertZero(actual);
 	}
 	@Test
 	public void testAssertZero_long_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertZero_long_failed");
+		System.out.println("PrimitiveAssertionsLongTest >>> testAssertZero_long_failed");
 		try{
 			long actual=1l;
 			PrimitiveAssertions.assertZero(actual);
@@ -53,13 +53,13 @@ public class PrimitiveAssertionsLongTest {
 	}
 	@Test
 	public void testAssertZero_long_message() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertZero_long_message");
+		System.out.println("PrimitiveAssertionsLongTest >>> testAssertZero_long_message");
 		long actual = 0l;
 		PrimitiveAssertions.assertZero(actual,"Message");
 	}
 	@Test
 	public void testAssertZero_long_message_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertZero_long_message_failed");
+		System.out.println("PrimitiveAssertionsLongTest >>> testAssertZero_long_message_failed");
 		try{
 			long actual=1l;
 			PrimitiveAssertions.assertZero(actual,"Message");
@@ -70,7 +70,7 @@ public class PrimitiveAssertionsLongTest {
 	}
 	@Test
 	public void testIsEqual_long_long() {
-		System.out.println("PrimitiveAssertionsTest >>> testIsEqual_long_long");
+		System.out.println("PrimitiveAssertionsLongTest >>> testIsEqual_long_long");
 		long actual=0l;
 		long expected=0l;
 		Assert.assertTrue(PrimitiveAssertions.isEqual(actual, expected));
@@ -83,7 +83,7 @@ public class PrimitiveAssertionsLongTest {
 	}
 	@Test
 	public void testAssertEquals_long_long() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertEquals_long_long");
+		System.out.println("PrimitiveAssertionsLongTest >>> testAssertEquals_long_long");
 		long actual=0l;
 		long expected=0l;
 		PrimitiveAssertions.assertEquals(actual,expected);
@@ -93,7 +93,7 @@ public class PrimitiveAssertionsLongTest {
 	}
 	@Test
 	public void testAssertEquals_long_long_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertEquals_long_long_failed");
+		System.out.println("PrimitiveAssertionsLongTest >>> testAssertEquals_long_long_failed");
 		try{
 			long actual=1l;
 			long expected=0l;
@@ -105,7 +105,7 @@ public class PrimitiveAssertionsLongTest {
 	}
 	@Test
 	public void testAssertEquals_long_long_message() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertEquals_long_long");
+		System.out.println("PrimitiveAssertionsLongTest >>> testAssertEquals_long_long");
 		long actual=0l;
 		long expected=0l;
 		PrimitiveAssertions.assertEquals(actual,expected,"Message");
@@ -115,7 +115,7 @@ public class PrimitiveAssertionsLongTest {
 	}
 	@Test
 	public void testAssertEquals_long_long_message_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertEquals_long_long_failed");
+		System.out.println("PrimitiveAssertionsLongTest >>> testAssertEquals_long_long_failed");
 		try{
 			long actual=1l;
 			long expected=0l;
@@ -127,7 +127,7 @@ public class PrimitiveAssertionsLongTest {
 	}
 	@Test
 	public void testAssertNotEquals_long_long() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertNotEquals_long_long");
+		System.out.println("PrimitiveAssertionsLongTest >>> testAssertNotEquals_long_long");
 		long actual=1l;
 		long expected=0l;
 		PrimitiveAssertions.assertNotEquals(actual,expected);
@@ -137,7 +137,7 @@ public class PrimitiveAssertionsLongTest {
 	}
 	@Test
 	public void testAssertNotEquals_long_long_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertNotEquals_long_long_failed");
+		System.out.println("PrimitiveAssertionsLongTest >>> testAssertNotEquals_long_long_failed");
 		try{
 			long actual=1l;
 			long expected=1l;
@@ -149,7 +149,7 @@ public class PrimitiveAssertionsLongTest {
 	}
 	@Test
 	public void testAssertNotEquals_long_long_message() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertNotEquals_long_long_message");
+		System.out.println("PrimitiveAssertionsLongTest >>> testAssertNotEquals_long_long_message");
 		long actual=0l;
 		long expected=1l;
 		PrimitiveAssertions.assertNotEquals(actual,expected,"Message");
@@ -159,7 +159,7 @@ public class PrimitiveAssertionsLongTest {
 	}
 	@Test
 	public void testAssertNotEquals_long_long_message_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertNotEquals_long_long_message_failed");
+		System.out.println("PrimitiveAssertionsLongTest >>> testAssertNotEquals_long_long_message_failed");
 		try{
 			long actual=1l;
 			long expected=1l;
@@ -171,7 +171,7 @@ public class PrimitiveAssertionsLongTest {
 	}	
 	@Test
 	public void testIsGreater_long_long() {
-		System.out.println("PrimitiveAssertionsTest >>> testIsGreater_long_long");
+		System.out.println("PrimitiveAssertionsLongTest >>> testIsGreater_long_long");
 		long actual=1l;
 		long expected=0l;
 		Assert.assertTrue(PrimitiveAssertions.isGreater(actual, expected));
@@ -187,7 +187,7 @@ public class PrimitiveAssertionsLongTest {
 	}
 	@Test
 	public void testAssertGreater_long_long() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertGreater_long_long");
+		System.out.println("PrimitiveAssertionsLongTest >>> testAssertGreater_long_long");
 		long actual=10l;
 		long expected=1l;
 		PrimitiveAssertions.assertGreater(actual,expected);
@@ -197,7 +197,7 @@ public class PrimitiveAssertionsLongTest {
 	}
 	@Test
 	public void testAssertGreater_long_long_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertGreater_long_long_failed");
+		System.out.println("PrimitiveAssertionsLongTest >>> testAssertGreater_long_long_failed");
 		try{
 			long actual=1l;
 			long expected=1l;
@@ -217,7 +217,7 @@ public class PrimitiveAssertionsLongTest {
 	}	
 	@Test
 	public void testAssertGreater_long_long_message() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertGreater_long_long_message");
+		System.out.println("PrimitiveAssertionsLongTest >>> testAssertGreater_long_long_message");
 		long actual=10l;
 		long expected=1l;
 		PrimitiveAssertions.assertGreater(actual,expected,"Message");
@@ -227,7 +227,7 @@ public class PrimitiveAssertionsLongTest {
 	}
 	@Test
 	public void testAssertGreater_long_long_message_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertGreater_long_long_message_failed");
+		System.out.println("PrimitiveAssertionsLongTest >>> testAssertGreater_long_long_message_failed");
 		try{
 			long actual=1l;
 			long expected=1l;
@@ -247,7 +247,7 @@ public class PrimitiveAssertionsLongTest {
 	}	
 	@Test
 	public void testIsGreaterOrEqual_long_long() {
-		System.out.println("PrimitiveAssertionsTest >>> testIsGreaterOrEqual_long_long");
+		System.out.println("PrimitiveAssertionsLongTest >>> testIsGreaterOrEqual_long_long");
 		long actual=1l;
 		long expected=0l;
 		Assert.assertTrue(PrimitiveAssertions.isGreaterOrEqual(actual, expected));
@@ -263,7 +263,7 @@ public class PrimitiveAssertionsLongTest {
 	}
 	@Test
 	public void testAssertGreaterOrEqual_long_long() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertGreaterOrEqual_long_long");
+		System.out.println("PrimitiveAssertionsLongTest >>> testAssertGreaterOrEqual_long_long");
 		long actual=10l;
 		long expected=1l;
 		PrimitiveAssertions.assertGreaterOrEqual(actual,expected);
@@ -273,7 +273,7 @@ public class PrimitiveAssertionsLongTest {
 	}
 	@Test
 	public void testAssertGreaterOrEqual_long_long_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertGreaterOrEqual_long_long_failed");
+		System.out.println("PrimitiveAssertionsLongTest >>> testAssertGreaterOrEqual_long_long_failed");
 		try{
 			long actual=0l;
 			long expected=1l;
@@ -285,7 +285,7 @@ public class PrimitiveAssertionsLongTest {
 	}	
 	@Test
 	public void testAssertGreaterOrEqual_long_long_message() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertGreaterOrEqual_long_long_message");
+		System.out.println("PrimitiveAssertionsLongTest >>> testAssertGreaterOrEqual_long_long_message");
 		long actual=10l;
 		long expected=1l;
 		PrimitiveAssertions.assertGreaterOrEqual(actual,expected,"Message");
@@ -295,7 +295,7 @@ public class PrimitiveAssertionsLongTest {
 	}
 	@Test
 	public void testAssertGreaterOrEqual_long_long_message_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertGreaterOrEqual_long_long_message_failed");
+		System.out.println("PrimitiveAssertionsLongTest >>> testAssertGreaterOrEqual_long_long_message_failed");
 		try{
 			long actual=0l;
 			long expected=1l;
@@ -307,7 +307,7 @@ public class PrimitiveAssertionsLongTest {
 	}	
 	@Test
 	public void testAssertSmaller_long_long() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertSmaller_long_long");
+		System.out.println("PrimitiveAssertionsLongTest >>> testAssertSmaller_long_long");
 		long actual=1l;
 		long expected=10l;
 		PrimitiveAssertions.assertSmaller(actual,expected);
@@ -317,7 +317,7 @@ public class PrimitiveAssertionsLongTest {
 	}
 	@Test
 	public void testAssertSmaller_long_long_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertSmaller_long_long_failed");
+		System.out.println("PrimitiveAssertionsLongTest >>> testAssertSmaller_long_long_failed");
 		try{
 			long actual=1l;
 			long expected=1l;
@@ -337,7 +337,7 @@ public class PrimitiveAssertionsLongTest {
 	}	
 	@Test
 	public void testAssertSmaller_long_long_message() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertSmaller_long_long_message");
+		System.out.println("PrimitiveAssertionsLongTest >>> testAssertSmaller_long_long_message");
 		long actual=1l;
 		long expected=10l;
 		PrimitiveAssertions.assertSmaller(actual,expected,"Message");
@@ -347,7 +347,7 @@ public class PrimitiveAssertionsLongTest {
 	}
 	@Test
 	public void testAssertSmaller_long_long_message_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertSmaller_long_long_message_failed");
+		System.out.println("PrimitiveAssertionsLongTest >>> testAssertSmaller_long_long_message_failed");
 		try{
 			long actual=1l;
 			long expected=1l;
@@ -367,7 +367,7 @@ public class PrimitiveAssertionsLongTest {
 	}	
 	@Test
 	public void testAssertSmallerOrEqual_long_long() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertSmallerOrEqual_long_long");
+		System.out.println("PrimitiveAssertionsLongTest >>> testAssertSmallerOrEqual_long_long");
 		long actual=1l;
 		long expected=10l;
 		PrimitiveAssertions.assertSmallerOrEqual(actual,expected);
@@ -377,7 +377,7 @@ public class PrimitiveAssertionsLongTest {
 	}
 	@Test
 	public void testAssertSmallerOrEqual_long_long_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertSmallerOrEqual_long_long_failed");
+		System.out.println("PrimitiveAssertionsLongTest >>> testAssertSmallerOrEqual_long_long_failed");
 		try{
 			long actual=1l;
 			long expected=0l;
@@ -389,7 +389,7 @@ public class PrimitiveAssertionsLongTest {
 	}	
 	@Test
 	public void testAssertSmallerOrEqual_long_long_message() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertSmallerOrEqual_long_long_message");
+		System.out.println("PrimitiveAssertionsLongTest >>> testAssertSmallerOrEqual_long_long_message");
 		long actual=1l;
 		long expected=10l;
 		PrimitiveAssertions.assertSmallerOrEqual(actual,expected,"Message");
@@ -399,7 +399,7 @@ public class PrimitiveAssertionsLongTest {
 	}
 	@Test
 	public void testAssertSmallerOrEqual_long_long_message_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertSmallerOrEqual_long_long_message_failed");
+		System.out.println("PrimitiveAssertionsLongTest >>> testAssertSmallerOrEqual_long_long_message_failed");
 		try{
 			long actual=1l;
 			long expected=0l;

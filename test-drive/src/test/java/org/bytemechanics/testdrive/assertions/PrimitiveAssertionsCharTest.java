@@ -26,7 +26,7 @@ public class PrimitiveAssertionsCharTest {
 		
 	@Test
 	public void testIsEqual_char_char() {
-		System.out.println("PrimitiveAssertionsTest >>> testIsEqual_char_char");
+		System.out.println("PrimitiveAssertionsCharTest >>> testIsEqual_char_char");
 		char actual='s';
 		char expected='s';
 		Assert.assertTrue(PrimitiveAssertions.isEqual(actual, expected));
@@ -39,7 +39,7 @@ public class PrimitiveAssertionsCharTest {
 	}
 	@Test
 	public void testAssertEquals_char_char() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertEquals_char_char");
+		System.out.println("PrimitiveAssertionsCharTest >>> testAssertEquals_char_char");
 		char actual='s';
 		char expected='s';
 		PrimitiveAssertions.assertEquals(actual,expected);
@@ -49,7 +49,7 @@ public class PrimitiveAssertionsCharTest {
 	}
 	@Test
 	public void testAssertEquals_char_char_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertEquals_char_char_failed");
+		System.out.println("PrimitiveAssertionsCharTest >>> testAssertEquals_char_char_failed");
 		try{
 			char actual='f';
 			char expected='s';
@@ -61,7 +61,7 @@ public class PrimitiveAssertionsCharTest {
 	}
 	@Test
 	public void testAssertEquals_char_char_message() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertEquals_char_char");
+		System.out.println("PrimitiveAssertionsCharTest >>> testAssertEquals_char_char");
 		char actual='s';
 		char expected='s';
 		PrimitiveAssertions.assertEquals(actual,expected,"Message");
@@ -71,7 +71,7 @@ public class PrimitiveAssertionsCharTest {
 	}
 	@Test
 	public void testAssertEquals_char_char_message_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertEquals_char_char_failed");
+		System.out.println("PrimitiveAssertionsCharTest >>> testAssertEquals_char_char_failed");
 		try{
 			char actual='f';
 			char expected='s';
@@ -83,7 +83,7 @@ public class PrimitiveAssertionsCharTest {
 	}
 	@Test
 	public void testAssertNotEquals_char_char() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertNotEquals_char_char");
+		System.out.println("PrimitiveAssertionsCharTest >>> testAssertNotEquals_char_char");
 		char actual='f';
 		char expected='s';
 		PrimitiveAssertions.assertNotEquals(actual,expected);
@@ -93,7 +93,7 @@ public class PrimitiveAssertionsCharTest {
 	}
 	@Test
 	public void testAssertNotEquals_char_char_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertNotEquals_char_char_failed");
+		System.out.println("PrimitiveAssertionsCharTest >>> testAssertNotEquals_char_char_failed");
 		try{
 			char actual='f';
 			char expected='f';
@@ -105,7 +105,7 @@ public class PrimitiveAssertionsCharTest {
 	}
 	@Test
 	public void testAssertNotEquals_char_char_message() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertNotEquals_char_char_message");
+		System.out.println("PrimitiveAssertionsCharTest >>> testAssertNotEquals_char_char_message");
 		char actual='s';
 		char expected='f';
 		PrimitiveAssertions.assertNotEquals(actual,expected,"Message");
@@ -115,7 +115,7 @@ public class PrimitiveAssertionsCharTest {
 	}
 	@Test
 	public void testAssertNotEquals_char_char_message_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertNotEquals_char_char_message_failed");
+		System.out.println("PrimitiveAssertionsCharTest >>> testAssertNotEquals_char_char_message_failed");
 		try{
 			char actual='f';
 			char expected='f';

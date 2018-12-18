@@ -26,7 +26,7 @@ public class PrimitiveAssertionsByteTest {
 		
 	@Test
 	public void testIsEqual_byte_byte() {
-		System.out.println("PrimitiveAssertionsTest >>> testIsEqual_byte_byte");
+		System.out.println("PrimitiveAssertionsByteTest >>> testIsEqual_byte_byte");
 		byte actual=0;
 		byte expected=0;
 		Assert.assertTrue(PrimitiveAssertions.isEqual(actual, expected));
@@ -39,7 +39,7 @@ public class PrimitiveAssertionsByteTest {
 	}
 	@Test
 	public void testAssertEquals_byte_byte() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertEquals_byte_byte");
+		System.out.println("PrimitiveAssertionsByteTest >>> testAssertEquals_byte_byte");
 		byte actual=0;
 		byte expected=0;
 		PrimitiveAssertions.assertEquals(actual,expected);
@@ -49,7 +49,7 @@ public class PrimitiveAssertionsByteTest {
 	}
 	@Test
 	public void testAssertEquals_byte_byte_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertEquals_byte_byte_failed");
+		System.out.println("PrimitiveAssertionsByteTest >>> testAssertEquals_byte_byte_failed");
 		try{
 			byte actual=1;
 			byte expected=0;
@@ -61,7 +61,7 @@ public class PrimitiveAssertionsByteTest {
 	}
 	@Test
 	public void testAssertEquals_byte_byte_message() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertEquals_byte_byte");
+		System.out.println("PrimitiveAssertionsByteTest >>> testAssertEquals_byte_byte");
 		byte actual=0;
 		byte expected=0;
 		PrimitiveAssertions.assertEquals(actual,expected,"Message");
@@ -71,7 +71,7 @@ public class PrimitiveAssertionsByteTest {
 	}
 	@Test
 	public void testAssertEquals_byte_byte_message_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertEquals_byte_byte_failed");
+		System.out.println("PrimitiveAssertionsByteTest >>> testAssertEquals_byte_byte_failed");
 		try{
 			byte actual=1;
 			byte expected=0;
@@ -83,7 +83,7 @@ public class PrimitiveAssertionsByteTest {
 	}
 	@Test
 	public void testAssertNotEquals_byte_byte() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertNotEquals_byte_byte");
+		System.out.println("PrimitiveAssertionsByteTest >>> testAssertNotEquals_byte_byte");
 		byte actual=1;
 		byte expected=0;
 		PrimitiveAssertions.assertNotEquals(actual,expected);
@@ -93,7 +93,7 @@ public class PrimitiveAssertionsByteTest {
 	}
 	@Test
 	public void testAssertNotEquals_byte_byte_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertNotEquals_byte_byte_failed");
+		System.out.println("PrimitiveAssertionsByteTest >>> testAssertNotEquals_byte_byte_failed");
 		try{
 			byte actual=1;
 			byte expected=1;
@@ -105,7 +105,7 @@ public class PrimitiveAssertionsByteTest {
 	}
 	@Test
 	public void testAssertNotEquals_byte_byte_message() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertNotEquals_byte_byte_message");
+		System.out.println("PrimitiveAssertionsByteTest >>> testAssertNotEquals_byte_byte_message");
 		byte actual=0;
 		byte expected=1;
 		PrimitiveAssertions.assertNotEquals(actual,expected,"Message");
@@ -115,7 +115,7 @@ public class PrimitiveAssertionsByteTest {
 	}
 	@Test
 	public void testAssertNotEquals_byte_byte_message_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertNotEquals_byte_byte_message_failed");
+		System.out.println("PrimitiveAssertionsByteTest >>> testAssertNotEquals_byte_byte_message_failed");
 		try{
 			byte actual=1;
 			byte expected=1;

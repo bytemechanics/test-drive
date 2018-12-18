@@ -247,7 +247,7 @@ public class ObjectAssertions extends PrimitiveAssertions{
 		assertEquals(_actual,_expected,"Assertion failed");
 	}
 	/**
-	 * Asserts if the _actual and the _expected values are equal
+	 * Asserts if the _actual and the _expected values are equal, if both are null or points to the same instance are considered equal
 	 * @param <T> type
 	 * @param _actual actual value
 	 * @param _expected expected value
@@ -255,7 +255,7 @@ public class ObjectAssertions extends PrimitiveAssertions{
 	 * @since 0.3.0
 	 */
 	protected static final  <T extends Number & Comparable> boolean isEqual(final T _actual,final T _expected){
-		return (_actual!=null)&&(_expected!=null)&&(_actual.compareTo(_expected)==0);
+		return (_actual==_expected)||((_actual!=null)&&(_expected!=null)&&(_actual.compareTo(_expected)==0));
 	}
 	/**
 	 * Asserts if the _actual and the _expected values are equal
@@ -456,7 +456,7 @@ public class ObjectAssertions extends PrimitiveAssertions{
 	}
 
 	/**
-	 * Asserts if the _actual and the _expected values are equal
+	 * Asserts if the _actual and the _expected values are equal or same
 	 * @param <T> type
 	 * @param _actual actual value
 	 * @param _expected expected value
@@ -464,7 +464,7 @@ public class ObjectAssertions extends PrimitiveAssertions{
 	 * @since 0.3.0
 	 */
 	protected static final <T extends Object> boolean isEqual(final T _actual,final T _expected){
-		return (_actual!=null)&&(_expected!=null)&&(_actual.equals(_expected));
+		return (isSame(_actual,_expected))||(_actual!=null)&&(_expected!=null)&&(_actual.equals(_expected));
 	}
 	/**
 	 * Asserts if the _actual and the _expected values are equal
@@ -473,8 +473,8 @@ public class ObjectAssertions extends PrimitiveAssertions{
 	 * @param _expected expected value
 	 * @since 0.4.0
 	 */
-	public static final <T extends Number & Comparable> void equals(final T _actual,final T _expected){
-		assertEquals(_actual,_expected,"Assertion failed");
+	public static final <T extends Object> void equals(final T _actual,final T _expected){
+		equals(_actual,_expected,"Assertion failed");
 	}
 	/**
 	 * Asserts if the _actual and the _expected values are equal
@@ -508,11 +508,11 @@ public class ObjectAssertions extends PrimitiveAssertions{
 	 */
 	public static final <T extends Object> void notEquals(final T _actual,final T _expected,final String _message){
 		if(isEqual(_actual,_expected))
-			throw new AssertException("!~", _actual, 0, _message);
+			throw new AssertException("!~", _actual, _expected, _message);
 	}
 
 	/**
-	 * Asserts if the _actual and the _expected values are the same instance
+	 * Asserts if the _actual and the _expected values are the same instance or both null
 	 * @param <T> type
 	 * @param _actual actual value
 	 * @param _expected expected value
@@ -520,7 +520,7 @@ public class ObjectAssertions extends PrimitiveAssertions{
 	 * @since 0.3.0
 	 */
 	protected static final <T extends Object> boolean isSame(final T _actual,final T _expected){
-		return (_actual!=null)&&(_expected!=null)&&(_actual==_expected);
+		return _actual==_expected;
 	}
 	/**
 	 * Asserts if the _actual and the _expected values are the same instance
@@ -542,7 +542,7 @@ public class ObjectAssertions extends PrimitiveAssertions{
 	 */
 	public static final <T extends Object> void same(final T _actual,final T _expected,final String _message){
 		if(!isSame(_actual,_expected))
-			throw new AssertException("=", _actual,_expected, _message);
+			throw new AssertException("==", _actual,_expected, _message);
 	}
 	/**
 	 * Asserts if the _actual and the _expected values are not the same instance
@@ -564,6 +564,6 @@ public class ObjectAssertions extends PrimitiveAssertions{
 	 */
 	public static final <T extends Object> void notSame(final T _actual,final T _expected,final String _message){
 		if(isSame(_actual,_expected))
-			throw new AssertException("!=", _actual, 0, _message);
+			throw new AssertException("!==", _actual, _expected, _message);
 	}
 }

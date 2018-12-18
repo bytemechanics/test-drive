@@ -26,18 +26,18 @@ public class PrimitiveAssertionsBooleanTest {
 	
 	@Test
 	public void testIsTrue() {
-		System.out.println("PrimitiveAssertionsTest >>> testIsTrue");
+		System.out.println("PrimitiveAssertionsBooleanTest >>> testIsTrue");
 		Assert.assertTrue(PrimitiveAssertions.isTrue(true));
 		Assert.assertFalse(PrimitiveAssertions.isTrue(false));
 	}
 	@Test
 	public void testAssertTrue_boolean() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertTrue_boolean");
+		System.out.println("PrimitiveAssertionsBooleanTest >>> testAssertTrue_boolean");
 		PrimitiveAssertions.assertTrue(true);
 	}
 	@Test()
 	public void testAssertTrue_boolean_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertTrue_boolean_failed");
+		System.out.println("PrimitiveAssertionsBooleanTest >>> testAssertTrue_boolean_failed");
 		try{
 			PrimitiveAssertions.assertTrue(false);
 			Assert.fail();
@@ -47,12 +47,12 @@ public class PrimitiveAssertionsBooleanTest {
 	}
 	@Test
 	public void testAssertTrue_boolean_String() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertTrue_boolean_String");
+		System.out.println("PrimitiveAssertionsBooleanTest >>> testAssertTrue_boolean_String");
 		PrimitiveAssertions.assertTrue(true,"message");
 	}
 	@Test
 	public void testAssertTrue_boolean_String_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertTrue_boolean_String_failed");
+		System.out.println("PrimitiveAssertionsBooleanTest >>> testAssertTrue_boolean_String_failed");
 		try{
 			PrimitiveAssertions.assertTrue(false,"message");
 			Assert.fail();
@@ -62,12 +62,12 @@ public class PrimitiveAssertionsBooleanTest {
 	}
 	@Test
 	public void testAssertFalse_boolean() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertFalse_boolean");
+		System.out.println("PrimitiveAssertionsBooleanTest >>> testAssertFalse_boolean");
 		PrimitiveAssertions.assertFalse(false);
 	}
 	@Test
 	public void testAssertFalse_boolean_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertTrue_boolean_failed");
+		System.out.println("PrimitiveAssertionsBooleanTest >>> testAssertTrue_boolean_failed");
 		try{
 			PrimitiveAssertions.assertFalse(true);
 			Assert.fail();
@@ -77,12 +77,12 @@ public class PrimitiveAssertionsBooleanTest {
 	}
 	@Test
 	public void testAssertFalse_boolean_String() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertTrue_boolean_String");
+		System.out.println("PrimitiveAssertionsBooleanTest >>> testAssertTrue_boolean_String");
 		PrimitiveAssertions.assertFalse(false,"message");
 	}
 	@Test
 	public void testAssertFalse_boolean_String_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertTrue_boolean_String_failed");
+		System.out.println("PrimitiveAssertionsBooleanTest >>> testAssertTrue_boolean_String_failed");
 		try{
 			PrimitiveAssertions.assertFalse(true,"message");
 			Assert.fail();
@@ -92,7 +92,7 @@ public class PrimitiveAssertionsBooleanTest {
 	}
 	@Test
 	public void testIsEqual_boolean_boolean() {
-		System.out.println("PrimitiveAssertionsTest >>> testIsEqual_boolean_boolean");
+		System.out.println("PrimitiveAssertionsBooleanTest >>> testIsEqual_boolean_boolean");
 		Assert.assertTrue(PrimitiveAssertions.isEqual(false, false));
 		Assert.assertTrue(PrimitiveAssertions.isEqual(true, true));
 		Assert.assertFalse(PrimitiveAssertions.isEqual(true, false));
@@ -100,13 +100,13 @@ public class PrimitiveAssertionsBooleanTest {
 	}
 	@Test
 	public void testAssertEquals_boolean_boolean() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertEquals_boolean_boolean");
+		System.out.println("PrimitiveAssertionsBooleanTest >>> testAssertEquals_boolean_boolean");
 		PrimitiveAssertions.assertEquals(true, true);
 		PrimitiveAssertions.assertEquals(false, false);
 	}
 	@Test
 	public void testAssertEquals_boolean_boolean_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertEquals_boolean_boolean_failed");
+		System.out.println("PrimitiveAssertionsBooleanTest >>> testAssertEquals_boolean_boolean_failed");
 		try{
 			PrimitiveAssertions.assertEquals(true, false);
 			Assert.fail();
@@ -122,13 +122,13 @@ public class PrimitiveAssertionsBooleanTest {
 	}
 	@Test
 	public void testAssertEquals_boolean_boolean_message() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertEquals_boolean_boolean_message");
+		System.out.println("PrimitiveAssertionsBooleanTest >>> testAssertEquals_boolean_boolean_message");
 		PrimitiveAssertions.assertEquals(true, true,"Message");
 		PrimitiveAssertions.assertEquals(false, false,"Message");
 	}
 	@Test
 	public void testAssertEquals_boolean_boolean_message_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertEquals_boolean_boolean_message_failed");
+		System.out.println("PrimitiveAssertionsBooleanTest >>> testAssertEquals_boolean_boolean_message_failed");
 		try{
 			PrimitiveAssertions.assertEquals(true, false,"Message");
 			Assert.fail();
@@ -144,13 +144,13 @@ public class PrimitiveAssertionsBooleanTest {
 	}
 	@Test
 	public void testAssertNotEquals_boolean_boolean() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertNotEquals_boolean_boolean");
+		System.out.println("PrimitiveAssertionsBooleanTest >>> testAssertNotEquals_boolean_boolean");
 		PrimitiveAssertions.assertNotEquals(false, true);
 		PrimitiveAssertions.assertNotEquals(true, false);
 	}
 	@Test
 	public void testAssertNotEquals_boolean_boolean_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertNotEquals_boolean_boolean_failed");
+		System.out.println("PrimitiveAssertionsBooleanTest >>> testAssertNotEquals_boolean_boolean_failed");
 		try{
 			PrimitiveAssertions.assertNotEquals(true, true);
 			Assert.fail();
@@ -166,13 +166,13 @@ public class PrimitiveAssertionsBooleanTest {
 	}
 	@Test
 	public void testAssertNotEquals_boolean_boolean_message() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertNotEquals_boolean_boolean_message");
+		System.out.println("PrimitiveAssertionsBooleanTest >>> testAssertNotEquals_boolean_boolean_message");
 		PrimitiveAssertions.assertNotEquals(false, true,"Message");
 		PrimitiveAssertions.assertNotEquals(true, false,"Message");
 	}
 	@Test
 	public void testAssertNotEquals_boolean_boolean_message_failed() {
-		System.out.println("PrimitiveAssertionsTest >>> testAssertNotEquals_boolean_boolean_message_failed");
+		System.out.println("PrimitiveAssertionsBooleanTest >>> testAssertNotEquals_boolean_boolean_message_failed");
 		try{
 			PrimitiveAssertions.assertNotEquals(true, true,"Message");
 			Assert.fail();
