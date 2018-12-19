@@ -35,9 +35,9 @@ public class CollectionsAssertionsMapTest {
 	@Test
 	public void testMapIsEmpty() {
 		System.out.println("CollectionsAssertionsMapTest >>> testMapIsEmpty");
-		Assert.assertTrue(CollectionsAssertions.isEmpty((Map)null));
-		Assert.assertTrue(CollectionsAssertions.isEmpty(Collections.emptyMap()));
-		Assert.assertFalse(CollectionsAssertions.isEmpty(Stream.of(Tuple.of("key1", "value1"),Tuple.of("key2", "value2")).collect(Collectors.toMap(Tuple::left,Tuple::right))));
+		Assert.assertTrue(CollectionsAssertions.empty((Map)null));
+		Assert.assertTrue(CollectionsAssertions.empty(Collections.emptyMap()));
+		Assert.assertFalse(CollectionsAssertions.empty(Stream.of(Tuple.of("key1", "value1"),Tuple.of("key2", "value2")).collect(Collectors.toMap(Tuple::left,Tuple::right))));
 	}
 
 	@Test
@@ -121,22 +121,22 @@ public class CollectionsAssertionsMapTest {
 	@Test
 	public void testAssertMapSame() {
 		System.out.println("CollectionsAssertionsMapTest >>> testAssertMapSame");
-		CollectionsAssertions.same((Map)null,(Map)null);
-		CollectionsAssertions.same(Collections.EMPTY_MAP,Collections.EMPTY_MAP);
+		CollectionsAssertions.assertSame((Map)null,(Map)null);
+		CollectionsAssertions.assertSame(Collections.EMPTY_MAP,Collections.EMPTY_MAP);
 		Map<String,String> actualSet=Stream.of(Tuple.of("key1", "value1"),Tuple.of("key2", "value2")).collect(Collectors.toMap(Tuple::left,Tuple::right));
-		CollectionsAssertions.same(actualSet,actualSet);
+		CollectionsAssertions.assertSame(actualSet,actualSet);
 	}
 	@Test
 	public void testAssertMapSame_failed() {
 		System.out.println("CollectionsAssertionsMapTest >>> testAssertMapSame_failed");
 		try{
-			CollectionsAssertions.same(new HashMap(),new HashMap());
+			CollectionsAssertions.assertSame(new HashMap(),new HashMap());
 			Assert.fail();
 		}catch(AssertException e){
 			Assert.assertEquals("Assertion failed({}=={}):\n\tActual:\t\t{}\n\tExpected:\t=={}", e.getMessage());
 		}
 		try{
-			CollectionsAssertions.same(Stream.of(Tuple.of("key1", "value1"),Tuple.of("key2", "value2")).collect(Collectors.toMap(Tuple::left,Tuple::right)),Stream.of(Tuple.of("key1", "value1"),Tuple.of("key2", "value2")).collect(Collectors.toMap(Tuple::left,Tuple::right)));
+			CollectionsAssertions.assertSame(Stream.of(Tuple.of("key1", "value1"),Tuple.of("key2", "value2")).collect(Collectors.toMap(Tuple::left,Tuple::right)),Stream.of(Tuple.of("key1", "value1"),Tuple.of("key2", "value2")).collect(Collectors.toMap(Tuple::left,Tuple::right)));
 			Assert.fail();
 		}catch(AssertException e){
 			Assert.assertEquals("Assertion failed({key1=value1, key2=value2}=={key1=value1, key2=value2}):\n\tActual:\t\t{key1=value1, key2=value2}\n\tExpected:\t=={key1=value1, key2=value2}", e.getMessage());
@@ -146,22 +146,22 @@ public class CollectionsAssertionsMapTest {
 	@Test
 	public void testAssertMapSame_message() {
 		System.out.println("CollectionsAssertionsMapTest >>> testAssertMapSame_message");
-		CollectionsAssertions.same((Map)null,(Map)null,"Message");
-		CollectionsAssertions.same(Collections.EMPTY_MAP,Collections.EMPTY_MAP,"Message");
+		CollectionsAssertions.assertSame((Map)null,(Map)null,"Message");
+		CollectionsAssertions.assertSame(Collections.EMPTY_MAP,Collections.EMPTY_MAP,"Message");
 		Map<String,String> actualSet=Stream.of(Tuple.of("key1", "value1"),Tuple.of("key2", "value2")).collect(Collectors.toMap(Tuple::left,Tuple::right));
-		CollectionsAssertions.same(actualSet,actualSet,"Message");
+		CollectionsAssertions.assertSame(actualSet,actualSet,"Message");
 	}
 	@Test
 	public void testAssertMapSame_message_failed() {
 		System.out.println("CollectionsAssertionsMapTest >>> testAssertMapSame_message_failed");
 		try{
-			CollectionsAssertions.same(new HashMap(),new HashMap(),"Message");
+			CollectionsAssertions.assertSame(new HashMap(),new HashMap(),"Message");
 			Assert.fail();
 		}catch(AssertException e){
 			Assert.assertEquals("Message({}=={}):\n\tActual:\t\t{}\n\tExpected:\t=={}", e.getMessage());
 		}
 		try{
-			CollectionsAssertions.same(Stream.of(Tuple.of("key1", "value1"),Tuple.of("key2", "value2")).collect(Collectors.toMap(Tuple::left,Tuple::right)),Stream.of(Tuple.of("key1", "value1"),Tuple.of("key2", "value2")).collect(Collectors.toMap(Tuple::left,Tuple::right)),"Message");
+			CollectionsAssertions.assertSame(Stream.of(Tuple.of("key1", "value1"),Tuple.of("key2", "value2")).collect(Collectors.toMap(Tuple::left,Tuple::right)),Stream.of(Tuple.of("key1", "value1"),Tuple.of("key2", "value2")).collect(Collectors.toMap(Tuple::left,Tuple::right)),"Message");
 			Assert.fail();
 		}catch(AssertException e){
 			Assert.assertEquals("Message({key1=value1, key2=value2}=={key1=value1, key2=value2}):\n\tActual:\t\t{key1=value1, key2=value2}\n\tExpected:\t=={key1=value1, key2=value2}", e.getMessage());
@@ -171,27 +171,27 @@ public class CollectionsAssertionsMapTest {
 	@Test
 	public void testAssertMapNotSame() {
 		System.out.println("CollectionsAssertionsMapTest >>> testAssertMapNotSame");
-		CollectionsAssertions.notSame(Stream.of().collect(Collectors.toSet()),Stream.of().collect(Collectors.toSet()));
-		CollectionsAssertions.notSame(Stream.of(Tuple.of("key1", "value1"),Tuple.of("key2", "value2")).collect(Collectors.toMap(Tuple::left,Tuple::right)),Stream.of(Tuple.of("key1", "value1"),Tuple.of("key2", "value2")).collect(Collectors.toMap(Tuple::left,Tuple::right)));
+		CollectionsAssertions.assertNotSame(Stream.of().collect(Collectors.toSet()),Stream.of().collect(Collectors.toSet()));
+		CollectionsAssertions.assertNotSame(Stream.of(Tuple.of("key1", "value1"),Tuple.of("key2", "value2")).collect(Collectors.toMap(Tuple::left,Tuple::right)),Stream.of(Tuple.of("key1", "value1"),Tuple.of("key2", "value2")).collect(Collectors.toMap(Tuple::left,Tuple::right)));
 	}
 	@Test
 	public void testAssertMapNotSame_failed() {
 		System.out.println("CollectionsAssertionsMapTest >>> testAssertMapNotSame_failed");
 		try{
-			CollectionsAssertions.notSame((Map)null,(Map)null);
+			CollectionsAssertions.assertNotSame((Map)null,(Map)null);
 			Assert.fail();
 		}catch(AssertException e){
 			Assert.assertEquals("Assertion failed(null!==null):\n\tActual:\t\tnull\n\tExpected:\t!==null", e.getMessage());
 		}
 		try{
-			CollectionsAssertions.notSame(Collections.EMPTY_MAP,Collections.EMPTY_MAP);
+			CollectionsAssertions.assertNotSame(Collections.EMPTY_MAP,Collections.EMPTY_MAP);
 			Assert.fail();
 		}catch(AssertException e){
 			Assert.assertEquals("Assertion failed({}!=={}):\n\tActual:\t\t{}\n\tExpected:\t!=={}", e.getMessage());
 		}
 		try{
 			Map<String,String> actualSet=Stream.of(Tuple.of("key1", "value1"),Tuple.of("key2", "value2")).collect(Collectors.toMap(Tuple::left,Tuple::right));
-			CollectionsAssertions.notSame(actualSet,actualSet);
+			CollectionsAssertions.assertNotSame(actualSet,actualSet);
 			Assert.fail();
 		}catch(AssertException e){
 			Assert.assertEquals("Assertion failed({key1=value1, key2=value2}!=={key1=value1, key2=value2}):\n\tActual:\t\t{key1=value1, key2=value2}\n\tExpected:\t!=={key1=value1, key2=value2}", e.getMessage());
@@ -201,27 +201,27 @@ public class CollectionsAssertionsMapTest {
 	@Test
 	public void testAssertMapNotSame_message() {
 		System.out.println("CollectionsAssertionsMapTest >>> testAssertMapNotSame_message");
-		CollectionsAssertions.notSame(new HashMap(),new HashMap(),"Message");
-		CollectionsAssertions.notSame(Stream.of(Tuple.of("key1", "value1"),Tuple.of("key2", "value2")).collect(Collectors.toMap(Tuple::left,Tuple::right)),Stream.of(Tuple.of("key1", "value1"),Tuple.of("key2", "value2")).collect(Collectors.toMap(Tuple::left,Tuple::right)),"Message");
+		CollectionsAssertions.assertNotSame(new HashMap(),new HashMap(),"Message");
+		CollectionsAssertions.assertNotSame(Stream.of(Tuple.of("key1", "value1"),Tuple.of("key2", "value2")).collect(Collectors.toMap(Tuple::left,Tuple::right)),Stream.of(Tuple.of("key1", "value1"),Tuple.of("key2", "value2")).collect(Collectors.toMap(Tuple::left,Tuple::right)),"Message");
 	}
 	@Test
 	public void testAssertMapNotSame_message_failed() {
 		System.out.println("CollectionsAssertionsMapTest >>> testAssertMapNotSame_message_failed");
 		try{
-			CollectionsAssertions.notSame((Map)null,(Map)null,"Message");
+			CollectionsAssertions.assertNotSame((Map)null,(Map)null,"Message");
 			Assert.fail();
 		}catch(AssertException e){
 			Assert.assertEquals("Message(null!==null):\n\tActual:\t\tnull\n\tExpected:\t!==null", e.getMessage());
 		}
 		try{
-			CollectionsAssertions.notSame(Collections.EMPTY_MAP ,Collections.EMPTY_MAP,"Message");
+			CollectionsAssertions.assertNotSame(Collections.EMPTY_MAP ,Collections.EMPTY_MAP,"Message");
 			Assert.fail();
 		}catch(AssertException e){
 			Assert.assertEquals("Message({}!=={}):\n\tActual:\t\t{}\n\tExpected:\t!=={}", e.getMessage());
 		}
 		try{
 			Map<String,String> actualSet=Stream.of(Tuple.of("key1", "value1"),Tuple.of("key2", "value2")).collect(Collectors.toMap(Tuple::left,Tuple::right));
-			CollectionsAssertions.notSame(actualSet,actualSet,"Message");
+			CollectionsAssertions.assertNotSame(actualSet,actualSet,"Message");
 			Assert.fail();
 		}catch(AssertException e){
 			Assert.assertEquals("Message({key1=value1, key2=value2}!=={key1=value1, key2=value2}):\n\tActual:\t\t{key1=value1, key2=value2}\n\tExpected:\t!=={key1=value1, key2=value2}", e.getMessage());

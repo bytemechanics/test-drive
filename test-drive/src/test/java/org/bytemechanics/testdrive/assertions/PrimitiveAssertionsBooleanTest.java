@@ -93,10 +93,10 @@ public class PrimitiveAssertionsBooleanTest {
 	@Test
 	public void testIsEqual_boolean_boolean() {
 		System.out.println("PrimitiveAssertionsBooleanTest >>> testIsEqual_boolean_boolean");
-		Assert.assertTrue(PrimitiveAssertions.isEqual(false, false));
-		Assert.assertTrue(PrimitiveAssertions.isEqual(true, true));
-		Assert.assertFalse(PrimitiveAssertions.isEqual(true, false));
-		Assert.assertFalse(PrimitiveAssertions.isEqual(false, true));
+		Assert.assertTrue(PrimitiveAssertions.equals(false, false));
+		Assert.assertTrue(PrimitiveAssertions.equals(true, true));
+		Assert.assertFalse(PrimitiveAssertions.equals(true, false));
+		Assert.assertFalse(PrimitiveAssertions.equals(false, true));
 	}
 	@Test
 	public void testAssertEquals_boolean_boolean() {

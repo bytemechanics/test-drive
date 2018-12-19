@@ -30,13 +30,13 @@ public class ObjectAssertionsByteTest {
 		System.out.println("ObjectAssertionsByteTest >>> testIsEqual_byte_byte");
 		Byte actual=0;
 		Byte expected=0;
-		Assert.assertTrue(ObjectAssertions.isEqual(actual, expected));
+		Assert.assertTrue(ObjectAssertions.equals(actual, expected));
 		actual=1;
 		expected=1;
-		Assert.assertTrue(ObjectAssertions.isEqual(actual, expected));
+		Assert.assertTrue(ObjectAssertions.equals(actual, expected));
 		actual=0;
 		expected=1;
-		Assert.assertFalse(ObjectAssertions.isEqual(actual, expected));
+		Assert.assertFalse(ObjectAssertions.equals(actual, expected));
 	}
 	@Test
 	public void testAssertEquals_byte_byte() {

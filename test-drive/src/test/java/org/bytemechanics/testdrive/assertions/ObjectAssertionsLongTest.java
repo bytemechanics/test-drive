@@ -30,11 +30,11 @@ public class ObjectAssertionsLongTest {
 	public void testIsZero_Long() {
 		System.out.println("ObjectAssertionsLongTest >>> testIsZero_Long");
 		Long actual = 0l;
-		Assert.assertTrue(ObjectAssertions.isZero(actual));
+		Assert.assertTrue(ObjectAssertions.zero(actual));
 		actual = 2l;
-		Assert.assertFalse(ObjectAssertions.isZero(actual));
+		Assert.assertFalse(ObjectAssertions.zero(actual));
 		actual = 10l;
-		Assert.assertFalse(ObjectAssertions.isZero(actual));
+		Assert.assertFalse(ObjectAssertions.zero(actual));
 	}
 	@Test
 	public void testAssertZero_Long() {
@@ -75,13 +75,13 @@ public class ObjectAssertionsLongTest {
 		System.out.println("ObjectAssertionsLongTest >>> testIsEqual_Long_Long");
 		Long actual=0l;
 		Long expected=0l;
-		Assert.assertTrue(ObjectAssertions.isEqual(actual, expected));
+		Assert.assertTrue(ObjectAssertions.equals(actual, expected));
 		actual=1l;
 		expected=1l;
-		Assert.assertTrue(ObjectAssertions.isEqual(actual, expected));
+		Assert.assertTrue(ObjectAssertions.equals(actual, expected));
 		actual=0l;
 		expected=1l;
-		Assert.assertFalse(ObjectAssertions.isEqual(actual, expected));
+		Assert.assertFalse(ObjectAssertions.equals(actual, expected));
 	}
 	@Test
 	public void testAssertEquals_Long_Long() {
@@ -176,16 +176,16 @@ public class ObjectAssertionsLongTest {
 		System.out.println("ObjectAssertionsLongTest >>> testIsGreater_Long_Long");
 		Long actual=1l;
 		Long expected=0l;
-		Assert.assertTrue(ObjectAssertions.isGreater(actual, expected));
+		Assert.assertTrue(ObjectAssertions.greater(actual, expected));
 		actual=10l;
 		expected=1l;
-		Assert.assertTrue(ObjectAssertions.isGreater(actual, expected));
+		Assert.assertTrue(ObjectAssertions.greater(actual, expected));
 		actual=1l;
 		expected=1l;
-		Assert.assertFalse(ObjectAssertions.isGreater(actual, expected));
+		Assert.assertFalse(ObjectAssertions.greater(actual, expected));
 		actual=0l;
 		expected=1l;
-		Assert.assertFalse(ObjectAssertions.isGreater(actual, expected));
+		Assert.assertFalse(ObjectAssertions.greater(actual, expected));
 	}
 	@Test
 	public void testAssertGreater_Long_Long() {
@@ -252,16 +252,16 @@ public class ObjectAssertionsLongTest {
 		System.out.println("ObjectAssertionsLongTest >>> testIsGreaterOrEqual_Long_Long");
 		Long actual=1l;
 		Long expected=0l;
-		Assert.assertTrue(ObjectAssertions.isGreaterOrEqual(actual, expected));
+		Assert.assertTrue(ObjectAssertions.greaterOrEqual(actual, expected));
 		actual=10l;
 		expected=1l;
-		Assert.assertTrue(ObjectAssertions.isGreaterOrEqual(actual, expected));
+		Assert.assertTrue(ObjectAssertions.greaterOrEqual(actual, expected));
 		actual=1l;
 		expected=1l;
-		Assert.assertTrue(ObjectAssertions.isGreaterOrEqual(actual, expected));
+		Assert.assertTrue(ObjectAssertions.greaterOrEqual(actual, expected));
 		actual=0l;
 		expected=1l;
-		Assert.assertFalse(ObjectAssertions.isGreaterOrEqual(actual, expected));
+		Assert.assertFalse(ObjectAssertions.greaterOrEqual(actual, expected));
 	}
 	@Test
 	public void testAssertGreaterOrEqual_Long_Long() {

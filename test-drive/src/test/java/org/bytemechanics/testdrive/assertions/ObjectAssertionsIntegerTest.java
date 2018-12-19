@@ -30,11 +30,11 @@ public class ObjectAssertionsIntegerTest {
 	public void testIsZero_Integer() {
 		System.out.println("ObjectAssertionsIntegerTest >>> testIsZero_Integer");
 		Integer actual = 0;
-		Assert.assertTrue(ObjectAssertions.isZero(actual));
+		Assert.assertTrue(ObjectAssertions.zero(actual));
 		actual = 2;
-		Assert.assertFalse(ObjectAssertions.isZero(actual));
+		Assert.assertFalse(ObjectAssertions.zero(actual));
 		actual = 10;
-		Assert.assertFalse(ObjectAssertions.isZero(actual));
+		Assert.assertFalse(ObjectAssertions.zero(actual));
 	}
 	@Test
 	public void testAssertZero_Integer() {
@@ -75,13 +75,13 @@ public class ObjectAssertionsIntegerTest {
 		System.out.println("ObjectAssertionsIntegerTest >>> testIsEqual_Integer_Integer");
 		Integer actual=0;
 		Integer expected=0;
-		Assert.assertTrue(ObjectAssertions.isEqual(actual, expected));
+		Assert.assertTrue(ObjectAssertions.equals(actual, expected));
 		actual=1;
 		expected=1;
-		Assert.assertTrue(ObjectAssertions.isEqual(actual, expected));
+		Assert.assertTrue(ObjectAssertions.equals(actual, expected));
 		actual=0;
 		expected=1;
-		Assert.assertFalse(ObjectAssertions.isEqual(actual, expected));
+		Assert.assertFalse(ObjectAssertions.equals(actual, expected));
 	}
 	@Test
 	public void testAssertEquals_Integer_Integer() {
@@ -176,16 +176,16 @@ public class ObjectAssertionsIntegerTest {
 		System.out.println("ObjectAssertionsIntegerTest >>> testIsGreater_Integer_Integer");
 		Integer actual=1;
 		Integer expected=0;
-		Assert.assertTrue(ObjectAssertions.isGreater(actual, expected));
+		Assert.assertTrue(ObjectAssertions.greater(actual, expected));
 		actual=10;
 		expected=1;
-		Assert.assertTrue(ObjectAssertions.isGreater(actual, expected));
+		Assert.assertTrue(ObjectAssertions.greater(actual, expected));
 		actual=1;
 		expected=1;
-		Assert.assertFalse(ObjectAssertions.isGreater(actual, expected));
+		Assert.assertFalse(ObjectAssertions.greater(actual, expected));
 		actual=0;
 		expected=1;
-		Assert.assertFalse(ObjectAssertions.isGreater(actual, expected));
+		Assert.assertFalse(ObjectAssertions.greater(actual, expected));
 	}
 	@Test
 	public void testAssertGreater_Integer_Integer() {
@@ -252,16 +252,16 @@ public class ObjectAssertionsIntegerTest {
 		System.out.println("ObjectAssertionsIntegerTest >>> testIsGreaterOrEqual_Integer_Integer");
 		Integer actual=1;
 		Integer expected=0;
-		Assert.assertTrue(ObjectAssertions.isGreaterOrEqual(actual, expected));
+		Assert.assertTrue(ObjectAssertions.greaterOrEqual(actual, expected));
 		actual=10;
 		expected=1;
-		Assert.assertTrue(ObjectAssertions.isGreaterOrEqual(actual, expected));
+		Assert.assertTrue(ObjectAssertions.greaterOrEqual(actual, expected));
 		actual=1;
 		expected=1;
-		Assert.assertTrue(ObjectAssertions.isGreaterOrEqual(actual, expected));
+		Assert.assertTrue(ObjectAssertions.greaterOrEqual(actual, expected));
 		actual=0;
 		expected=1;
-		Assert.assertFalse(ObjectAssertions.isGreaterOrEqual(actual, expected));
+		Assert.assertFalse(ObjectAssertions.greaterOrEqual(actual, expected));
 	}
 	@Test
 	public void testAssertGreaterOrEqual_Integer_Integer() {

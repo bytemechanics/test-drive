@@ -29,13 +29,13 @@ public class PrimitiveAssertionsByteTest {
 		System.out.println("PrimitiveAssertionsByteTest >>> testIsEqual_byte_byte");
 		byte actual=0;
 		byte expected=0;
-		Assert.assertTrue(PrimitiveAssertions.isEqual(actual, expected));
+		Assert.assertTrue(PrimitiveAssertions.equals(actual, expected));
 		actual=1;
 		expected=1;
-		Assert.assertTrue(PrimitiveAssertions.isEqual(actual, expected));
+		Assert.assertTrue(PrimitiveAssertions.equals(actual, expected));
 		actual=0;
 		expected=1;
-		Assert.assertFalse(PrimitiveAssertions.isEqual(actual, expected));
+		Assert.assertFalse(PrimitiveAssertions.equals(actual, expected));
 	}
 	@Test
 	public void testAssertEquals_byte_byte() {

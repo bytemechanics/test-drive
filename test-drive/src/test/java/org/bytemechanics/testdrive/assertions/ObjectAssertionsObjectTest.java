@@ -99,39 +99,39 @@ public class ObjectAssertionsObjectTest {
 	@Test
 	public void testIsEqual() {
 		System.out.println("ObjectAssertionsObjectTest >>> testIsEqual");
-		Assert.assertTrue(ObjectAssertions.isEquals("",""));
-		Assert.assertTrue(ObjectAssertions.isEquals("b","b"));
-		Assert.assertTrue(ObjectAssertions.isEqual(null,null));
-		Assert.assertFalse(ObjectAssertions.isEqual(12,null));
-		Assert.assertFalse(ObjectAssertions.isEquals(null,""));
-		Assert.assertFalse(ObjectAssertions.isEquals(12,""));
-		Assert.assertFalse(ObjectAssertions.isEquals("a",""));
+		Assert.assertTrue(ObjectAssertions.equals("",""));
+		Assert.assertTrue(ObjectAssertions.equals("b","b"));
+		Assert.assertTrue(ObjectAssertions.equals(null,null));
+		Assert.assertFalse(ObjectAssertions.equals(12,null));
+		Assert.assertFalse(ObjectAssertions.equals(null,""));
+		Assert.assertFalse(ObjectAssertions.equals(12,""));
+		Assert.assertFalse(ObjectAssertions.equals("a",""));
 	}
 	
 	@Test
 	public void testEquals() {
 		System.out.println("ObjectAssertionsObjectTest >>> testEquals");
-		ObjectAssertions.equals("","");
-		ObjectAssertions.equals("b","b");
-		ObjectAssertions.equals(null,null);
+		ObjectAssertions.assertEquals("","");
+		ObjectAssertions.assertEquals("b","b");
+		ObjectAssertions.assertEquals((Object)null,(Object)null);
 	}
 	@Test
 	public void testEquals_failed() {
 		System.out.println("ObjectAssertionsObjectTest >>> testEquals_failed");
 		try{
-			ObjectAssertions.equals(12,"b");
+			ObjectAssertions.assertEquals(12,"b");
 			Assert.fail();
 		}catch(AssertException e){
 			Assert.assertEquals("Assertion failed(12~b):\n\tActual:\t\t12\n\tExpected:\t~b", e.getMessage());
 		}
 		try{
-			ObjectAssertions.equals("a","b");
+			ObjectAssertions.assertEquals("a","b");
 			Assert.fail();
 		}catch(AssertException e){
 			Assert.assertEquals("Assertion failed(a~b):\n\tActual:\t\ta\n\tExpected:\t~b", e.getMessage());
 		}
 		try{
-			ObjectAssertions.equals("a",null);
+			ObjectAssertions.assertEquals("a",null);
 			Assert.fail();
 		}catch(AssertException e){
 			Assert.assertEquals("Assertion failed(a~null):\n\tActual:\t\ta\n\tExpected:\t~null", e.getMessage());
@@ -140,27 +140,27 @@ public class ObjectAssertionsObjectTest {
 	@Test
 	public void testEquals_message() {
 		System.out.println("ObjectAssertionsObjectTest >>> testEquals_message");
-		ObjectAssertions.equals("","","Message");
-		ObjectAssertions.equals("b","b","Message");
-		ObjectAssertions.equals(null,null,"Message");
+		ObjectAssertions.assertEquals("","","Message");
+		ObjectAssertions.assertEquals("b","b","Message");
+		ObjectAssertions.assertEquals((Object)null,null,"Message");
 	}
 	@Test
 	public void testEquals_message_failed() {
 		System.out.println("ObjectAssertionsObjectTest >>> testEquals_message_failed");
 		try{
-			ObjectAssertions.equals(12,"b","Message");
+			ObjectAssertions.assertEquals(12,"b","Message");
 			Assert.fail();
 		}catch(AssertException e){
 			Assert.assertEquals("Message(12~b):\n\tActual:\t\t12\n\tExpected:\t~b", e.getMessage());
 		}
 		try{
-			ObjectAssertions.equals("a","b","Message");
+			ObjectAssertions.assertEquals("a","b","Message");
 			Assert.fail();
 		}catch(AssertException e){
 			Assert.assertEquals("Message(a~b):\n\tActual:\t\ta\n\tExpected:\t~b", e.getMessage());
 		}
 		try{
-			ObjectAssertions.equals("a",null,"Message");
+			ObjectAssertions.assertEquals("a",null,"Message");
 			Assert.fail();
 		}catch(AssertException e){
 			Assert.assertEquals("Message(a~null):\n\tActual:\t\ta\n\tExpected:\t~null", e.getMessage());
@@ -170,22 +170,22 @@ public class ObjectAssertionsObjectTest {
 	@Test
 	public void testNotEquals() {
 		System.out.println("ObjectAssertionsObjectTest >>> testNotEquals");
-		ObjectAssertions.notEquals(12,null);
-		ObjectAssertions.notEquals(null,"");
-		ObjectAssertions.notEquals(12,"");
-		ObjectAssertions.notEquals("a","");
+		ObjectAssertions.assertNotEquals(12,null);
+		ObjectAssertions.assertNotEquals(null,"");
+		ObjectAssertions.assertNotEquals(12,"");
+		ObjectAssertions.assertNotEquals("a","");
 	}
 	@Test
 	public void testNotEquals_failed() {
 		System.out.println("ObjectAssertionsObjectTest >>> testNotEquals_failed");
 		try{
-			ObjectAssertions.notEquals("b","b");
+			ObjectAssertions.assertNotEquals("b","b");
 			Assert.fail();
 		}catch(AssertException e){
 			Assert.assertEquals("Assertion failed(b!~b):\n\tActual:\t\tb\n\tExpected:\t!~b", e.getMessage());
 		}
 		try{
-			ObjectAssertions.notEquals(null,null);
+			ObjectAssertions.assertNotEquals((Object)null,null);
 			Assert.fail();
 		}catch(AssertException e){
 			Assert.assertEquals("Assertion failed(null!~null):\n\tActual:\t\tnull\n\tExpected:\t!~null", e.getMessage());
@@ -194,22 +194,22 @@ public class ObjectAssertionsObjectTest {
 	@Test
 	public void testNotEquals_message() {
 		System.out.println("ObjectAssertionsObjectTest >>> testNotEquals_message");
-		ObjectAssertions.notEquals(12,null,"Message");
-		ObjectAssertions.notEquals(null,"","Message");
-		ObjectAssertions.notEquals(12,"","Message");
-		ObjectAssertions.notEquals("a","","Message");
+		ObjectAssertions.assertNotEquals(12,null,"Message");
+		ObjectAssertions.assertNotEquals(null,"","Message");
+		ObjectAssertions.assertNotEquals(12,"","Message");
+		ObjectAssertions.assertNotEquals("a","","Message");
 	}
 	@Test
 	public void testNotEquals_message_failed() {
 		System.out.println("ObjectAssertionsObjectTest >>> testNotEquals_message_failed");
 		try{
-			ObjectAssertions.notEquals("b","b","Message");
+			ObjectAssertions.assertNotEquals("b","b","Message");
 			Assert.fail();
 		}catch(AssertException e){
 			Assert.assertEquals("Message(b!~b):\n\tActual:\t\tb\n\tExpected:\t!~b", e.getMessage());
 		}
 		try{
-			ObjectAssertions.notEquals(null,null,"Message");
+			ObjectAssertions.assertNotEquals((Object)null,null,"Message");
 			Assert.fail();
 		}catch(AssertException e){
 			Assert.assertEquals("Message(null!~null):\n\tActual:\t\tnull\n\tExpected:\t!~null", e.getMessage());
@@ -222,40 +222,40 @@ public class ObjectAssertionsObjectTest {
 	public void testIsSame() {
 		System.out.println("ObjectAssertionsObjectTest >>> testIsSame");
 		String actual="",expected=actual;
-		Assert.assertTrue(ObjectAssertions.isSame(actual,expected));
-		Assert.assertTrue(ObjectAssertions.isSame(null,null));
-		Assert.assertFalse(ObjectAssertions.isSame(12,null));
-		Assert.assertFalse(ObjectAssertions.isSame(null,""));
-		Assert.assertFalse(ObjectAssertions.isSame(12,""));
-		Assert.assertFalse(ObjectAssertions.isSame(new Integer(12),new Integer(12)));
-		Assert.assertFalse(ObjectAssertions.isSame(new String(""),new String("")));
+		Assert.assertTrue(ObjectAssertions.same(actual,expected));
+		Assert.assertTrue(ObjectAssertions.same(null,null));
+		Assert.assertFalse(ObjectAssertions.same(12,null));
+		Assert.assertFalse(ObjectAssertions.same(null,""));
+		Assert.assertFalse(ObjectAssertions.same(12,""));
+		Assert.assertFalse(ObjectAssertions.same(new Integer(12),new Integer(12)));
+		Assert.assertFalse(ObjectAssertions.same(new String(""),new String("")));
 	}
 	
 	@Test
 	public void testSame() {
 		System.out.println("ObjectAssertionsObjectTest >>> testSame");
 		String actual="",expected=actual;
-		ObjectAssertions.same(actual,expected);
-		ObjectAssertions.same(null,null);
+		ObjectAssertions.assertSame(actual,expected);
+		ObjectAssertions.assertSame(null,null);
 	}
 	@Test
 	@SuppressWarnings("UnnecessaryBoxing")
 	public void testSame_failed() {
 		System.out.println("ObjectAssertionsObjectTest >>> testSame_failed");
 		try{
-			ObjectAssertions.same(12,"b");
+			ObjectAssertions.assertSame(12,"b");
 			Assert.fail();
 		}catch(AssertException e){
 			Assert.assertEquals("Assertion failed(12==b):\n\tActual:\t\t12\n\tExpected:\t==b", e.getMessage());
 		}
 		try{
-			ObjectAssertions.same("a","b");
+			ObjectAssertions.assertSame("a","b");
 			Assert.fail();
 		}catch(AssertException e){
 			Assert.assertEquals("Assertion failed(a==b):\n\tActual:\t\ta\n\tExpected:\t==b", e.getMessage());
 		}
 		try{
-			ObjectAssertions.same(new Integer(12),new Integer(12));
+			ObjectAssertions.assertSame(new Integer(12),new Integer(12));
 			Assert.fail();
 		}catch(AssertException e){
 			Assert.assertEquals("Assertion failed(12==12):\n\tActual:\t\t12\n\tExpected:\t==12", e.getMessage());
@@ -264,28 +264,28 @@ public class ObjectAssertionsObjectTest {
 	@Test
 	public void testSame_message() {
 		System.out.println("ObjectAssertionsObjectTest >>> testSame_message");
-		ObjectAssertions.same("","","Message");
-		ObjectAssertions.same("b","b","Message");
-		ObjectAssertions.same(null,null,"Message");
+		ObjectAssertions.assertSame("","","Message");
+		ObjectAssertions.assertSame("b","b","Message");
+		ObjectAssertions.assertSame(null,null,"Message");
 	}
 	@Test
 	@SuppressWarnings("UnnecessaryBoxing")
 	public void testSame_message_failed() {
 		System.out.println("ObjectAssertionsObjectTest >>> testSame_message_failed");
 		try{
-			ObjectAssertions.same(12,"b","Message");
+			ObjectAssertions.assertSame(12,"b","Message");
 			Assert.fail();
 		}catch(AssertException e){
 			Assert.assertEquals("Message(12==b):\n\tActual:\t\t12\n\tExpected:\t==b", e.getMessage());
 		}
 		try{
-			ObjectAssertions.same("a","b","Message");
+			ObjectAssertions.assertSame("a","b","Message");
 			Assert.fail();
 		}catch(AssertException e){
 			Assert.assertEquals("Message(a==b):\n\tActual:\t\ta\n\tExpected:\t==b", e.getMessage());
 		}
 		try{
-			ObjectAssertions.same(new Integer(12),new Integer(12),"Message");
+			ObjectAssertions.assertSame(new Integer(12),new Integer(12),"Message");
 			Assert.fail();
 		}catch(AssertException e){
 			Assert.assertEquals("Message(12==12):\n\tActual:\t\t12\n\tExpected:\t==12", e.getMessage());
@@ -296,25 +296,25 @@ public class ObjectAssertionsObjectTest {
 	@SuppressWarnings({"RedundantStringConstructorCall", "UnnecessaryBoxing"})
 	public void testNotSame() {
 		System.out.println("ObjectAssertionsObjectTest >>> testNotSame");
-		ObjectAssertions.notSame(12,null);
-		ObjectAssertions.notSame(null,"");
-		ObjectAssertions.notSame(12,"");
-		ObjectAssertions.notSame(new Integer(12),new Integer(12));
-		ObjectAssertions.notSame(new String(""),new String(""));
+		ObjectAssertions.assertNotSame(12,null);
+		ObjectAssertions.assertNotSame(null,"");
+		ObjectAssertions.assertNotSame(12,"");
+		ObjectAssertions.assertNotSame(new Integer(12),new Integer(12));
+		ObjectAssertions.assertNotSame(new String(""),new String(""));
 	}
 	@Test
 	public void testNotSame_failed() {
 		System.out.println("ObjectAssertionsObjectTest >>> testNotSame_failed");
 		try{
 			String actual="b",expected=actual;
-			ObjectAssertions.notSame(actual,expected);
+			ObjectAssertions.assertNotSame(actual,expected);
 			Assert.fail();
 		}catch(AssertException e){
 			Assert.assertEquals("Assertion failed(b!==b):\n\tActual:\t\tb\n\tExpected:\t!==b", e.getMessage());
 		}
 		try{
 			String actual=null,expected=null;
-			ObjectAssertions.notSame(actual,expected);
+			ObjectAssertions.assertNotSame(actual,expected);
 			Assert.fail();
 		}catch(AssertException e){
 			Assert.assertEquals("Assertion failed(null!==null):\n\tActual:\t\tnull\n\tExpected:\t!==null", e.getMessage());
@@ -324,24 +324,24 @@ public class ObjectAssertionsObjectTest {
 	@SuppressWarnings("UnnecessaryBoxing")
 	public void testNotSame_message() {
 		System.out.println("ObjectAssertionsObjectTest >>> testNotSame_message");
-		ObjectAssertions.notSame(12,null,"Message");
-		ObjectAssertions.notSame(null,"","Message");
-		ObjectAssertions.notSame(12,"","Message");
-		ObjectAssertions.notSame(new Integer(12),new Integer(12),"Message");
+		ObjectAssertions.assertNotSame(12,null,"Message");
+		ObjectAssertions.assertNotSame(null,"","Message");
+		ObjectAssertions.assertNotSame(12,"","Message");
+		ObjectAssertions.assertNotSame(new Integer(12),new Integer(12),"Message");
 	}
 	@Test
 	public void testNotSame_message_failed() {
 		System.out.println("ObjectAssertionsObjectTest >>> testNotSame_message_failed");
 		try{
 			String actual="b",expected=actual;
-			ObjectAssertions.notSame(actual,expected,"Message");
+			ObjectAssertions.assertNotSame(actual,expected,"Message");
 			Assert.fail();
 		}catch(AssertException e){
 			Assert.assertEquals("Message(b!==b):\n\tActual:\t\tb\n\tExpected:\t!==b", e.getMessage());
 		}
 		try{
 			String actual=null,expected=null;
-			ObjectAssertions.notSame(actual,expected,"Message");
+			ObjectAssertions.assertNotSame(actual,expected,"Message");
 			Assert.fail();
 		}catch(AssertException e){
 			Assert.assertEquals("Message(null!==null):\n\tActual:\t\tnull\n\tExpected:\t!==null", e.getMessage());
@@ -354,50 +354,50 @@ public class ObjectAssertionsObjectTest {
 
 	@Test
 	public void testIsSame() {
-		System.out.println("isSame");
+		System.out.println("same");
 		Object _actual = null;
 		Object _expected = null;
 		boolean expResult = false;
-		boolean result = ObjectAssertions.isSame(_actual, _expected);
+		boolean result = ObjectAssertions.same(_actual, _expected);
 		assertEquals(expResult, result);
 		fail("The test case is a prototype.");
 	}
 
 	@Test
 	public void testSame_GenericType_GenericType() {
-		System.out.println("same");
+		System.out.println("assertSame");
 		Object _actual = null;
 		Object _expected = null;
-		ObjectAssertions.same(_actual, _expected);
+		ObjectAssertions.assertSame(_actual, _expected);
 		fail("The test case is a prototype.");
 	}
 
 	@Test
 	public void testSame_3args() {
-		System.out.println("same");
+		System.out.println("assertSame");
 		Object _actual = null;
 		Object _expected = null;
 		String _message = "";
-		ObjectAssertions.same(_actual, _expected, _message);
+		ObjectAssertions.assertSame(_actual, _expected, _message);
 		fail("The test case is a prototype.");
 	}
 
 	@Test
 	public void testNotSame_GenericType_GenericType() {
-		System.out.println("notSame");
+		System.out.println("assertNotSame");
 		Object _actual = null;
 		Object _expected = null;
-		ObjectAssertions.notSame(_actual, _expected);
+		ObjectAssertions.assertNotSame(_actual, _expected);
 		fail("The test case is a prototype.");
 	}
 
 	@Test
 	public void testNotSame_3args() {
-		System.out.println("notSame");
+		System.out.println("assertNotSame");
 		Object _actual = null;
 		Object _expected = null;
 		String _message = "";
-		ObjectAssertions.notSame(_actual, _expected, _message);
+		ObjectAssertions.assertNotSame(_actual, _expected, _message);
 		fail("The test case is a prototype.");
 	}
 	*/

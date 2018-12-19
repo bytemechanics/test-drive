@@ -28,11 +28,11 @@ public class PrimitiveAssertionsFloatTest {
 	public void testIsZero_float() {
 		System.out.println("PrimitiveAssertionsFloatTest >>> testIsZero_float");
 		float actual = 0.0f;
-		Assert.assertTrue(PrimitiveAssertions.isZero(actual));
+		Assert.assertTrue(PrimitiveAssertions.zero(actual));
 		actual = 2.0f;
-		Assert.assertFalse(PrimitiveAssertions.isZero(actual));
+		Assert.assertFalse(PrimitiveAssertions.zero(actual));
 		actual = 10.0f;
-		Assert.assertFalse(PrimitiveAssertions.isZero(actual));
+		Assert.assertFalse(PrimitiveAssertions.zero(actual));
 	}
 	@Test
 	public void testAssertZero_float() {
@@ -73,13 +73,13 @@ public class PrimitiveAssertionsFloatTest {
 		System.out.println("PrimitiveAssertionsFloatTest >>> testIsEqual_float_float");
 		float actual=0.0f;
 		float expected=0.0f;
-		Assert.assertTrue(PrimitiveAssertions.isEqual(actual, expected));
+		Assert.assertTrue(PrimitiveAssertions.equals(actual, expected));
 		actual=1.0f;
 		expected=1.0f;
-		Assert.assertTrue(PrimitiveAssertions.isEqual(actual, expected));
+		Assert.assertTrue(PrimitiveAssertions.equals(actual, expected));
 		actual=0.0f;
 		expected=1.0f;
-		Assert.assertFalse(PrimitiveAssertions.isEqual(actual, expected));
+		Assert.assertFalse(PrimitiveAssertions.equals(actual, expected));
 	}
 	@Test
 	public void testAssertEquals_float_float() {
@@ -174,16 +174,16 @@ public class PrimitiveAssertionsFloatTest {
 		System.out.println("PrimitiveAssertionsFloatTest >>> testIsGreater_float_float");
 		float actual=1.0f;
 		float expected=0.0f;
-		Assert.assertTrue(PrimitiveAssertions.isGreater(actual, expected));
+		Assert.assertTrue(PrimitiveAssertions.greater(actual, expected));
 		actual=10.0f;
 		expected=1.0f;
-		Assert.assertTrue(PrimitiveAssertions.isGreater(actual, expected));
+		Assert.assertTrue(PrimitiveAssertions.greater(actual, expected));
 		actual=1.0f;
 		expected=1.0f;
-		Assert.assertFalse(PrimitiveAssertions.isGreater(actual, expected));
+		Assert.assertFalse(PrimitiveAssertions.greater(actual, expected));
 		actual=0.0f;
 		expected=1.0f;
-		Assert.assertFalse(PrimitiveAssertions.isGreater(actual, expected));
+		Assert.assertFalse(PrimitiveAssertions.greater(actual, expected));
 	}
 	@Test
 	public void testAssertGreater_float_float() {
@@ -250,16 +250,16 @@ public class PrimitiveAssertionsFloatTest {
 		System.out.println("PrimitiveAssertionsFloatTest >>> testIsGreaterOrEqual_float_float");
 		float actual=1.0f;
 		float expected=0.0f;
-		Assert.assertTrue(PrimitiveAssertions.isGreaterOrEqual(actual, expected));
+		Assert.assertTrue(PrimitiveAssertions.greaterOrEqual(actual, expected));
 		actual=10.0f;
 		expected=1.0f;
-		Assert.assertTrue(PrimitiveAssertions.isGreaterOrEqual(actual, expected));
+		Assert.assertTrue(PrimitiveAssertions.greaterOrEqual(actual, expected));
 		actual=1.0f;
 		expected=1.0f;
-		Assert.assertTrue(PrimitiveAssertions.isGreaterOrEqual(actual, expected));
+		Assert.assertTrue(PrimitiveAssertions.greaterOrEqual(actual, expected));
 		actual=0.0f;
 		expected=1.0f;
-		Assert.assertFalse(PrimitiveAssertions.isGreaterOrEqual(actual, expected));
+		Assert.assertFalse(PrimitiveAssertions.greaterOrEqual(actual, expected));
 	}
 	@Test
 	public void testAssertGreaterOrEqual_float_float() {

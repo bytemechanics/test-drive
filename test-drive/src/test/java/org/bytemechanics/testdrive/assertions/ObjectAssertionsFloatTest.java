@@ -30,11 +30,11 @@ public class ObjectAssertionsFloatTest {
 	public void testIsZero_Float() {
 		System.out.println("ObjectAssertionsFloatTest >>> testIsZero_Float");
 		Float actual = 0.0f;
-		Assert.assertTrue(ObjectAssertions.isZero(actual));
+		Assert.assertTrue(ObjectAssertions.zero(actual));
 		actual = 2.0f;
-		Assert.assertFalse(ObjectAssertions.isZero(actual));
+		Assert.assertFalse(ObjectAssertions.zero(actual));
 		actual = 10.0f;
-		Assert.assertFalse(ObjectAssertions.isZero(actual));
+		Assert.assertFalse(ObjectAssertions.zero(actual));
 	}
 	@Test
 	public void testAssertZero_Float() {
@@ -75,13 +75,13 @@ public class ObjectAssertionsFloatTest {
 		System.out.println("ObjectAssertionsFloatTest >>> testIsEqual_Float_Float");
 		Float actual=0.0f;
 		Float expected=0.0f;
-		Assert.assertTrue(ObjectAssertions.isEqual(actual, expected));
+		Assert.assertTrue(ObjectAssertions.equals(actual, expected));
 		actual=1.0f;
 		expected=1.0f;
-		Assert.assertTrue(ObjectAssertions.isEqual(actual, expected));
+		Assert.assertTrue(ObjectAssertions.equals(actual, expected));
 		actual=0.0f;
 		expected=1.0f;
-		Assert.assertFalse(ObjectAssertions.isEqual(actual, expected));
+		Assert.assertFalse(ObjectAssertions.equals(actual, expected));
 	}
 	@Test
 	public void testAssertEquals_Float_Float() {
@@ -176,16 +176,16 @@ public class ObjectAssertionsFloatTest {
 		System.out.println("ObjectAssertionsFloatTest >>> testIsGreater_Float_Float");
 		Float actual=1.0f;
 		Float expected=0.0f;
-		Assert.assertTrue(ObjectAssertions.isGreater(actual, expected));
+		Assert.assertTrue(ObjectAssertions.greater(actual, expected));
 		actual=10.0f;
 		expected=1.0f;
-		Assert.assertTrue(ObjectAssertions.isGreater(actual, expected));
+		Assert.assertTrue(ObjectAssertions.greater(actual, expected));
 		actual=1.0f;
 		expected=1.0f;
-		Assert.assertFalse(ObjectAssertions.isGreater(actual, expected));
+		Assert.assertFalse(ObjectAssertions.greater(actual, expected));
 		actual=0.0f;
 		expected=1.0f;
-		Assert.assertFalse(ObjectAssertions.isGreater(actual, expected));
+		Assert.assertFalse(ObjectAssertions.greater(actual, expected));
 	}
 	@Test
 	public void testAssertGreater_Float_Float() {
@@ -252,16 +252,16 @@ public class ObjectAssertionsFloatTest {
 		System.out.println("ObjectAssertionsFloatTest >>> testIsGreaterOrEqual_Float_Float");
 		Float actual=1.0f;
 		Float expected=0.0f;
-		Assert.assertTrue(ObjectAssertions.isGreaterOrEqual(actual, expected));
+		Assert.assertTrue(ObjectAssertions.greaterOrEqual(actual, expected));
 		actual=10.0f;
 		expected=1.0f;
-		Assert.assertTrue(ObjectAssertions.isGreaterOrEqual(actual, expected));
+		Assert.assertTrue(ObjectAssertions.greaterOrEqual(actual, expected));
 		actual=1.0f;
 		expected=1.0f;
-		Assert.assertTrue(ObjectAssertions.isGreaterOrEqual(actual, expected));
+		Assert.assertTrue(ObjectAssertions.greaterOrEqual(actual, expected));
 		actual=0.0f;
 		expected=1.0f;
-		Assert.assertFalse(ObjectAssertions.isGreaterOrEqual(actual, expected));
+		Assert.assertFalse(ObjectAssertions.greaterOrEqual(actual, expected));
 	}
 	@Test
 	public void testAssertGreaterOrEqual_Float_Float() {

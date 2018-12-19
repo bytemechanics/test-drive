@@ -29,13 +29,13 @@ public class PrimitiveAssertionsCharTest {
 		System.out.println("PrimitiveAssertionsCharTest >>> testIsEqual_char_char");
 		char actual='s';
 		char expected='s';
-		Assert.assertTrue(PrimitiveAssertions.isEqual(actual, expected));
+		Assert.assertTrue(PrimitiveAssertions.equals(actual, expected));
 		actual='a';
 		expected='a';
-		Assert.assertTrue(PrimitiveAssertions.isEqual(actual, expected));
+		Assert.assertTrue(PrimitiveAssertions.equals(actual, expected));
 		actual='t';
 		expected='f';
-		Assert.assertFalse(PrimitiveAssertions.isEqual(actual, expected));
+		Assert.assertFalse(PrimitiveAssertions.equals(actual, expected));
 	}
 	@Test
 	public void testAssertEquals_char_char() {

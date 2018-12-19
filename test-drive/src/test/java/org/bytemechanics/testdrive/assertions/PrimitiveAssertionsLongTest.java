@@ -28,11 +28,11 @@ public class PrimitiveAssertionsLongTest {
 	public void testIsZero_long() {
 		System.out.println("PrimitiveAssertionsLongTest >>> testIsZero_long");
 		long actual = 0l;
-		Assert.assertTrue(PrimitiveAssertions.isZero(actual));
+		Assert.assertTrue(PrimitiveAssertions.zero(actual));
 		actual = 2;
-		Assert.assertFalse(PrimitiveAssertions.isZero(actual));
+		Assert.assertFalse(PrimitiveAssertions.zero(actual));
 		actual = 10;
-		Assert.assertFalse(PrimitiveAssertions.isZero(actual));
+		Assert.assertFalse(PrimitiveAssertions.zero(actual));
 	}
 	@Test
 	public void testAssertZero_long() {
@@ -73,13 +73,13 @@ public class PrimitiveAssertionsLongTest {
 		System.out.println("PrimitiveAssertionsLongTest >>> testIsEqual_long_long");
 		long actual=0l;
 		long expected=0l;
-		Assert.assertTrue(PrimitiveAssertions.isEqual(actual, expected));
+		Assert.assertTrue(PrimitiveAssertions.equals(actual, expected));
 		actual=1l;
 		expected=1l;
-		Assert.assertTrue(PrimitiveAssertions.isEqual(actual, expected));
+		Assert.assertTrue(PrimitiveAssertions.equals(actual, expected));
 		actual=0l;
 		expected=1l;
-		Assert.assertFalse(PrimitiveAssertions.isEqual(actual, expected));
+		Assert.assertFalse(PrimitiveAssertions.equals(actual, expected));
 	}
 	@Test
 	public void testAssertEquals_long_long() {
@@ -174,16 +174,16 @@ public class PrimitiveAssertionsLongTest {
 		System.out.println("PrimitiveAssertionsLongTest >>> testIsGreater_long_long");
 		long actual=1l;
 		long expected=0l;
-		Assert.assertTrue(PrimitiveAssertions.isGreater(actual, expected));
+		Assert.assertTrue(PrimitiveAssertions.greater(actual, expected));
 		actual=10l;
 		expected=1l;
-		Assert.assertTrue(PrimitiveAssertions.isGreater(actual, expected));
+		Assert.assertTrue(PrimitiveAssertions.greater(actual, expected));
 		actual=1l;
 		expected=1l;
-		Assert.assertFalse(PrimitiveAssertions.isGreater(actual, expected));
+		Assert.assertFalse(PrimitiveAssertions.greater(actual, expected));
 		actual=0l;
 		expected=1l;
-		Assert.assertFalse(PrimitiveAssertions.isGreater(actual, expected));
+		Assert.assertFalse(PrimitiveAssertions.greater(actual, expected));
 	}
 	@Test
 	public void testAssertGreater_long_long() {
@@ -250,16 +250,16 @@ public class PrimitiveAssertionsLongTest {
 		System.out.println("PrimitiveAssertionsLongTest >>> testIsGreaterOrEqual_long_long");
 		long actual=1l;
 		long expected=0l;
-		Assert.assertTrue(PrimitiveAssertions.isGreaterOrEqual(actual, expected));
+		Assert.assertTrue(PrimitiveAssertions.greaterOrEqual(actual, expected));
 		actual=10l;
 		expected=1l;
-		Assert.assertTrue(PrimitiveAssertions.isGreaterOrEqual(actual, expected));
+		Assert.assertTrue(PrimitiveAssertions.greaterOrEqual(actual, expected));
 		actual=1l;
 		expected=1l;
-		Assert.assertTrue(PrimitiveAssertions.isGreaterOrEqual(actual, expected));
+		Assert.assertTrue(PrimitiveAssertions.greaterOrEqual(actual, expected));
 		actual=0l;
 		expected=1l;
-		Assert.assertFalse(PrimitiveAssertions.isGreaterOrEqual(actual, expected));
+		Assert.assertFalse(PrimitiveAssertions.greaterOrEqual(actual, expected));
 	}
 	@Test
 	public void testAssertGreaterOrEqual_long_long() {

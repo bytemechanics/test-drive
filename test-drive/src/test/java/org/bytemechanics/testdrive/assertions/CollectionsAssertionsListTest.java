@@ -33,9 +33,9 @@ public class CollectionsAssertionsListTest {
 	@Test
 	public void testListIsEmpty() {
 		System.out.println("CollectionsAssertionsListTest >>> testListIsEmpty");
-		Assert.assertTrue(CollectionsAssertions.isEmpty((Collection)null));
-		Assert.assertFalse(CollectionsAssertions.isEmpty(Stream.of("a","b").collect(Collectors.toSet())));
-		Assert.assertFalse(CollectionsAssertions.isEmpty(Stream.of("a").collect(Collectors.toList())));
+		Assert.assertTrue(CollectionsAssertions.empty((Collection)null));
+		Assert.assertFalse(CollectionsAssertions.empty(Stream.of("a","b").collect(Collectors.toSet())));
+		Assert.assertFalse(CollectionsAssertions.empty(Stream.of("a").collect(Collectors.toList())));
 	}
 
 	@Test
@@ -119,22 +119,22 @@ public class CollectionsAssertionsListTest {
 	@Test
 	public void testAssertListSame() {
 		System.out.println("CollectionsAssertionsListTest >>> testAssertListSame");
-		CollectionsAssertions.same((List)null,(List)null);
-		CollectionsAssertions.same(Collections.EMPTY_LIST,Collections.EMPTY_LIST);
+		CollectionsAssertions.assertSame((List)null,(List)null);
+		CollectionsAssertions.assertSame(Collections.EMPTY_LIST,Collections.EMPTY_LIST);
 		List actualList=Stream.of("a","b").collect(Collectors.toList());
-		CollectionsAssertions.same(actualList,actualList);
+		CollectionsAssertions.assertSame(actualList,actualList);
 	}
 	@Test
 	public void testAssertListSame_failed() {
 		System.out.println("CollectionsAssertionsListTest >>> testAssertListSame_failed");
 		try{
-			CollectionsAssertions.same(Stream.of().collect(Collectors.toList()),Stream.of().collect(Collectors.toList()));
+			CollectionsAssertions.assertSame(Stream.of().collect(Collectors.toList()),Stream.of().collect(Collectors.toList()));
 			Assert.fail();
 		}catch(AssertException e){
 			Assert.assertEquals("Assertion failed([]==[]):\n\tActual:\t\t[]\n\tExpected:\t==[]", e.getMessage());
 		}
 		try{
-			CollectionsAssertions.same(Stream.of("a","b").collect(Collectors.toList()),Stream.of("a","b").collect(Collectors.toList()));
+			CollectionsAssertions.assertSame(Stream.of("a","b").collect(Collectors.toList()),Stream.of("a","b").collect(Collectors.toList()));
 			Assert.fail();
 		}catch(AssertException e){
 			Assert.assertEquals("Assertion failed([a, b]==[a, b]):\n\tActual:\t\t[a, b]\n\tExpected:\t==[a, b]", e.getMessage());
@@ -144,22 +144,22 @@ public class CollectionsAssertionsListTest {
 	@Test
 	public void testAssertListSame_message() {
 		System.out.println("CollectionsAssertionsListTest >>> testAssertListSame_message");
-		CollectionsAssertions.same((List)null,(List)null,"Message");
-		CollectionsAssertions.same(Collections.EMPTY_LIST,Collections.EMPTY_LIST,"Message");
+		CollectionsAssertions.assertSame((List)null,(List)null,"Message");
+		CollectionsAssertions.assertSame(Collections.EMPTY_LIST,Collections.EMPTY_LIST,"Message");
 		List actualList=Stream.of("a","b").collect(Collectors.toList());
-		CollectionsAssertions.same(actualList,actualList,"Message");
+		CollectionsAssertions.assertSame(actualList,actualList,"Message");
 	}
 	@Test
 	public void testAssertListSame_message_failed() {
 		System.out.println("CollectionsAssertionsListTest >>> testAssertListSame_message_failed");
 		try{
-			CollectionsAssertions.same(Stream.of().collect(Collectors.toList()),Stream.of().collect(Collectors.toList()),"Message");
+			CollectionsAssertions.assertSame(Stream.of().collect(Collectors.toList()),Stream.of().collect(Collectors.toList()),"Message");
 			Assert.fail();
 		}catch(AssertException e){
 			Assert.assertEquals("Message([]==[]):\n\tActual:\t\t[]\n\tExpected:\t==[]", e.getMessage());
 		}
 		try{
-			CollectionsAssertions.same(Stream.of("a","b").collect(Collectors.toList()),Stream.of("a","b").collect(Collectors.toList()),"Message");
+			CollectionsAssertions.assertSame(Stream.of("a","b").collect(Collectors.toList()),Stream.of("a","b").collect(Collectors.toList()),"Message");
 			Assert.fail();
 		}catch(AssertException e){
 			Assert.assertEquals("Message([a, b]==[a, b]):\n\tActual:\t\t[a, b]\n\tExpected:\t==[a, b]", e.getMessage());
@@ -169,27 +169,27 @@ public class CollectionsAssertionsListTest {
 	@Test
 	public void testAssertListNotSame() {
 		System.out.println("CollectionsAssertionsListTest >>> testAssertListNotSame");
-		CollectionsAssertions.notSame(Stream.of().collect(Collectors.toList()),Stream.of().collect(Collectors.toList()));
-		CollectionsAssertions.notSame(Stream.of("a","b").collect(Collectors.toList()),Stream.of("a","b").collect(Collectors.toList()));
+		CollectionsAssertions.assertNotSame(Stream.of().collect(Collectors.toList()),Stream.of().collect(Collectors.toList()));
+		CollectionsAssertions.assertNotSame(Stream.of("a","b").collect(Collectors.toList()),Stream.of("a","b").collect(Collectors.toList()));
 	}
 	@Test
 	public void testAssertListNotSame_failed() {
 		System.out.println("CollectionsAssertionsListTest >>> testAssertListNotSame_failed");
 		try{
-			CollectionsAssertions.notSame((List)null,(List)null);
+			CollectionsAssertions.assertNotSame((List)null,(List)null);
 			Assert.fail();
 		}catch(AssertException e){
 			Assert.assertEquals("Assertion failed(null!==null):\n\tActual:\t\tnull\n\tExpected:\t!==null", e.getMessage());
 		}
 		try{
-			CollectionsAssertions.notSame(Collections.EMPTY_LIST,Collections.EMPTY_LIST);
+			CollectionsAssertions.assertNotSame(Collections.EMPTY_LIST,Collections.EMPTY_LIST);
 			Assert.fail();
 		}catch(AssertException e){
 			Assert.assertEquals("Assertion failed([]!==[]):\n\tActual:\t\t[]\n\tExpected:\t!==[]", e.getMessage());
 		}
 		try{
 			List actualList=Stream.of("a","b").collect(Collectors.toList());
-			CollectionsAssertions.notSame(actualList,actualList);
+			CollectionsAssertions.assertNotSame(actualList,actualList);
 			Assert.fail();
 		}catch(AssertException e){
 			Assert.assertEquals("Assertion failed([a, b]!==[a, b]):\n\tActual:\t\t[a, b]\n\tExpected:\t!==[a, b]", e.getMessage());
@@ -199,27 +199,27 @@ public class CollectionsAssertionsListTest {
 	@Test
 	public void testAssertListNotSame_message() {
 		System.out.println("CollectionsAssertionsListTest >>> testAssertListNotSame_message");
-		CollectionsAssertions.notSame(Stream.of().collect(Collectors.toList()),Stream.of().collect(Collectors.toList()),"Message");
-		CollectionsAssertions.notSame(Stream.of("a","b").collect(Collectors.toList()),Stream.of("a","b").collect(Collectors.toList()),"Message");
+		CollectionsAssertions.assertNotSame(Stream.of().collect(Collectors.toList()),Stream.of().collect(Collectors.toList()),"Message");
+		CollectionsAssertions.assertNotSame(Stream.of("a","b").collect(Collectors.toList()),Stream.of("a","b").collect(Collectors.toList()),"Message");
 	}
 	@Test
 	public void testAssertListNotSame_message_failed() {
 		System.out.println("CollectionsAssertionsListTest >>> testAssertListNotSame_message_failed");
 		try{
-			CollectionsAssertions.notSame((List)null,(List)null,"Message");
+			CollectionsAssertions.assertNotSame((List)null,(List)null,"Message");
 			Assert.fail();
 		}catch(AssertException e){
 			Assert.assertEquals("Message(null!==null):\n\tActual:\t\tnull\n\tExpected:\t!==null", e.getMessage());
 		}
 		try{
-			CollectionsAssertions.notSame(Collections.EMPTY_LIST,Collections.EMPTY_LIST,"Message");
+			CollectionsAssertions.assertNotSame(Collections.EMPTY_LIST,Collections.EMPTY_LIST,"Message");
 			Assert.fail();
 		}catch(AssertException e){
 			Assert.assertEquals("Message([]!==[]):\n\tActual:\t\t[]\n\tExpected:\t!==[]", e.getMessage());
 		}
 		try{
 			List actualList=Stream.of("a","b").collect(Collectors.toList());
-			CollectionsAssertions.notSame(actualList,actualList,"Message");
+			CollectionsAssertions.assertNotSame(actualList,actualList,"Message");
 			Assert.fail();
 		}catch(AssertException e){
 			Assert.assertEquals("Message([a, b]!==[a, b]):\n\tActual:\t\t[a, b]\n\tExpected:\t!==[a, b]", e.getMessage());

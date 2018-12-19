@@ -30,11 +30,11 @@ public class ObjectAssertionsDoubleTest {
 	public void testIsZero_Double() {
 		System.out.println("ObjectAssertionsDoubleTest >>> testIsZero_Double");
 		Double actual = 0.0d;
-		Assert.assertTrue(ObjectAssertions.isZero(actual));
+		Assert.assertTrue(ObjectAssertions.zero(actual));
 		actual = 2.0d;
-		Assert.assertFalse(ObjectAssertions.isZero(actual));
+		Assert.assertFalse(ObjectAssertions.zero(actual));
 		actual = 10.0d;
-		Assert.assertFalse(ObjectAssertions.isZero(actual));
+		Assert.assertFalse(ObjectAssertions.zero(actual));
 	}
 	@Test
 	public void testAssertZero_Double() {
@@ -75,13 +75,13 @@ public class ObjectAssertionsDoubleTest {
 		System.out.println("ObjectAssertionsDoubleTest >>> testIsEqual_Double_Double");
 		Double actual=0.0d;
 		Double expected=0.0d;
-		Assert.assertTrue(ObjectAssertions.isEqual(actual, expected));
+		Assert.assertTrue(ObjectAssertions.equals(actual, expected));
 		actual=1.0d;
 		expected=1.0d;
-		Assert.assertTrue(ObjectAssertions.isEqual(actual, expected));
+		Assert.assertTrue(ObjectAssertions.equals(actual, expected));
 		actual=0.0d;
 		expected=1.0d;
-		Assert.assertFalse(ObjectAssertions.isEqual(actual, expected));
+		Assert.assertFalse(ObjectAssertions.equals(actual, expected));
 	}
 	@Test
 	public void testAssertEquals_Double_Double() {
@@ -176,16 +176,16 @@ public class ObjectAssertionsDoubleTest {
 		System.out.println("ObjectAssertionsDoubleTest >>> testIsGreater_Double_Double");
 		Double actual=1.0d;
 		Double expected=0.0d;
-		Assert.assertTrue(ObjectAssertions.isGreater(actual, expected));
+		Assert.assertTrue(ObjectAssertions.greater(actual, expected));
 		actual=10.0d;
 		expected=1.0d;
-		Assert.assertTrue(ObjectAssertions.isGreater(actual, expected));
+		Assert.assertTrue(ObjectAssertions.greater(actual, expected));
 		actual=1.0d;
 		expected=1.0d;
-		Assert.assertFalse(ObjectAssertions.isGreater(actual, expected));
+		Assert.assertFalse(ObjectAssertions.greater(actual, expected));
 		actual=0.0d;
 		expected=1.0d;
-		Assert.assertFalse(ObjectAssertions.isGreater(actual, expected));
+		Assert.assertFalse(ObjectAssertions.greater(actual, expected));
 	}
 	@Test
 	public void testAssertGreater_Double_Double() {
@@ -252,16 +252,16 @@ public class ObjectAssertionsDoubleTest {
 		System.out.println("ObjectAssertionsDoubleTest >>> testIsGreaterOrEqual_Double_Double");
 		Double actual=1.0d;
 		Double expected=0.0d;
-		Assert.assertTrue(ObjectAssertions.isGreaterOrEqual(actual, expected));
+		Assert.assertTrue(ObjectAssertions.greaterOrEqual(actual, expected));
 		actual=10.0d;
 		expected=1.0d;
-		Assert.assertTrue(ObjectAssertions.isGreaterOrEqual(actual, expected));
+		Assert.assertTrue(ObjectAssertions.greaterOrEqual(actual, expected));
 		actual=1.0d;
 		expected=1.0d;
-		Assert.assertTrue(ObjectAssertions.isGreaterOrEqual(actual, expected));
+		Assert.assertTrue(ObjectAssertions.greaterOrEqual(actual, expected));
 		actual=0.0d;
 		expected=1.0d;
-		Assert.assertFalse(ObjectAssertions.isGreaterOrEqual(actual, expected));
+		Assert.assertFalse(ObjectAssertions.greaterOrEqual(actual, expected));
 	}
 	@Test
 	public void testAssertGreaterOrEqual_Double_Double() {

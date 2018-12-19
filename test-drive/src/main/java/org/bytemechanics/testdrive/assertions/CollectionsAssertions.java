@@ -32,7 +32,7 @@ public class CollectionsAssertions extends ObjectAssertions{
 	 * @param _actual actual value
 	 * @return true if the _actual map has zero length
 	 */
-	protected static final <T> boolean isEmpty(final Collection<T> _actual){
+	protected static final <T> boolean empty(final Collection<T> _actual){
 		return (_actual==null)||(_actual.isEmpty());
 	}
 	/**
@@ -52,7 +52,7 @@ public class CollectionsAssertions extends ObjectAssertions{
 	 */
 	@SuppressWarnings({"ConfusingArrayVararg", "PrimitiveArrayArgumentToVariableArgMethod"})
 	public static final <T> void assertEmpty(final Collection<T>  _actual,final String _message){
-		if(!isEmpty(_actual))
+		if(!CollectionsAssertions.empty(_actual))
 			throw new AssertException(".size()=",_actual.size(),0, _message);
 	}
 	/**
@@ -72,12 +72,12 @@ public class CollectionsAssertions extends ObjectAssertions{
 	 */
 	@SuppressWarnings({"ConfusingArrayVararg", "PrimitiveArrayArgumentToVariableArgMethod"})
 	public static final <T> void assertNotEmpty(final Collection<T>  _actual,final String _message){
-		if(isEmpty(_actual))
+		if(CollectionsAssertions.empty(_actual))
 			throw new AssertException(".size()>",0,0, _message);
 	}
 
 	/**
-	 * Asserts if the _actual and the _expected values are the same instance
+	 * Asserts if the _actual and the _expected values are the assertSame instance
 	 * @param <T> type of the map
 	 * @param _actual actual value
 	 * @param _expected expected value
@@ -86,18 +86,18 @@ public class CollectionsAssertions extends ObjectAssertions{
 		assertSame(_actual, _expected, "Assertion failed");
 	}
 	/**
-	 * Asserts if the _actual and the _expected values are the same instance
+	 * Asserts if the _actual and the _expected values are the assertSame instance
 	 * @param <T> type of the map
 	 * @param _actual actual value
 	 * @param _expected expected value
 	 * @param _message message to show if the assertion fail
 	 */
 	public static final <T> void assertSame(final Collection<T>  _actual,final Collection<T>  _expected,final String _message){
-		if(!isSame(_actual, _expected))
+		if(!same(_actual, _expected))
 			throw new AssertException("==", _actual,_expected, _message);
 	}
 	/**
-	 * Asserts if the _actual and the _expected values are not the same instance
+	 * Asserts if the _actual and the _expected values are not the assertSame instance
 	 * @param <T> type of the map
 	 * @param _actual actual value
 	 * @param _expected expected value
@@ -106,14 +106,14 @@ public class CollectionsAssertions extends ObjectAssertions{
 		assertNotSame(_actual, _expected, "Assertion failed");
 	}
 	/**
-	 * Asserts if the _actual and the _expected values are the same instance
+	 * Asserts if the _actual and the _expected values are the assertSame instance
 	 * @param <T> type of the map
 	 * @param _actual actual value
 	 * @param _expected expected value
 	 * @param _message message to show if the assertion fail
 	 */
 	public static final <T> void assertNotSame(final Collection<T>  _actual,final Collection<T>  _expected,final String _message){
-		if(isSame(_actual, _expected))
+		if(same(_actual, _expected))
 			throw new AssertException("!==", _actual,_expected, _message);
 	}
 
@@ -134,7 +134,7 @@ public class CollectionsAssertions extends ObjectAssertions{
 	 * @param _message message to show if the assertion fail
 	 */
 	public static final <T> void assertEquals(final Collection<T>  _actual,final Collection<T>  _expected,final String _message){
-		if(!CollectionsAssertions.isEquals(_actual, _expected))
+		if(!CollectionsAssertions.equals(_actual, _expected))
 			throw new AssertException("~", _actual,_expected, _message);
 	}
 	/**
@@ -154,7 +154,7 @@ public class CollectionsAssertions extends ObjectAssertions{
 	 * @param _message message to show if the assertion fail
 	 */
 	public static final <T> void assertNotEquals(final Collection<T>  _actual,final Collection<T>  _expected,final String _message){
-		if(CollectionsAssertions.isEquals(_actual, _expected))
+		if(CollectionsAssertions.equals(_actual, _expected))
 			throw new AssertException("!~", _actual,_expected, _message);
 	}
 
@@ -166,7 +166,7 @@ public class CollectionsAssertions extends ObjectAssertions{
 	 * @param _actual actual value
 	 * @return true if the _actual map has zero length
 	 */
-	protected static final <T,K> boolean isEmpty(final Map<T,K> _actual){
+	protected static final <T,K> boolean empty(final Map<T,K> _actual){
 		return (_actual==null)||(_actual.isEmpty());
 	}
 	/**
@@ -188,7 +188,7 @@ public class CollectionsAssertions extends ObjectAssertions{
 	 */
 	@SuppressWarnings({"ConfusingArrayVararg", "PrimitiveArrayArgumentToVariableArgMethod"})
 	public static final <T,K> void assertEmpty(final Map<T,K>  _actual,final String _message){
-		if(!isEmpty(_actual))
+		if(!empty(_actual))
 			throw new AssertException(".size()=",_actual.size(),0, _message);
 	}
 	/**
@@ -210,12 +210,12 @@ public class CollectionsAssertions extends ObjectAssertions{
 	 */
 	@SuppressWarnings({"ConfusingArrayVararg", "PrimitiveArrayArgumentToVariableArgMethod"})
 	public static final <T,K> void assertNotEmpty(final Map<T,K>  _actual,final String _message){
-		if(isEmpty(_actual))
+		if(empty(_actual))
 			throw new AssertException(".size()>",0,0, _message);
 	}
 
 	/**
-	 * Asserts if the _actual and the _expected values are the same instance
+	 * Asserts if the _actual and the _expected values are the assertSame instance
 	 * @param <T> map key type
 	 * @param <K> map value type
 	 * @param _actual actual value
@@ -225,7 +225,7 @@ public class CollectionsAssertions extends ObjectAssertions{
 		assertSame(_actual, _expected, "Assertion failed");
 	}
 	/**
-	 * Asserts if the _actual and the _expected values are the same instance
+	 * Asserts if the _actual and the _expected values are the assertSame instance
 	 * @param <T> map key type
 	 * @param <K> map value type
 	 * @param _actual actual value
@@ -233,11 +233,11 @@ public class CollectionsAssertions extends ObjectAssertions{
 	 * @param _message message to show if the assertion fail
 	 */
 	public static final <T,K> void assertSame(final Map<T,K>  _actual,final Map<T,K>  _expected,final String _message){
-		if(!isSame(_actual, _expected))
-			throw new AssertException("=", _actual,_expected, _message);
+		if(!same(_actual, _expected))
+			throw new AssertException("==", _actual,_expected, _message);
 	}
 	/**
-	 * Asserts if the _actual and the _expected values are not the same instance
+	 * Asserts if the _actual and the _expected values are not the assertSame instance
 	 * @param <T> map key type
 	 * @param <K> map value type
 	 * @param _actual actual value
@@ -247,7 +247,7 @@ public class CollectionsAssertions extends ObjectAssertions{
 		assertNotSame(_actual, _expected, "Assertion failed");
 	}
 	/**
-	 * Asserts if the _actual and the _expected values are the same instance
+	 * Asserts if the _actual and the _expected values are the assertSame instance
 	 * @param <T> map key type
 	 * @param <K> map value type
 	 * @param _actual actual value
@@ -255,8 +255,8 @@ public class CollectionsAssertions extends ObjectAssertions{
 	 * @param _message message to show if the assertion fail
 	 */
 	public static final <T,K> void assertNotSame(final Map<T,K>  _actual,final Map<T,K>  _expected,final String _message){
-		if(isSame(_actual, _expected))
-			throw new AssertException("!=", _actual,_expected, _message);
+		if(same(_actual, _expected))
+			throw new AssertException("!==", _actual,_expected, _message);
 	}
 
 	/**
@@ -278,7 +278,7 @@ public class CollectionsAssertions extends ObjectAssertions{
 	 * @param _message message to show if the assertion fail
 	 */
 	public static final <T,K> void assertEquals(final Map<T,K>  _actual,final Map<T,K>  _expected,final String _message){
-		if(!isEquals(_actual, _expected))
+		if(!equals(_actual, _expected))
 			throw new AssertException("~", _actual,_expected, _message);
 	}
 	/**
@@ -300,7 +300,7 @@ public class CollectionsAssertions extends ObjectAssertions{
 	 * @param _message message to show if the assertion fail
 	 */
 	public static final <T,K> void assertNotEquals(final Map<T,K>  _actual,final Map<T,K>  _expected,final String _message){
-		if(isEquals(_actual, _expected))
+		if(equals(_actual, _expected))
 			throw new AssertException("!~", _actual,_expected, _message);
 	}
 }

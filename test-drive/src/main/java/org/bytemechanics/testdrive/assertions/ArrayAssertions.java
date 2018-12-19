@@ -75,17 +75,17 @@ public class ArrayAssertions extends CollectionsAssertions{
 	}
 
 	/**
-	 * Asserts if the _actual and the _expected values are the same instance
+	 * Asserts if the _actual and the _expected values are the assertSame instance
 	 * @param _actual actual value
 	 * @param _expected expected value
-	 * @return true if _actual is the same instance than _expected
+	 * @return true if _actual is the assertSame instance than _expected
 	 * @since 0.3.0
 	 */
 	protected static final boolean isSame(final boolean[] _actual,final boolean[] _expected){
 		return _actual==_expected;
 	}
 	/**
-	 * Asserts if the _actual and the _expected values are the same instance
+	 * Asserts if the _actual and the _expected values are the assertSame instance
 	 * @param _actual actual value
 	 * @param _expected expected value
 	 * @since 0.4.0
@@ -94,7 +94,7 @@ public class ArrayAssertions extends CollectionsAssertions{
 		assertSame(_actual, _expected, "Assertion failed");
 	}
 	/**
-	 * Asserts if the _actual and the _expected values are the same instance
+	 * Asserts if the _actual and the _expected values are the assertSame instance
 	 * @param _actual actual value
 	 * @param _expected expected value
 	 * @param _message message to show if the assertion fail
@@ -105,7 +105,7 @@ public class ArrayAssertions extends CollectionsAssertions{
 			throw new AssertException("=", _actual,_expected, _message);
 	}
 	/**
-	 * Asserts if the _actual and the _expected values are not the same instance
+	 * Asserts if the _actual and the _expected values are not the assertSame instance
 	 * @param _actual actual value
 	 * @param _expected expected value
 	 * @since 0.4.0
@@ -114,7 +114,7 @@ public class ArrayAssertions extends CollectionsAssertions{
 		assertNotSame(_actual, _expected, "Assertion failed");
 	}
 	/**
-	 * Asserts if the _actual and the _expected values are the same instance
+	 * Asserts if the _actual and the _expected values are the assertSame instance
 	 * @param _actual actual value
 	 * @param _expected expected value
 	 * @param _message message to show if the assertion fail
@@ -133,17 +133,19 @@ public class ArrayAssertions extends CollectionsAssertions{
 	 * @since 0.3.0
 	 */
 	@SuppressWarnings("null")
-	protected static final boolean isEqual(final boolean[] _actual,final boolean[] _expected){
+	protected static final boolean equals(final boolean[] _actual,final boolean[] _expected){
 		
-		boolean reply=(_actual!=null)&&(_expected!=null)&&(_actual.length==_expected.length);
-		
-		if(reply){
-			for(int ic1=0;ic1<_expected.length;ic1++){
-				reply&=isEqual(_actual[ic1], _expected[ic1]);
-			}
+		if(same(_actual,_expected)){
+			return true;
+		}else{
+			if((_actual!=null)&&(_expected!=null)&&(_actual.length==_expected.length)){
+				boolean reply=true;
+				for(int ic1=0;ic1<_expected.length;ic1++){
+					reply&=equals(_actual[ic1], _expected[ic1]);
+				}
+				return reply;
+			}else return false;
 		}
-		
-		return reply;
 	}
 	/**
 	 * Asserts if the _actual and the _expected values are equal
@@ -162,7 +164,7 @@ public class ArrayAssertions extends CollectionsAssertions{
 	 * @since 0.3.0
 	 */
 	public static final void assertEquals(final boolean[] _actual,final boolean[] _expected,final String _message){
-		if(!isEqual(_actual, _expected))
+		if(!equals(_actual, _expected))
 			throw new AssertException("~", _actual,_expected, _message);
 	}
 	/**
@@ -182,7 +184,7 @@ public class ArrayAssertions extends CollectionsAssertions{
 	 * @since 0.3.0
 	 */
 	public static final void assertNotEquals(final boolean[] _actual,final boolean[] _expected,final String _message){
-		if(isEqual(_actual, _expected))
+		if(equals(_actual, _expected))
 			throw new AssertException("!~", _actual,_expected, _message);
 	}
 
@@ -238,17 +240,17 @@ public class ArrayAssertions extends CollectionsAssertions{
 	}
 
 	/**
-	 * Asserts if the _actual and the _expected values are the same instance
+	 * Asserts if the _actual and the _expected values are the assertSame instance
 	 * @param _actual actual value
 	 * @param _expected expected value
-	 * @return true if _actual is the same instance than _expected
+	 * @return true if _actual is the assertSame instance than _expected
 	 * @since 0.3.0
 	 */
 	protected static final boolean isSame(final byte[] _actual,final byte[] _expected){
 		return _actual==_expected;
 	}
 	/**
-	 * Asserts if the _actual and the _expected values are the same instance
+	 * Asserts if the _actual and the _expected values are the assertSame instance
 	 * @param _actual actual value
 	 * @param _expected expected value
 	 * @since 0.4.0
@@ -257,7 +259,7 @@ public class ArrayAssertions extends CollectionsAssertions{
 		assertSame(_actual, _expected, "Assertion failed");
 	}
 	/**
-	 * Asserts if the _actual and the _expected values are the same instance
+	 * Asserts if the _actual and the _expected values are the assertSame instance
 	 * @param _actual actual value
 	 * @param _expected expected value
 	 * @param _message message to show if the assertion fail
@@ -268,7 +270,7 @@ public class ArrayAssertions extends CollectionsAssertions{
 			throw new AssertException("=", _actual,_expected, _message);
 	}
 	/**
-	 * Asserts if the _actual and the _expected values are not the same instance
+	 * Asserts if the _actual and the _expected values are not the assertSame instance
 	 * @param _actual actual value
 	 * @param _expected expected value
 	 * @since 0.4.0
@@ -277,7 +279,7 @@ public class ArrayAssertions extends CollectionsAssertions{
 		assertNotSame(_actual, _expected, "Assertion failed");
 	}
 	/**
-	 * Asserts if the _actual and the _expected values are the same instance
+	 * Asserts if the _actual and the _expected values are the assertSame instance
 	 * @param _actual actual value
 	 * @param _expected expected value
 	 * @param _message message to show if the assertion fail
@@ -296,17 +298,19 @@ public class ArrayAssertions extends CollectionsAssertions{
 	 * @since 0.3.0
 	 */
 	@SuppressWarnings("null")
-	protected static final boolean isEqual(final byte[] _actual,final byte[] _expected){
+	protected static final boolean equals(final byte[] _actual,final byte[] _expected){
 		
-		boolean reply=(_actual!=null)&&(_expected!=null)&&(_actual.length==_expected.length);
-		
-		if(reply){
-			for(int ic1=0;ic1<_expected.length;ic1++){
-				reply&=isEqual(_actual[ic1], _expected[ic1]);
-			}
+		if(same(_actual,_expected)){
+			return true;
+		}else{
+			if((_actual!=null)&&(_expected!=null)&&(_actual.length==_expected.length)){
+				boolean reply=true;
+				for(int ic1=0;ic1<_expected.length;ic1++){
+					reply&=equals(_actual[ic1], _expected[ic1]);
+				}
+				return reply;
+			}else return false;
 		}
-		
-		return reply;
 	}
 	/**
 	 * Asserts if the _actual and the _expected values are equal
@@ -325,7 +329,7 @@ public class ArrayAssertions extends CollectionsAssertions{
 	 * @since 0.3.0
 	 */
 	public static final void assertEquals(final byte[] _actual,final byte[] _expected,final String _message){
-		if(!isEqual(_actual, _expected))
+		if(!ArrayAssertions.equals(_actual, _expected))
 			throw new AssertException("~", _actual,_expected, _message);
 	}
 	/**
@@ -345,7 +349,7 @@ public class ArrayAssertions extends CollectionsAssertions{
 	 * @since 0.3.0
 	 */
 	public static final void assertNotEquals(final byte[] _actual,final byte[] _expected,final String _message){
-		if(isEqual(_actual, _expected))
+		if(ArrayAssertions.equals(_actual, _expected))
 			throw new AssertException("!~", _actual,_expected, _message);
 	}
 
@@ -401,17 +405,17 @@ public class ArrayAssertions extends CollectionsAssertions{
 	}
 
 	/**
-	 * Asserts if the _actual and the _expected values are the same instance
+	 * Asserts if the _actual and the _expected values are the assertSame instance
 	 * @param _actual actual value
 	 * @param _expected expected value
-	 * @return true if _actual is the same instance than _expected
+	 * @return true if _actual is the assertSame instance than _expected
 	 * @since 0.3.0
 	 */
 	protected static final boolean isSame(final char[] _actual,final char[] _expected){
 		return _actual==_expected;
 	}
 	/**
-	 * Asserts if the _actual and the _expected values are the same instance
+	 * Asserts if the _actual and the _expected values are the assertSame instance
 	 * @param _actual actual value
 	 * @param _expected expected value
 	 * @since 0.4.0
@@ -420,7 +424,7 @@ public class ArrayAssertions extends CollectionsAssertions{
 		assertSame(_actual, _expected, "Assertion failed");
 	}
 	/**
-	 * Asserts if the _actual and the _expected values are the same instance
+	 * Asserts if the _actual and the _expected values are the assertSame instance
 	 * @param _actual actual value
 	 * @param _expected expected value
 	 * @param _message message to show if the assertion fail
@@ -431,7 +435,7 @@ public class ArrayAssertions extends CollectionsAssertions{
 			throw new AssertException("=", _actual,_expected, _message);
 	}
 	/**
-	 * Asserts if the _actual and the _expected values are not the same instance
+	 * Asserts if the _actual and the _expected values are not the assertSame instance
 	 * @param _actual actual value
 	 * @param _expected expected value
 	 * @since 0.4.0
@@ -440,7 +444,7 @@ public class ArrayAssertions extends CollectionsAssertions{
 		assertNotSame(_actual, _expected, "Assertion failed");
 	}
 	/**
-	 * Asserts if the _actual and the _expected values are the same instance
+	 * Asserts if the _actual and the _expected values are the assertSame instance
 	 * @param _actual actual value
 	 * @param _expected expected value
 	 * @param _message message to show if the assertion fail
@@ -459,17 +463,19 @@ public class ArrayAssertions extends CollectionsAssertions{
 	 * @since 0.3.0
 	 */
 	@SuppressWarnings("null")
-	protected static final boolean isEqual(final char[] _actual,final char[] _expected){
+	protected static final boolean equals(final char[] _actual,final char[] _expected){
 		
-		boolean reply=(_actual!=null)&&(_expected!=null)&&(_actual.length==_expected.length);
-		
-		if(reply){
-			for(int ic1=0;ic1<_expected.length;ic1++){
-				reply&=isEqual(_actual[ic1], _expected[ic1]);
-			}
+		if(same(_actual,_expected)){
+			return true;
+		}else{
+			if((_actual!=null)&&(_expected!=null)&&(_actual.length==_expected.length)){
+				boolean reply=true;
+				for(int ic1=0;ic1<_expected.length;ic1++){
+					reply&=equals(_actual[ic1], _expected[ic1]);
+				}
+				return reply;
+			}else return false;
 		}
-		
-		return reply;
 	}
 	/**
 	 * Asserts if the _actual and the _expected values are equal
@@ -488,7 +494,7 @@ public class ArrayAssertions extends CollectionsAssertions{
 	 * @since 0.3.0
 	 */
 	public static final void assertEquals(final char[] _actual,final char[] _expected,final String _message){
-		if(!isEqual(_actual, _expected))
+		if(!ArrayAssertions.equals(_actual, _expected))
 			throw new AssertException("~", _actual,_expected, _message);
 	}
 	/**
@@ -508,7 +514,7 @@ public class ArrayAssertions extends CollectionsAssertions{
 	 * @since 0.3.0
 	 */
 	public static final void assertNotEquals(final char[] _actual,final char[] _expected,final String _message){
-		if(isEqual(_actual, _expected))
+		if(ArrayAssertions.equals(_actual, _expected))
 			throw new AssertException("!~", _actual,_expected, _message);
 	}
 
@@ -564,17 +570,17 @@ public class ArrayAssertions extends CollectionsAssertions{
 	}
 
 	/**
-	 * Asserts if the _actual and the _expected values are the same instance
+	 * Asserts if the _actual and the _expected values are the assertSame instance
 	 * @param _actual actual value
 	 * @param _expected expected value
-	 * @return true if _actual is the same instance than _expected
+	 * @return true if _actual is the assertSame instance than _expected
 	 * @since 0.3.0
 	 */
 	protected static final boolean isSame(final short[] _actual,final short[] _expected){
 		return _actual==_expected;
 	}
 	/**
-	 * Asserts if the _actual and the _expected values are the same instance
+	 * Asserts if the _actual and the _expected values are the assertSame instance
 	 * @param _actual actual value
 	 * @param _expected expected value
 	 * @since 0.4.0
@@ -583,7 +589,7 @@ public class ArrayAssertions extends CollectionsAssertions{
 		assertSame(_actual, _expected, "Assertion failed");
 	}
 	/**
-	 * Asserts if the _actual and the _expected values are the same instance
+	 * Asserts if the _actual and the _expected values are the assertSame instance
 	 * @param _actual actual value
 	 * @param _expected expected value
 	 * @param _message message to show if the assertion fail
@@ -594,7 +600,7 @@ public class ArrayAssertions extends CollectionsAssertions{
 			throw new AssertException("=", _actual,_expected, _message);
 	}
 	/**
-	 * Asserts if the _actual and the _expected values are not the same instance
+	 * Asserts if the _actual and the _expected values are not the assertSame instance
 	 * @param _actual actual value
 	 * @param _expected expected value
 	 * @since 0.4.0
@@ -603,7 +609,7 @@ public class ArrayAssertions extends CollectionsAssertions{
 		assertNotSame(_actual, _expected, "Assertion failed");
 	}
 	/**
-	 * Asserts if the _actual and the _expected values are the same instance
+	 * Asserts if the _actual and the _expected values are the assertSame instance
 	 * @param _actual actual value
 	 * @param _expected expected value
 	 * @param _message message to show if the assertion fail
@@ -622,17 +628,19 @@ public class ArrayAssertions extends CollectionsAssertions{
 	 * @since 0.3.0
 	 */
 	@SuppressWarnings("null")
-	protected static final boolean isEqual(final short[] _actual,final short[] _expected){
+	protected static final boolean equals(final short[] _actual,final short[] _expected){
 		
-		boolean reply=(_actual!=null)&&(_expected!=null)&&(_actual.length==_expected.length);
-		
-		if(reply){
-			for(int ic1=0;ic1<_expected.length;ic1++){
-				reply&=isEqual(_actual[ic1], _expected[ic1]);
-			}
+		if(same(_actual,_expected)){
+			return true;
+		}else{
+			if((_actual!=null)&&(_expected!=null)&&(_actual.length==_expected.length)){
+				boolean reply=true;
+				for(int ic1=0;ic1<_expected.length;ic1++){
+					reply&=equals(_actual[ic1], _expected[ic1]);
+				}
+				return reply;
+			}else return false;
 		}
-		
-		return reply;
 	}
 	/**
 	 * Asserts if the _actual and the _expected values are equal
@@ -651,7 +659,7 @@ public class ArrayAssertions extends CollectionsAssertions{
 	 * @since 0.3.0
 	 */
 	public static final void assertEquals(final short[] _actual,final short[] _expected,final String _message){
-		if(!isEqual(_actual, _expected))
+		if(!ArrayAssertions.equals(_actual, _expected))
 			throw new AssertException("~", _actual,_expected, _message);
 	}
 	/**
@@ -671,7 +679,7 @@ public class ArrayAssertions extends CollectionsAssertions{
 	 * @since 0.3.0
 	 */
 	public static final void assertNotEquals(final short[] _actual,final short[] _expected,final String _message){
-		if(isEqual(_actual, _expected))
+		if(ArrayAssertions.equals(_actual, _expected))
 			throw new AssertException("!~", _actual,_expected, _message);
 	}
 
@@ -727,17 +735,17 @@ public class ArrayAssertions extends CollectionsAssertions{
 	}
 
 	/**
-	 * Asserts if the _actual and the _expected values are the same instance
+	 * Asserts if the _actual and the _expected values are the assertSame instance
 	 * @param _actual actual value
 	 * @param _expected expected value
-	 * @return true if _actual is the same instance than _expected
+	 * @return true if _actual is the assertSame instance than _expected
 	 * @since 0.3.0
 	 */
 	protected static final boolean isSame(final int[] _actual,final int[] _expected){
 		return _actual==_expected;
 	}
 	/**
-	 * Asserts if the _actual and the _expected values are the same instance
+	 * Asserts if the _actual and the _expected values are the assertSame instance
 	 * @param _actual actual value
 	 * @param _expected expected value
 	 * @since 0.4.0
@@ -746,7 +754,7 @@ public class ArrayAssertions extends CollectionsAssertions{
 		assertSame(_actual, _expected, "Assertion failed");
 	}
 	/**
-	 * Asserts if the _actual and the _expected values are the same instance
+	 * Asserts if the _actual and the _expected values are the assertSame instance
 	 * @param _actual actual value
 	 * @param _expected expected value
 	 * @param _message message to show if the assertion fail
@@ -757,7 +765,7 @@ public class ArrayAssertions extends CollectionsAssertions{
 			throw new AssertException("=", _actual,_expected, _message);
 	}
 	/**
-	 * Asserts if the _actual and the _expected values are not the same instance
+	 * Asserts if the _actual and the _expected values are not the assertSame instance
 	 * @param _actual actual value
 	 * @param _expected expected value
 	 * @since 0.4.0
@@ -766,7 +774,7 @@ public class ArrayAssertions extends CollectionsAssertions{
 		assertNotSame(_actual, _expected, "Assertion failed");
 	}
 	/**
-	 * Asserts if the _actual and the _expected values are the same instance
+	 * Asserts if the _actual and the _expected values are the assertSame instance
 	 * @param _actual actual value
 	 * @param _expected expected value
 	 * @param _message message to show if the assertion fail
@@ -785,17 +793,19 @@ public class ArrayAssertions extends CollectionsAssertions{
 	 * @since 0.3.0
 	 */
 	@SuppressWarnings("null")
-	protected static final boolean isEqual(final int[] _actual,final int[] _expected){
+	protected static final boolean equals(final int[] _actual,final int[] _expected){
 		
-		boolean reply=(_actual!=null)&&(_expected!=null)&&(_actual.length==_expected.length);
-		
-		if(reply){
-			for(int ic1=0;ic1<_expected.length;ic1++){
-				reply&=isEqual(_actual[ic1], _expected[ic1]);
-			}
+		if(same(_actual,_expected)){
+			return true;
+		}else{
+			if((_actual!=null)&&(_expected!=null)&&(_actual.length==_expected.length)){
+				boolean reply=true;
+				for(int ic1=0;ic1<_expected.length;ic1++){
+					reply&=equals(_actual[ic1], _expected[ic1]);
+				}
+				return reply;
+			}else return false;
 		}
-		
-		return reply;
 	}
 	/**
 	 * Asserts if the _actual and the _expected values are equal
@@ -814,7 +824,7 @@ public class ArrayAssertions extends CollectionsAssertions{
 	 * @since 0.3.0
 	 */
 	public static final void assertEquals(final int[] _actual,final int[] _expected,final String _message){
-		if(!isEqual(_actual, _expected))
+		if(!ArrayAssertions.equals(_actual, _expected))
 			throw new AssertException("~", _actual,_expected, _message);
 	}
 	/**
@@ -834,7 +844,7 @@ public class ArrayAssertions extends CollectionsAssertions{
 	 * @since 0.3.0
 	 */
 	public static final void assertNotEquals(final int[] _actual,final int[] _expected,final String _message){
-		if(isEqual(_actual, _expected))
+		if(ArrayAssertions.equals(_actual, _expected))
 			throw new AssertException("!~", _actual,_expected, _message);
 	}
 
@@ -890,17 +900,17 @@ public class ArrayAssertions extends CollectionsAssertions{
 	}
 
 	/**
-	 * Asserts if the _actual and the _expected values are the same instance
+	 * Asserts if the _actual and the _expected values are the assertSame instance
 	 * @param _actual actual value
 	 * @param _expected expected value
-	 * @return true if _actual is the same instance than _expected
+	 * @return true if _actual is the assertSame instance than _expected
 	 * @since 0.3.0
 	 */
 	protected static final boolean isSame(final long[] _actual,final long[] _expected){
 		return _actual==_expected;
 	}
 	/**
-	 * Asserts if the _actual and the _expected values are the same instance
+	 * Asserts if the _actual and the _expected values are the assertSame instance
 	 * @param _actual actual value
 	 * @param _expected expected value
 	 * @since 0.4.0
@@ -909,7 +919,7 @@ public class ArrayAssertions extends CollectionsAssertions{
 		assertSame(_actual, _expected, "Assertion failed");
 	}
 	/**
-	 * Asserts if the _actual and the _expected values are the same instance
+	 * Asserts if the _actual and the _expected values are the assertSame instance
 	 * @param _actual actual value
 	 * @param _expected expected value
 	 * @param _message message to show if the assertion fail
@@ -920,7 +930,7 @@ public class ArrayAssertions extends CollectionsAssertions{
 			throw new AssertException("=", _actual,_expected, _message);
 	}
 	/**
-	 * Asserts if the _actual and the _expected values are not the same instance
+	 * Asserts if the _actual and the _expected values are not the assertSame instance
 	 * @param _actual actual value
 	 * @param _expected expected value
 	 * @since 0.4.0
@@ -929,7 +939,7 @@ public class ArrayAssertions extends CollectionsAssertions{
 		assertNotSame(_actual, _expected, "Assertion failed");
 	}
 	/**
-	 * Asserts if the _actual and the _expected values are the same instance
+	 * Asserts if the _actual and the _expected values are the assertSame instance
 	 * @param _actual actual value
 	 * @param _expected expected value
 	 * @param _message message to show if the assertion fail
@@ -948,17 +958,19 @@ public class ArrayAssertions extends CollectionsAssertions{
 	 * @since 0.3.0
 	 */
 	@SuppressWarnings("null")
-	protected static final boolean isEqual(final long[] _actual,final long[] _expected){
+	protected static final boolean equals(final long[] _actual,final long[] _expected){
 		
-		boolean reply=(_actual!=null)&&(_expected!=null)&&(_actual.length==_expected.length);
-		
-		if(reply){
-			for(int ic1=0;ic1<_expected.length;ic1++){
-				reply&=isEqual(_actual[ic1], _expected[ic1]);
-			}
+		if(same(_actual,_expected)){
+			return true;
+		}else{
+			if((_actual!=null)&&(_expected!=null)&&(_actual.length==_expected.length)){
+				boolean reply=true;
+				for(int ic1=0;ic1<_expected.length;ic1++){
+					reply&=equals(_actual[ic1], _expected[ic1]);
+				}
+				return reply;
+			}else return false;
 		}
-		
-		return reply;
 	}
 	/**
 	 * Asserts if the _actual and the _expected values are equal
@@ -977,7 +989,7 @@ public class ArrayAssertions extends CollectionsAssertions{
 	 * @since 0.3.0
 	 */
 	public static final void assertEquals(final long[] _actual,final long[] _expected,final String _message){
-		if(!isEqual(_actual, _expected))
+		if(!ArrayAssertions.equals(_actual, _expected))
 			throw new AssertException("~", _actual,_expected, _message);
 	}
 	/**
@@ -997,7 +1009,7 @@ public class ArrayAssertions extends CollectionsAssertions{
 	 * @since 0.3.0
 	 */
 	public static final void assertNotEquals(final long[] _actual,final long[] _expected,final String _message){
-		if(isEqual(_actual, _expected))
+		if(ArrayAssertions.equals(_actual, _expected))
 			throw new AssertException("!~", _actual,_expected, _message);
 	}
 
@@ -1053,17 +1065,17 @@ public class ArrayAssertions extends CollectionsAssertions{
 	}
 
 	/**
-	 * Asserts if the _actual and the _expected values are the same instance
+	 * Asserts if the _actual and the _expected values are the assertSame instance
 	 * @param _actual actual value
 	 * @param _expected expected value
-	 * @return true if _actual is the same instance than _expected
+	 * @return true if _actual is the assertSame instance than _expected
 	 * @since 0.3.0
 	 */
 	protected static final boolean isSame(final float[] _actual,final float[] _expected){
 		return _actual==_expected;
 	}
 	/**
-	 * Asserts if the _actual and the _expected values are the same instance
+	 * Asserts if the _actual and the _expected values are the assertSame instance
 	 * @param _actual actual value
 	 * @param _expected expected value
 	 * @since 0.4.0
@@ -1072,7 +1084,7 @@ public class ArrayAssertions extends CollectionsAssertions{
 		assertSame(_actual, _expected, "Assertion failed");
 	}
 	/**
-	 * Asserts if the _actual and the _expected values are the same instance
+	 * Asserts if the _actual and the _expected values are the assertSame instance
 	 * @param _actual actual value
 	 * @param _expected expected value
 	 * @param _message message to show if the assertion fail
@@ -1083,7 +1095,7 @@ public class ArrayAssertions extends CollectionsAssertions{
 			throw new AssertException("=", _actual,_expected, _message);
 	}
 	/**
-	 * Asserts if the _actual and the _expected values are not the same instance
+	 * Asserts if the _actual and the _expected values are not the assertSame instance
 	 * @param _actual actual value
 	 * @param _expected expected value
 	 * @since 0.4.0
@@ -1092,7 +1104,7 @@ public class ArrayAssertions extends CollectionsAssertions{
 		assertNotSame(_actual, _expected, "Assertion failed");
 	}
 	/**
-	 * Asserts if the _actual and the _expected values are the same instance
+	 * Asserts if the _actual and the _expected values are the assertSame instance
 	 * @param _actual actual value
 	 * @param _expected expected value
 	 * @param _message message to show if the assertion fail
@@ -1111,17 +1123,19 @@ public class ArrayAssertions extends CollectionsAssertions{
 	 * @since 0.3.0
 	 */
 	@SuppressWarnings("null")
-	protected static final boolean isEqual(final float[] _actual,final float[] _expected){
+	protected static final boolean equals(final float[] _actual,final float[] _expected){
 		
-		boolean reply=(_actual!=null)&&(_expected!=null)&&(_actual.length==_expected.length);
-		
-		if(reply){
-			for(int ic1=0;ic1<_expected.length;ic1++){
-				reply&=isEqual(_actual[ic1], _expected[ic1]);
-			}
+		if(same(_actual,_expected)){
+			return true;
+		}else{
+			if((_actual!=null)&&(_expected!=null)&&(_actual.length==_expected.length)){
+				boolean reply=true;
+				for(int ic1=0;ic1<_expected.length;ic1++){
+					reply&=equals(_actual[ic1], _expected[ic1]);
+				}
+				return reply;
+			}else return false;
 		}
-		
-		return reply;
 	}
 	/**
 	 * Asserts if the _actual and the _expected values are equal
@@ -1140,7 +1154,7 @@ public class ArrayAssertions extends CollectionsAssertions{
 	 * @since 0.3.0
 	 */
 	public static final void assertEquals(final float[] _actual,final float[] _expected,final String _message){
-		if(!isEqual(_actual, _expected))
+		if(!ArrayAssertions.equals(_actual, _expected))
 			throw new AssertException("~", _actual,_expected, _message);
 	}
 	/**
@@ -1160,7 +1174,7 @@ public class ArrayAssertions extends CollectionsAssertions{
 	 * @since 0.3.0
 	 */
 	public static final void assertNotEquals(final float[] _actual,final float[] _expected,final String _message){
-		if(isEqual(_actual, _expected))
+		if(ArrayAssertions.equals(_actual, _expected))
 			throw new AssertException("!~", _actual,_expected, _message);
 	}
 
@@ -1216,17 +1230,17 @@ public class ArrayAssertions extends CollectionsAssertions{
 	}
 
 	/**
-	 * Asserts if the _actual and the _expected values are the same instance
+	 * Asserts if the _actual and the _expected values are the assertSame instance
 	 * @param _actual actual value
 	 * @param _expected expected value
-	 * @return true if _actual is the same instance than _expected
+	 * @return true if _actual is the assertSame instance than _expected
 	 * @since 0.3.0
 	 */
 	protected static final boolean isSame(final double[] _actual,final double[] _expected){
 		return _actual==_expected;
 	}
 	/**
-	 * Asserts if the _actual and the _expected values are the same instance
+	 * Asserts if the _actual and the _expected values are the assertSame instance
 	 * @param _actual actual value
 	 * @param _expected expected value
 	 * @since 0.4.0
@@ -1235,7 +1249,7 @@ public class ArrayAssertions extends CollectionsAssertions{
 		assertSame(_actual, _expected, "Assertion failed");
 	}
 	/**
-	 * Asserts if the _actual and the _expected values are the same instance
+	 * Asserts if the _actual and the _expected values are the assertSame instance
 	 * @param _actual actual value
 	 * @param _expected expected value
 	 * @param _message message to show if the assertion fail
@@ -1245,7 +1259,7 @@ public class ArrayAssertions extends CollectionsAssertions{
 			throw new AssertException("=", _actual,_expected, _message);
 	}
 	/**
-	 * Asserts if the _actual and the _expected values are not the same instance
+	 * Asserts if the _actual and the _expected values are not the assertSame instance
 	 * @param _actual actual value
 	 * @param _expected expected value
 	 * @since 0.4.0
@@ -1254,7 +1268,7 @@ public class ArrayAssertions extends CollectionsAssertions{
 		assertNotSame(_actual, _expected, "Assertion failed");
 	}
 	/**
-	 * Asserts if the _actual and the _expected values are the same instance
+	 * Asserts if the _actual and the _expected values are the assertSame instance
 	 * @param _actual actual value
 	 * @param _expected expected value
 	 * @param _message message to show if the assertion fail
@@ -1273,17 +1287,19 @@ public class ArrayAssertions extends CollectionsAssertions{
 	 * @since 0.3.0
 	 */
 	@SuppressWarnings("null")
-	protected static final boolean isEqual(final double[] _actual,final double[] _expected){
+	protected static final boolean equals(final double[] _actual,final double[] _expected){
 		
-		boolean reply=(_actual!=null)&&(_expected!=null)&&(_actual.length==_expected.length);
-		
-		if(reply){
-			for(int ic1=0;ic1<_expected.length;ic1++){
-				reply&=isEqual(_actual[ic1], _expected[ic1]);
-			}
+		if(same(_actual,_expected)){
+			return true;
+		}else{
+			if((_actual!=null)&&(_expected!=null)&&(_actual.length==_expected.length)){
+				boolean reply=true;
+				for(int ic1=0;ic1<_expected.length;ic1++){
+					reply&=equals(_actual[ic1], _expected[ic1]);
+				}
+				return reply;
+			}else return false;
 		}
-		
-		return reply;
 	}
 	/**
 	 * Asserts if the _actual and the _expected values are equal
@@ -1302,7 +1318,7 @@ public class ArrayAssertions extends CollectionsAssertions{
 	 * @since 0.3.0
 	 */
 	public static final void assertEquals(final double[] _actual,final double[] _expected,final String _message){
-		if(!isEqual(_actual, _expected))
+		if(!equals(_actual, _expected))
 			throw new AssertException("~", _actual,_expected, _message);
 	}
 	/**
@@ -1322,7 +1338,7 @@ public class ArrayAssertions extends CollectionsAssertions{
 	 * @since 0.3.0
 	 */
 	public static final void assertNotEquals(final double[] _actual,final double[] _expected,final String _message){
-		if(isEqual(_actual, _expected))
+		if(equals(_actual, _expected))
 			throw new AssertException("!~", _actual,_expected, _message);
 	}
 
@@ -1383,18 +1399,18 @@ public class ArrayAssertions extends CollectionsAssertions{
 	}
 
 	/**
-	 * Asserts if the _actual and the _expected values are the same instance
+	 * Asserts if the _actual and the _expected values are the assertSame instance
 	 * @param <T> type
 	 * @param _actual actual value
 	 * @param _expected expected value
-	 * @return true if _actual is the same instance than _expected
+	 * @return true if _actual is the assertSame instance than _expected
 	 * @since 0.3.0
 	 */
 	protected static final <T extends Object> boolean isSame(final T[] _actual,final T[] _expected){
 		return _actual==_expected;
 	}
 	/**
-	 * Asserts if the _actual and the _expected values are the same instance
+	 * Asserts if the _actual and the _expected values are the assertSame instance
 	 * @param <T> type
 	 * @param _actual actual value
 	 * @param _expected expected value
@@ -1404,7 +1420,7 @@ public class ArrayAssertions extends CollectionsAssertions{
 		assertSame(_actual, _expected, "Assertion failed");
 	}
 	/**
-	 * Asserts if the _actual and the _expected values are the same instance
+	 * Asserts if the _actual and the _expected values are the assertSame instance
 	 * @param <T> type
 	 * @param _actual actual value
 	 * @param _expected expected value
@@ -1416,7 +1432,7 @@ public class ArrayAssertions extends CollectionsAssertions{
 			throw new AssertException("=", _actual,_expected, _message);
 	}
 	/**
-	 * Asserts if the _actual and the _expected values are not the same instance
+	 * Asserts if the _actual and the _expected values are not the assertSame instance
 	 * @param <T> type
 	 * @param _actual actual value
 	 * @param _expected expected value
@@ -1426,7 +1442,7 @@ public class ArrayAssertions extends CollectionsAssertions{
 		assertNotSame(_actual, _expected, "Assertion failed");
 	}
 	/**
-	 * Asserts if the _actual and the _expected values are the same instance
+	 * Asserts if the _actual and the _expected values are the assertSame instance
 	 * @param <T> type
 	 * @param _actual actual value
 	 * @param _expected expected value
@@ -1447,17 +1463,19 @@ public class ArrayAssertions extends CollectionsAssertions{
 	 * @since 0.3.0
 	 */
 	@SuppressWarnings("null")
-	protected static final <T extends Object> boolean isEqual(final T[] _actual,final T[] _expected){
+	protected static final <T extends Object> boolean equals(final T[] _actual,final T[] _expected){
 		
-		boolean reply=(_actual!=null)&&(_expected!=null)&&(_actual.length==_expected.length);
-		
-		if(reply){
-			for(int ic1=0;ic1<_expected.length;ic1++){
-				reply&=isEquals(_actual[ic1], _expected[ic1]);
-			}
+		if(same(_actual,_expected)){
+			return true;
+		}else{
+			if((_actual!=null)&&(_expected!=null)&&(_actual.length==_expected.length)){
+				boolean reply=true;
+				for(int ic1=0;ic1<_expected.length;ic1++){
+					reply&=equals(_actual[ic1], _expected[ic1]);
+				}
+				return reply;
+			}else return false;
 		}
-		
-		return reply;
 	}
 	/**
 	 * Asserts if the _actual and the _expected values are equal
@@ -1478,7 +1496,7 @@ public class ArrayAssertions extends CollectionsAssertions{
 	 * @since 0.3.0
 	 */
 	public static final <T extends Object> void assertEquals(final T[] _actual,final T[] _expected,final String _message){
-		if(!isEqual(_actual, _expected))
+		if(!equals(_actual, _expected))
 			throw new AssertException("~", _actual,_expected, _message);
 	}
 	/**
@@ -1500,7 +1518,7 @@ public class ArrayAssertions extends CollectionsAssertions{
 	 * @since 0.3.0
 	 */
 	public static final <T extends Object> void assertNotEquals(final T[] _actual,final T[] _expected,final String _message){
-		if(isEqual(_actual, _expected))
+		if(equals(_actual, _expected))
 			throw new AssertException("!~", _actual,_expected, _message);
 	}
 }

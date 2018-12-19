@@ -28,11 +28,11 @@ public class PrimitiveAssertionsShortTest {
 	public void testIsZero_short() {
 		System.out.println("PrimitiveAssertionsShortTest >>> testIsZero_short");
 		short actual = 0;
-		Assert.assertTrue(PrimitiveAssertions.isZero(actual));
+		Assert.assertTrue(PrimitiveAssertions.zero(actual));
 		actual = 2;
-		Assert.assertFalse(PrimitiveAssertions.isZero(actual));
+		Assert.assertFalse(PrimitiveAssertions.zero(actual));
 		actual = 10;
-		Assert.assertFalse(PrimitiveAssertions.isZero(actual));
+		Assert.assertFalse(PrimitiveAssertions.zero(actual));
 	}
 	@Test
 	public void testAssertZero_short() {
@@ -73,13 +73,13 @@ public class PrimitiveAssertionsShortTest {
 		System.out.println("PrimitiveAssertionsShortTest >>> testIsEqual_short_short");
 		short actual=0;
 		short expected=0;
-		Assert.assertTrue(PrimitiveAssertions.isEqual(actual, expected));
+		Assert.assertTrue(PrimitiveAssertions.equals(actual, expected));
 		actual=1;
 		expected=1;
-		Assert.assertTrue(PrimitiveAssertions.isEqual(actual, expected));
+		Assert.assertTrue(PrimitiveAssertions.equals(actual, expected));
 		actual=0;
 		expected=1;
-		Assert.assertFalse(PrimitiveAssertions.isEqual(actual, expected));
+		Assert.assertFalse(PrimitiveAssertions.equals(actual, expected));
 	}
 	@Test
 	public void testAssertEquals_short_short() {
@@ -174,16 +174,16 @@ public class PrimitiveAssertionsShortTest {
 		System.out.println("PrimitiveAssertionsShortTest >>> testIsGreater_short_short");
 		short actual=1;
 		short expected=0;
-		Assert.assertTrue(PrimitiveAssertions.isGreater(actual, expected));
+		Assert.assertTrue(PrimitiveAssertions.greater(actual, expected));
 		actual=10;
 		expected=1;
-		Assert.assertTrue(PrimitiveAssertions.isGreater(actual, expected));
+		Assert.assertTrue(PrimitiveAssertions.greater(actual, expected));
 		actual=1;
 		expected=1;
-		Assert.assertFalse(PrimitiveAssertions.isGreater(actual, expected));
+		Assert.assertFalse(PrimitiveAssertions.greater(actual, expected));
 		actual=0;
 		expected=1;
-		Assert.assertFalse(PrimitiveAssertions.isGreater(actual, expected));
+		Assert.assertFalse(PrimitiveAssertions.greater(actual, expected));
 	}
 	@Test
 	public void testAssertGreater_short_short() {
@@ -250,16 +250,16 @@ public class PrimitiveAssertionsShortTest {
 		System.out.println("PrimitiveAssertionsShortTest >>> testIsGreaterOrEqual_short_short");
 		short actual=1;
 		short expected=0;
-		Assert.assertTrue(PrimitiveAssertions.isGreaterOrEqual(actual, expected));
+		Assert.assertTrue(PrimitiveAssertions.greaterOrEqual(actual, expected));
 		actual=10;
 		expected=1;
-		Assert.assertTrue(PrimitiveAssertions.isGreaterOrEqual(actual, expected));
+		Assert.assertTrue(PrimitiveAssertions.greaterOrEqual(actual, expected));
 		actual=1;
 		expected=1;
-		Assert.assertTrue(PrimitiveAssertions.isGreaterOrEqual(actual, expected));
+		Assert.assertTrue(PrimitiveAssertions.greaterOrEqual(actual, expected));
 		actual=0;
 		expected=1;
-		Assert.assertFalse(PrimitiveAssertions.isGreaterOrEqual(actual, expected));
+		Assert.assertFalse(PrimitiveAssertions.greaterOrEqual(actual, expected));
 	}
 	@Test
 	public void testAssertGreaterOrEqual_short_short() {
