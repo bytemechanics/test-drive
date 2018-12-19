@@ -15,6 +15,7 @@
  */
 package org.bytemechanics.testdrive.assertions;
 
+import static org.bytemechanics.testdrive.assertions.ObjectAssertions.isSame;
 import org.bytemechanics.testdrive.exceptions.AssertException;
 
 /**
@@ -74,6 +75,7 @@ public class ObjectAssertions extends PrimitiveAssertions{
 		if(isTrue(_actual))
 			throw new AssertException("~", _actual, false, _message);
 	}
+
 	/**
 	 * Asserts if the _actual and the _expected values are equal
 	 * @param <T> type
@@ -463,7 +465,7 @@ public class ObjectAssertions extends PrimitiveAssertions{
 	 * @return true if _actual is equals to _expected
 	 * @since 0.3.0
 	 */
-	protected static final <T extends Object> boolean isEqual(final T _actual,final T _expected){
+	protected static final <T extends Object> boolean isEquals(final T _actual,final T _expected){
 		return (isSame(_actual,_expected))||(_actual!=null)&&(_expected!=null)&&(_actual.equals(_expected));
 	}
 	/**
@@ -485,7 +487,7 @@ public class ObjectAssertions extends PrimitiveAssertions{
 	 * @since 0.3.0
 	 */
 	public static final <T extends Object> void equals(final T _actual,final T _expected,final String _message){
-		if(!isEqual(_actual,_expected))
+		if(!isEquals(_actual,_expected))
 			throw new AssertException("~", _actual,_expected, _message);
 	}
 	/**
@@ -507,7 +509,7 @@ public class ObjectAssertions extends PrimitiveAssertions{
 	 * @since 0.3.0
 	 */
 	public static final <T extends Object> void notEquals(final T _actual,final T _expected,final String _message){
-		if(isEqual(_actual,_expected))
+		if(isEquals(_actual,_expected))
 			throw new AssertException("!~", _actual, _expected, _message);
 	}
 

@@ -30,13 +30,13 @@ public class ObjectAssertionsCharacterTest {
 		System.out.println("ObjectAssertionsCharTest >>> testIsEqual_Character_Character");
 		Character actual='s';
 		Character expected='s';
-		Assert.assertTrue(ObjectAssertions.isEqual(actual, expected));
+		Assert.assertTrue(ObjectAssertions.isEquals(actual, expected));
 		actual='a';
 		expected='a';
-		Assert.assertTrue(ObjectAssertions.isEqual(actual, expected));
+		Assert.assertTrue(ObjectAssertions.isEquals(actual, expected));
 		actual='t';
 		expected='f';
-		Assert.assertFalse(ObjectAssertions.isEqual(actual, expected));
+		Assert.assertFalse(ObjectAssertions.isEquals(actual, expected));
 	}
 	@Test
 	public void testAssertEquals_Character_Character() {

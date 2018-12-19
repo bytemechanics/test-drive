@@ -22,7 +22,7 @@ import org.bytemechanics.testdrive.exceptions.AssertException;
  * @author afarre
  * @since 0.3.0
  */
-public class ArrayAssertions extends CollectionAssertions{
+public class ArrayAssertions extends CollectionsAssertions{
 
 	/**
 	 * Asserts if the _actual array has zero length
@@ -1453,7 +1453,7 @@ public class ArrayAssertions extends CollectionAssertions{
 		
 		if(reply){
 			for(int ic1=0;ic1<_expected.length;ic1++){
-				reply&=isEqual(_actual[ic1], _expected[ic1]);
+				reply&=isEquals(_actual[ic1], _expected[ic1]);
 			}
 		}
 		

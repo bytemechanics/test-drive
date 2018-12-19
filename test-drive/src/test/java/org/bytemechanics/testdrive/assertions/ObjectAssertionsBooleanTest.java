@@ -94,10 +94,10 @@ public class ObjectAssertionsBooleanTest {
 	@Test
 	public void testIsEqual_boolean_boolean() {
 		System.out.println("ObjectAssertionsBooleanTest >>> testIsEqual_boolean_boolean");
-		Assert.assertTrue(ObjectAssertions.isEqual(Boolean.FALSE,Boolean.FALSE));
-		Assert.assertTrue(ObjectAssertions.isEqual(Boolean.TRUE,Boolean.TRUE));
-		Assert.assertFalse(ObjectAssertions.isEqual(Boolean.TRUE,Boolean.FALSE));
-		Assert.assertFalse(ObjectAssertions.isEqual(Boolean.FALSE,Boolean.TRUE));
+		Assert.assertTrue(ObjectAssertions.isEquals(Boolean.FALSE,Boolean.FALSE));
+		Assert.assertTrue(ObjectAssertions.isEquals(Boolean.TRUE,Boolean.TRUE));
+		Assert.assertFalse(ObjectAssertions.isEquals(Boolean.TRUE,Boolean.FALSE));
+		Assert.assertFalse(ObjectAssertions.isEquals(Boolean.FALSE,Boolean.TRUE));
 	}
 	@Test
 	public void testAssertEquals_boolean_boolean() {

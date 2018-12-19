@@ -99,13 +99,13 @@ public class ObjectAssertionsObjectTest {
 	@Test
 	public void testIsEqual() {
 		System.out.println("ObjectAssertionsObjectTest >>> testIsEqual");
-		Assert.assertTrue(ObjectAssertions.isEqual("",""));
-		Assert.assertTrue(ObjectAssertions.isEqual("b","b"));
+		Assert.assertTrue(ObjectAssertions.isEquals("",""));
+		Assert.assertTrue(ObjectAssertions.isEquals("b","b"));
 		Assert.assertTrue(ObjectAssertions.isEqual(null,null));
 		Assert.assertFalse(ObjectAssertions.isEqual(12,null));
-		Assert.assertFalse(ObjectAssertions.isEqual(null,""));
-		Assert.assertFalse(ObjectAssertions.isEqual(12,""));
-		Assert.assertFalse(ObjectAssertions.isEqual("a",""));
+		Assert.assertFalse(ObjectAssertions.isEquals(null,""));
+		Assert.assertFalse(ObjectAssertions.isEquals(12,""));
+		Assert.assertFalse(ObjectAssertions.isEquals("a",""));
 	}
 	
 	@Test
