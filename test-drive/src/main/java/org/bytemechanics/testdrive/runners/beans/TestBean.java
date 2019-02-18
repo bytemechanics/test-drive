@@ -19,8 +19,6 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import org.bytemechanics.testdrive.adapter.TestId;
 import org.bytemechanics.testdrive.annotations.Evaluation;
 import org.bytemechanics.testdrive.annotations.Test;
@@ -54,17 +52,11 @@ public class TestBean extends SpecificationBean implements TestId {
 									.map(Test::name)
 									.map(String::trim)
 									.filter(name -> !name.isEmpty())
-									.orElse(buildTestPattern(_method));
-		this.testMethodParameters=Optional.ofNullable(_method)
-											.map(Method::getParameterTypes)
-											.orElseGet(() -> new Class[0]);
+									.orElse(TestId.super.name());
+		this.testMethodParameters=TestId.super.getTestMethodParameters();
 		this.testResult=null;
 	}
-	private String buildTestPattern(final Method _method){
-		return Stream.of(_method.getParameters())
-						.map(parameter -> "{}")
-						.collect(Collectors.joining(",",getTestMethod().getName()+"(", ")"));
-	}
+
 	/**
 	 * Clone testbean from the given one
 	 * @param _test testbean to clone

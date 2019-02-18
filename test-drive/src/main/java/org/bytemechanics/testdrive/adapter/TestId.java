@@ -16,6 +16,9 @@
 package org.bytemechanics.testdrive.adapter;
 
 import java.lang.reflect.Method;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.bytemechanics.testdrive.annotations.Test;
 import org.bytemechanics.testdrive.internal.commons.string.SimpleFormat;
 
@@ -36,30 +39,17 @@ public interface TestId extends SpecificationId{
 	 * Returns the test method parameter classes
 	 * @return parameter classes of the test method
 	 */
-	public Class[] getTestMethodParameters();
+	public default Class[] getTestMethodParameters(){
+		return Optional.ofNullable(getTestMethod())
+							.map(Method::getParameterTypes)
+							.orElseGet(() -> new Class[0]);
+	}
 	/**
 	 * Returns the name of the test accordingly with the Test#name()
 	 * @return test name
 	 * @see Test#name() 
 	 */
 	public String getTestName();
-
-	/**
-	 * Return the cannonical name of the test
-	 * @return an string representing the cannonical name of the test
-	 */
-	@Override
-	public default String name(){
-		return SimpleFormat.format(getTestName(),(Object[])getTestMethod().getParameterTypes());
-	}
-	/**
-	 * Return the cannonical name of the test with the given parameters
-	 * @param _args arguments
-	 * @return an string representing the cannonical name of the test with the given parameters
-	 */
-	public default String name(final String... _args){
-		return SimpleFormat.format(getTestName(),(Object[])_args);
-	}
 
 	
 	/**
@@ -69,5 +59,26 @@ public interface TestId extends SpecificationId{
 	 */
 	public default String specName(){
 		return SpecificationId.super.name();
+	}
+
+	/**
+	 * Return the cannonical name of the test
+	 * @return an string representing the cannonical name of the test
+	 */
+	@Override
+	public default String name(){
+		return Stream.of(getTestMethodParameters())
+						.map(Class::getSimpleName)
+						.collect(Collectors.joining(",",getTestMethod().getName()+"(", ")"));
+	}
+	/**
+	 * Return the cannonical name of the test with the given parameters
+	 * @param _args arguments
+	 * @return an string representing the cannonical name of the test with the given parameters
+	 */
+	public default String name(final Object... _args){
+		return SimpleFormat.format(Stream.of(getTestMethodParameters())
+						.map(parameter -> "{}")
+						.collect(Collectors.joining(",",getTestMethod().getName()+"(", ")")),(Object[])_args);
 	}
 }
