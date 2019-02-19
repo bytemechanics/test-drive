@@ -41,7 +41,16 @@ public interface EvaluationId extends TestId{
 	 * Returns the arguments of the test used for this evaluation
 	 * @return evaluation arguments
 	 */
-	public String[] getEvaluationArguments();
+	public Object[] getEvaluationArguments();
+
+	/**
+	 * Return the test cannonical name of this test
+	 * @return the specification cannonical name of this test
+	 * @see SpecificationId#name() 
+	 */
+	public default String testName(){
+		return TestId.super.name(getEvaluationArguments());
+	}
 
 	/**
 	 * Return the cannonical name of this evaluation
@@ -49,6 +58,6 @@ public interface EvaluationId extends TestId{
 	 */
 	@Override
 	public default String name(){
-		return SimpleFormat.format("{}: {}", getEvaluationName(),TestId.super.name(getEvaluationArguments()));
+		return SimpleFormat.format("{}: {}", getEvaluationName(),testName());
 	}
 }
